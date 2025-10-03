@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
-    maxHeight: 150,
+    maxHeight: 300,
   },
   eventLogHeader: {
     flexDirection: 'row',
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   eventScroll: {
-    maxHeight: 120,
+    maxHeight: 270,
   },
   noEvents: {
     padding: 8,
