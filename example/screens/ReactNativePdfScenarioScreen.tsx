@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Pdf from 'react-native-pdf';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import type { PdfScenario, ScenarioEvent } from '../scenarios';
 
 export default function ReactNativePdfScenarioScreen({ route }: any) {
@@ -12,6 +13,15 @@ export default function ReactNativePdfScenarioScreen({ route }: any) {
       ...prev,
       { timestamp: Date.now(), type, data },
     ]);
+  };
+
+  const copyEventLog = async () => {
+    const logText = events.map(event =>
+      `[${event.type}]\n${JSON.stringify(event.data, null, 2)}`
+    ).join('\n\n');
+
+    await Clipboard.setStringAsync(logText);
+    Alert.alert('Copied!', 'Event log copied to clipboard');
   };
 
   // Normalize props for react-native-pdf
@@ -56,7 +66,12 @@ export default function ReactNativePdfScenarioScreen({ route }: any) {
       />
 
       <View style={styles.eventLog}>
-        <Text style={styles.eventLogTitle}>Event Log</Text>
+        <View style={styles.eventLogHeader}>
+          <Text style={styles.eventLogTitle}>Event Log</Text>
+          <TouchableOpacity onPress={copyEventLog} style={styles.copyButton}>
+            <Text style={styles.copyButtonText}>Copy</Text>
+          </TouchableOpacity>
+        </View>
         <ScrollView style={styles.eventScroll}>
           {events.length === 0 ? (
             <Text style={styles.noEvents}>No events yet</Text>
@@ -114,11 +129,28 @@ const styles = StyleSheet.create({
     borderTopColor: '#ddd',
     maxHeight: 150,
   },
+  eventLogHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+  },
   eventLogTitle: {
     fontSize: 14,
     fontWeight: 'bold',
-    padding: 8,
-    backgroundColor: '#f0f0f0',
+  },
+  copyButton: {
+    backgroundColor: '#34c759',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
+  },
+  copyButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
   eventScroll: {
     maxHeight: 120,
