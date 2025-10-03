@@ -45,7 +45,6 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       LinearLayout.LayoutParams.WRAP_CONTENT
     )
     orientation = LinearLayout.VERTICAL
-    setBackgroundColor(android.graphics.Color.BLUE)
   }
 
   private var enablePaging: Boolean = false
@@ -55,11 +54,6 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   init {
     scrollView.addView(contentLayout)
     addView(scrollView)
-
-    // Make sure the view is visible for debugging
-    setBackgroundColor(android.graphics.Color.LTGRAY)
-    scrollView.setBackgroundColor(android.graphics.Color.RED)
-    contentLayout.setBackgroundColor(android.graphics.Color.BLUE)
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -253,7 +247,6 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
           setMargins(0, pageSpacing, 0, pageSpacing)
         }
         scaleType = ImageView.ScaleType.FIT_CENTER
-        setBackgroundColor(android.graphics.Color.WHITE)
 
         // Add tap gesture
         val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
@@ -272,31 +265,13 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       Log.d(TAG, "ImageView created with bitmap size: ${bitmap.width}x${bitmap.height}")
 
       contentLayout.addView(imageView)
-      Log.d(TAG, "Added ImageView for page ${i + 1} to contentLayout")
-      Log.d(TAG, "ImageView parent: ${imageView.parent}, visibility: ${imageView.visibility}")
-      Log.d(TAG, "ImageView layoutParams: ${imageView.layoutParams.width}x${imageView.layoutParams.height}")
     }
 
-    // Force a simple test view to verify contentLayout is working
-    val testView = View(context).apply {
-      layoutParams = LinearLayout.LayoutParams(200, 200)
-      setBackgroundColor(android.graphics.Color.GREEN)
-    }
-    contentLayout.addView(testView)
-    Log.d(TAG, "Added green test view")
-
-    Log.d(TAG, "contentLayout now has ${contentLayout.childCount} children")
-    Log.d(TAG, "View dimensions - this: ${width}x${height}, scrollView: ${scrollView.width}x${scrollView.height}")
-    Log.d(TAG, "contentLayout dimensions before requestLayout: ${contentLayout.left},${contentLayout.top}-${contentLayout.right},${contentLayout.bottom}")
-
-    // Force measure and layout
+    // Force measure and layout to ensure views are displayed
     val widthSpec = View.MeasureSpec.makeMeasureSpec(scrollView.width, View.MeasureSpec.EXACTLY)
     val heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
     contentLayout.measure(widthSpec, heightSpec)
     contentLayout.layout(0, 0, contentLayout.measuredWidth, contentLayout.measuredHeight)
-
-    Log.d(TAG, "contentLayout measured size: ${contentLayout.measuredWidth}x${contentLayout.measuredHeight}")
-    Log.d(TAG, "contentLayout dimensions after layout: ${contentLayout.left},${contentLayout.top}-${contentLayout.right},${contentLayout.bottom}")
 
     scrollView.requestLayout()
     invalidate()
