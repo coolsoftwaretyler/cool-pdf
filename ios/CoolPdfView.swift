@@ -100,9 +100,27 @@ class CoolPdfView: ExpoView {
     if let document = document {
       pdfView.document = document
       currentPage = 1
+
+      // Get dimensions from first page
+      let dimensions: [String: Any]
+      if let firstPage = document.page(at: 0) {
+        let bounds = firstPage.bounds(for: .mediaBox)
+        dimensions = [
+          "width": Int(bounds.width),
+          "height": Int(bounds.height)
+        ]
+      } else {
+        dimensions = ["width": 0, "height": 0]
+      }
+
+      // Get table of contents
+      let tableContents = extractTableOfContents(from: document)
+
       onLoadComplete([
         "numberOfPages": document.pageCount,
-        "path": source["uri"] as? String ?? source["path"] as? String ?? ""
+        "path": source["uri"] as? String ?? source["path"] as? String ?? "",
+        "dimensions": dimensions,
+        "tableContents": tableContents
       ])
       // Fire onPageChanged for initial page
       onPageChanged([
@@ -140,9 +158,27 @@ class CoolPdfView: ExpoView {
       if let document = PDFDocument(url: cacheURL) {
         self.pdfView.document = document
         self.currentPage = 1
+
+        // Get dimensions from first page
+        let dimensions: [String: Any]
+        if let firstPage = document.page(at: 0) {
+          let bounds = firstPage.bounds(for: .mediaBox)
+          dimensions = [
+            "width": Int(bounds.width),
+            "height": Int(bounds.height)
+          ]
+        } else {
+          dimensions = ["width": 0, "height": 0]
+        }
+
+        // Get table of contents
+        let tableContents = self.extractTableOfContents(from: document)
+
         self.onLoadComplete([
           "numberOfPages": document.pageCount,
-          "path": cacheURL.path
+          "path": cacheURL.path,
+          "dimensions": dimensions,
+          "tableContents": tableContents
         ])
         self.onPageChanged([
           "page": 1,
@@ -182,9 +218,27 @@ class CoolPdfView: ExpoView {
 
         self.pdfView.document = document
         self.currentPage = 1
+
+        // Get dimensions from first page
+        let dimensions: [String: Any]
+        if let firstPage = document.page(at: 0) {
+          let bounds = firstPage.bounds(for: .mediaBox)
+          dimensions = [
+            "width": Int(bounds.width),
+            "height": Int(bounds.height)
+          ]
+        } else {
+          dimensions = ["width": 0, "height": 0]
+        }
+
+        // Get table of contents
+        let tableContents = self.extractTableOfContents(from: document)
+
         self.onLoadComplete([
           "numberOfPages": document.pageCount,
-          "path": cache ? cacheURL.path : url.absoluteString
+          "path": cache ? cacheURL.path : url.absoluteString,
+          "dimensions": dimensions,
+          "tableContents": tableContents
         ])
         // Fire onPageChanged for initial page
         self.onPageChanged([
@@ -232,5 +286,37 @@ class CoolPdfView: ExpoView {
       bottom: CGFloat(spacing),
       right: CGFloat(spacing)
     )
+  }
+
+  private func extractTableOfContents(from document: PDFDocument) -> [[String: Any]] {
+    guard let outline = document.outlineRoot else {
+      return []
+    }
+    return extractOutlineItems(outline)
+  }
+
+  private func extractOutlineItems(_ outline: PDFOutline) -> [[String: Any]] {
+    var items: [[String: Any]] = []
+
+    for i in 0..<outline.numberOfChildren {
+      guard let child = outline.child(at: i) else { continue }
+
+      var item: [String: Any] = [
+        "title": child.label ?? "",
+        "pageIdx": 0,
+        "children": extractOutlineItems(child)
+      ]
+
+      // Get page index for this outline item
+      if let destination = child.destination,
+         let page = destination.page,
+         let document = pdfView.document {
+        item["pageIdx"] = document.index(for: page)
+      }
+
+      items.append(item)
+    }
+
+    return items
   }
 }

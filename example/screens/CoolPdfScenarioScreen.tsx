@@ -35,7 +35,8 @@ export default function CoolPdfScenarioScreen({ route }: any) {
       <CoolPdfView
         {...scenario.props}
         onLoadComplete={(event) => {
-          addEvent('loadComplete', event.nativeEvent);
+          const { numberOfPages, path, dimensions, tableContents } = event.nativeEvent;
+          addEvent('loadComplete', { numberOfPages, path, dimensions, tableContents });
         }}
         onPageChanged={(event) => {
           addEvent('pageChanged', event.nativeEvent);

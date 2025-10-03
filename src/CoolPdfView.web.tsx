@@ -50,12 +50,14 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
   };
 
   const handleLoad = () => {
-    // In web, we can't easily get page count without a PDF library
+    // In web, we can't easily get page count, dimensions, or table of contents without a PDF library
     // For now, we'll just trigger onLoadComplete with basic info
     props.onLoadComplete?.({
       nativeEvent: {
         numberOfPages: 1, // Unknown for iframe
         path: pdfUrl,
+        dimensions: { width: 0, height: 0 }, // Unknown for iframe
+        tableContents: [], // Unknown for iframe
       },
     });
   };

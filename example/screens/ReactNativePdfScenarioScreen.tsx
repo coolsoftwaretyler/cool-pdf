@@ -58,11 +58,9 @@ export default function ReactNativePdfScenarioScreen({ route }: any) {
       <Pdf
         {...pdfProps}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
-          console.log('onLoadComplete', numberOfPages, path, dimensions, tableContents);
           addEvent('loadComplete', { numberOfPages, path, dimensions, tableContents });
         }}
         onPageChanged={(page, numberOfPages) => {
-          console.log('onPageChanged', page, numberOfPages);
           addEvent('pageChanged', { page, numberOfPages });
         }}
         onError={(error) => {

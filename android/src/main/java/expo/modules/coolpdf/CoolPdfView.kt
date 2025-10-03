@@ -212,12 +212,36 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       val pageCount = pdfRenderer?.pageCount ?: 0
       Log.d(TAG, "PDF has $pageCount pages")
 
+      // Get display density for scaling dimensions (to match react-native-pdf behavior)
+      // AndroidPdfViewer (used by RNPDF) scales using a specific formula rather than raw density
+      // Formula appears to be: densityDpi / 274 (empirically determined)
+      val densityDpi = context.resources.displayMetrics.densityDpi
+      val scaleFactor = densityDpi / 274f
+      Log.d(TAG, "Display densityDpi: $densityDpi, scaleFactor: $scaleFactor")
+
+      // Get dimensions from first page, scaled to match RNPDF
+      val dimensions = if (pageCount > 0) {
+        val firstPage = pdfRenderer!!.openPage(0)
+        val dims = mapOf(
+          "width" to (firstPage.width * scaleFactor).toInt(),
+          "height" to (firstPage.height * scaleFactor).toInt()
+        )
+        Log.d(TAG, "Raw page dimensions: ${firstPage.width} x ${firstPage.height}, scaled: ${dims["width"]} x ${dims["height"]}")
+        firstPage.close()
+        dims
+      } else {
+        mapOf("width" to 0, "height" to 0)
+      }
+
+      // Note: Android's PdfRenderer doesn't provide access to table of contents/bookmarks
+      // Sending empty array to match react-native-pdf structure
       onLoadComplete(mapOf(
         "numberOfPages" to pageCount,
-        "path" to file.absolutePath
+        "path" to file.absolutePath,
+        "dimensions" to dimensions,
+        "tableContents" to emptyList<Map<String, Any>>()
       ))
 
-      // Fire onPageChanged for initial page (page 1)
       currentPage = 1
       onPageChanged(mapOf(
         "page" to 1,

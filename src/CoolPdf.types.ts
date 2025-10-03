@@ -8,9 +8,20 @@ export type PdfSource = {
   cache?: boolean;
 };
 
+export type TableContentItem = {
+  title: string;
+  pageIdx: number;
+  children: TableContentItem[];
+};
+
 export type OnLoadCompleteEventPayload = {
   numberOfPages: number;
   path: string;
+  dimensions: {
+    width: number;
+    height: number;
+  };
+  tableContents: TableContentItem[];
 };
 
 export type OnPageChangedEventPayload = {
