@@ -1,6 +1,6 @@
 # cool-pdf
 
-PDF View Component for Expo
+PDF View Component for Expo - version 0.1.0 was heavily written by Claude and not fully reviewed. Please install with caution. Consider not installing at all.
 
 # API documentation
 
