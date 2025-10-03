@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-pdf/package.json b/node_modules/react-native-pdf/package.json
+index 1234567..abcdefg 100644
+--- a/node_modules/react-native-pdf/package.json
++++ b/node_modules/react-native-pdf/package.json
+@@ -63,6 +63,11 @@
+         "jsSrcsDir": "./fabric",
+         "android": {
+           "javaPackageName": "org.wonday.pdf"
++        },
++        "ios": {
++          "componentProvider": {
++            "RNPDFPdfView": "RNPDFPdfView"
++          }
+         }
+       }
+ }
