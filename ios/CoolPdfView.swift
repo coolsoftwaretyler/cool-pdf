@@ -1,5 +1,6 @@
 import ExpoModulesCore
 import PDFKit
+import CommonCrypto
 
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
@@ -79,7 +80,9 @@ class CoolPdfView: ExpoView {
       if let url = URL(string: uri) {
         // Handle remote URL
         if uri.hasPrefix("http://") || uri.hasPrefix("https://") {
-          loadRemotePdf(from: url, headers: source["headers"] as? [String: String])
+          let cache = source["cache"] as? Bool ?? false
+          let cacheFileName = source["cacheFileName"] as? String
+          loadRemotePdf(from: url, headers: source["headers"] as? [String: String], cache: cache, cacheFileName: cacheFileName)
           return
         } else {
           // Handle file URL
@@ -113,7 +116,42 @@ class CoolPdfView: ExpoView {
     }
   }
 
-  private func loadRemotePdf(from url: URL, headers: [String: String]?) {
+  private func loadRemotePdf(from url: URL, headers: [String: String]?, cache: Bool, cacheFileName: String?) {
+    // Determine cache file name
+    let fileName: String
+    if let customFileName = cacheFileName {
+      fileName = customFileName
+    } else {
+      // Generate SHA-1 hash of URL for cache filename (like react-native-pdf does)
+      let urlString = url.absoluteString
+      let data = urlString.data(using: .utf8)!
+      var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+      data.withUnsafeBytes {
+        _ = CC_SHA1($0.baseAddress, CC_LONG(data.count), &digest)
+      }
+      fileName = digest.map { String(format: "%02x", $0) }.joined()
+    }
+
+    let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+      .appendingPathComponent("\(fileName).pdf")
+
+    // If caching is enabled and file exists, use it
+    if cache && FileManager.default.fileExists(atPath: cacheURL.path) {
+      if let document = PDFDocument(url: cacheURL) {
+        self.pdfView.document = document
+        self.currentPage = 1
+        self.onLoadComplete([
+          "numberOfPages": document.pageCount,
+          "path": cacheURL.path
+        ])
+        self.onPageChanged([
+          "page": 1,
+          "numberOfPages": document.pageCount
+        ])
+        return
+      }
+    }
+
     var request = URLRequest(url: url)
     headers?.forEach { key, value in
       request.setValue(value, forHTTPHeaderField: key)
@@ -137,11 +175,16 @@ class CoolPdfView: ExpoView {
           return
         }
 
+        // Save to cache if caching is enabled
+        if cache {
+          try? data.write(to: cacheURL)
+        }
+
         self.pdfView.document = document
         self.currentPage = 1
         self.onLoadComplete([
           "numberOfPages": document.pageCount,
-          "path": url.absoluteString
+          "path": cache ? cacheURL.path : url.absoluteString
         ])
         // Fire onPageChanged for initial page
         self.onPageChanged([

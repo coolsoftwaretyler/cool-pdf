@@ -1,3 +1,25 @@
+diff --git a/node_modules/react-native-pdf/android/src/main/java/org/wonday/pdf/PdfView.java b/node_modules/react-native-pdf/android/src/main/java/org/wonday/pdf/PdfView.java
+index 7b7a125..d616ef6 100644
+--- a/node_modules/react-native-pdf/android/src/main/java/org/wonday/pdf/PdfView.java
++++ b/node_modules/react-native-pdf/android/src/main/java/org/wonday/pdf/PdfView.java
+@@ -12,6 +12,8 @@ import java.io.File;
+
+ import android.content.ContentResolver;
+ import android.content.Context;
++import android.os.Handler;
++import android.os.Looper;
+ import android.util.SizeF;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -157,7 +159,7 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
+         TopChangeEvent tce = new TopChangeEvent(surfaceId, getId(), event);
+
+         if (dispatcher != null) {
+-            dispatcher.dispatchEvent(tce);
++            new Handler(Looper.getMainLooper()).postDelayed(() -> dispatcher.dispatchEvent(tce), 10);
+         }
+         //        ReactContext reactContext = (ReactContext)this.getContext();
+ //        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
 diff --git a/node_modules/react-native-pdf/package.json b/node_modules/react-native-pdf/package.json
 index 1234567..abcdefg 100644
 --- a/node_modules/react-native-pdf/package.json

@@ -25,8 +25,16 @@ export default function ReactNativePdfScenarioScreen({ route }: any) {
   };
 
   // Normalize props for react-native-pdf
+  const source = typeof scenario.props.source === 'string'
+    ? { uri: scenario.props.source }
+    : {
+        uri: scenario.props.source.uri,
+        headers: scenario.props.source.headers,
+        cache: scenario.props.source.cache,
+      };
+
   const pdfProps = {
-    source: scenario.props.source,
+    source,
     page: scenario.props.page,
     scale: scenario.props.scale,
     minScale: scenario.props.minScale,
@@ -50,9 +58,11 @@ export default function ReactNativePdfScenarioScreen({ route }: any) {
       <Pdf
         {...pdfProps}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
+          console.log('onLoadComplete', numberOfPages, path, dimensions, tableContents);
           addEvent('loadComplete', { numberOfPages, path, dimensions, tableContents });
         }}
         onPageChanged={(page, numberOfPages) => {
+          console.log('onPageChanged', page, numberOfPages);
           addEvent('pageChanged', { page, numberOfPages });
         }}
         onError={(error) => {

@@ -12,7 +12,7 @@ export const basicScenarios: PdfScenario[] = [
         cache: true,
       },
     },
-    expectedBehavior: 'PDF should load and display the first page',
+    expectedBehavior: 'PDF should load and display the first page. Both onLoadComplete and onPageChanged should fire.',
   },
   {
     id: 'basic-no-cache',

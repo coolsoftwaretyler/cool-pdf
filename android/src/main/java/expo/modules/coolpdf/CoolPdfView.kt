@@ -79,7 +79,9 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
             Log.d(TAG, "Loading PDF from URI: $uri")
             if (uri.startsWith("http://") || uri.startsWith("https://")) {
               Log.d(TAG, "Downloading PDF from URL: $uri")
-              downloadPdf(uri, source["headers"] as? Map<String, String>)
+              val cache = source["cache"] as? Boolean ?: false
+              val cacheFileName = source["cacheFileName"] as? String
+              downloadPdf(uri, source["headers"] as? Map<String, String>, cache, cacheFileName)
             } else {
               Log.d(TAG, "Loading PDF from local file: $uri")
               File(uri)
@@ -140,8 +142,29 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     }
   }
 
-  private suspend fun downloadPdf(urlString: String, headers: Map<String, String>?): File? = withContext(Dispatchers.IO) {
+  private suspend fun downloadPdf(
+    urlString: String,
+    headers: Map<String, String>?,
+    cache: Boolean,
+    cacheFileName: String?
+  ): File? = withContext(Dispatchers.IO) {
     try {
+      // Determine cache file name
+      val fileName = cacheFileName ?: run {
+        // Generate SHA-1 hash of URL for cache filename (like react-native-pdf does)
+        val digest = java.security.MessageDigest.getInstance("SHA-1")
+        val hash = digest.digest(urlString.toByteArray())
+        hash.joinToString("") { "%02x".format(it) }
+      }
+
+      val cacheFile = File(context.cacheDir, "$fileName.pdf")
+
+      // If caching is enabled and file exists, return it
+      if (cache && cacheFile.exists()) {
+        Log.d(TAG, "Using cached PDF: ${cacheFile.absolutePath}")
+        return@withContext cacheFile
+      }
+
       Log.d(TAG, "Starting download from: $urlString")
       val url = URL(urlString)
       val connection = url.openConnection()
@@ -149,12 +172,12 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         connection.setRequestProperty(key, value)
       }
 
-      val tempFile = File.createTempFile("pdf", ".pdf", context.cacheDir)
-      Log.d(TAG, "Downloading to temp file: ${tempFile.absolutePath}")
+      val targetFile = if (cache) cacheFile else File.createTempFile("pdf", ".pdf", context.cacheDir)
+      Log.d(TAG, "Downloading to file: ${targetFile.absolutePath}")
 
       var totalBytes = 0L
       connection.getInputStream().use { input ->
-        FileOutputStream(tempFile).use { output ->
+        FileOutputStream(targetFile).use { output ->
           val buffer = ByteArray(8192)
           var bytesRead: Int
           while (input.read(buffer).also { bytesRead = it } != -1) {
@@ -165,7 +188,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       }
 
       Log.d(TAG, "Download complete: $totalBytes bytes written")
-      tempFile
+      targetFile
     } catch (e: Exception) {
       Log.e(TAG, "Error downloading PDF", e)
       withContext(Dispatchers.Main) {
