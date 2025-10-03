@@ -1,0 +1,253 @@
+› Skipping dev server
+› Building app...
+Configuration on demand is an incubating feature.
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-module-gradle-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:jar UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-module-gradle-plugin:classes UP-TO-DATE
+> Task :expo-module-gradle-plugin:jar UP-TO-DATE
+
+> Configure project :
+[32m[ExpoRootProject][0m Using the following versions:
+  - buildTools:  [32m36.0.0[0m
+  - minSdk:      [32m24[0m
+  - compileSdk:  [32m36[0m
+  - targetSdk:   [32m36[0m
+  - ndk:         [32m27.1.12297006[0m
+  - kotlin:      [32m2.1.20[0m
+  - ksp:         [32m2.1.20-2.0.1[0m
+
+> Configure project :expo
+
+Using expo modules
+  - [32mcool-pdf[0m (0.1.0)
+  - [32mexpo-constants[0m (18.0.9)
+  - [32mexpo-modules-core[0m (3.0.20)
+  - [33m[📦][0m [32mexpo-asset[0m (12.0.9)
+  - [33m[📦][0m [32mexpo-file-system[0m (19.0.16)
+  - [33m[📦][0m [32mexpo-font[0m (14.0.8)
+  - [33m[📦][0m [32mexpo-keep-awake[0m (15.0.7)
+
+
+> Task :expo-modules-core:preBuild UP-TO-DATE
+> Task :cool-pdf:preBuild UP-TO-DATE
+> Task :expo-modules-core:preDebugBuild UP-TO-DATE
+> Task :cool-pdf:preDebugBuild UP-TO-DATE
+> Task :expo:generatePackagesList UP-TO-DATE
+> Task :expo-modules-core:writeDebugAarMetadata UP-TO-DATE
+> Task :app:generateAutolinkingNewArchitectureFiles UP-TO-DATE
+> Task :expo:preBuild UP-TO-DATE
+> Task :cool-pdf:writeDebugAarMetadata UP-TO-DATE
+> Task :expo:preDebugBuild UP-TO-DATE
+> Task :cool-pdf:generateDebugResValues UP-TO-DATE
+> Task :expo:writeDebugAarMetadata UP-TO-DATE
+> Task :expo-modules-core:generateDebugResValues UP-TO-DATE
+> Task :app:generateAutolinkingPackageList UP-TO-DATE
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :cool-pdf:generateDebugResources UP-TO-DATE
+> Task :expo:generateDebugResValues UP-TO-DATE
+> Task :expo-modules-core:generateDebugResources UP-TO-DATE
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :expo:generateDebugResources UP-TO-DATE
+> Task :app:generateReactNativeEntryPoint UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :expo-modules-core:packageDebugResources UP-TO-DATE
+> Task :cool-pdf:packageDebugResources UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :cool-pdf:extractDeepLinksDebug UP-TO-DATE
+> Task :expo:packageDebugResources UP-TO-DATE
+> Task :expo-modules-core:extractDeepLinksDebug UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :expo:extractDeepLinksDebug UP-TO-DATE
+> Task :cool-pdf:processDebugManifest UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :expo-modules-core:processDebugManifest UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :cool-pdf:compileDebugLibraryResources UP-TO-DATE
+> Task :expo-modules-core:compileDebugLibraryResources UP-TO-DATE
+> Task :expo:processDebugManifest UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :expo:compileDebugLibraryResources UP-TO-DATE
+> Task :cool-pdf:parseDebugLocalResources UP-TO-DATE
+> Task :expo-modules-core:parseDebugLocalResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :expo:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :cool-pdf:generateDebugRFile UP-TO-DATE
+> Task :cool-pdf:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :expo-modules-core:generateDebugRFile UP-TO-DATE
+> Task :expo:generateDebugRFile UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :cool-pdf:generateDebugBuildConfig UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :cool-pdf:javaPreCompileDebug UP-TO-DATE
+> Task :expo:generateDebugBuildConfig UP-TO-DATE
+> Task :expo-modules-core:generateDebugBuildConfig UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :expo:javaPreCompileDebug UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :cool-pdf:mergeDebugShaders UP-TO-DATE
+> Task :cool-pdf:compileDebugShaders NO-SOURCE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :expo:mergeDebugShaders UP-TO-DATE
+> Task :cool-pdf:generateDebugAssets UP-TO-DATE
+> Task :expo:compileDebugShaders NO-SOURCE
+> Task :expo:generateDebugAssets UP-TO-DATE
+> Task :cool-pdf:mergeDebugAssets UP-TO-DATE
+> Task :expo:mergeDebugAssets UP-TO-DATE
+> Task :cool-pdf:mergeDebugJniLibFolders UP-TO-DATE
+> Task :expo:mergeDebugJniLibFolders UP-TO-DATE
+> Task :cool-pdf:mergeDebugNativeLibs NO-SOURCE
+> Task :expo:mergeDebugNativeLibs NO-SOURCE
+> Task :cool-pdf:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :expo:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :expo-modules-core:compileDebugKotlin UP-TO-DATE
+> Task :expo-modules-core:javaPreCompileDebug UP-TO-DATE
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :expo-constants:createExpoConfig
+> Task :expo-constants:preBuild
+> Task :expo-constants:preDebugBuild
+> Task :expo-constants:writeDebugAarMetadata UP-TO-DATE
+> Task :expo-constants:generateDebugResValues UP-TO-DATE
+> Task :expo-modules-core:compileDebugJavaWithJavac UP-TO-DATE
+> Task :expo-constants:generateDebugResources UP-TO-DATE
+> Task :expo-modules-core:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :expo-modules-core:mergeDebugShaders UP-TO-DATE
+> Task :expo-constants:packageDebugResources UP-TO-DATE
+> Task :expo-modules-core:compileDebugShaders NO-SOURCE
+> Task :expo-modules-core:generateDebugAssets UP-TO-DATE
+> Task :expo-constants:extractDeepLinksDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :expo-modules-core:mergeDebugAssets UP-TO-DATE
+> Task :expo-constants:processDebugManifest UP-TO-DATE
+> Task :expo-modules-core:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :expo-constants:compileDebugLibraryResources UP-TO-DATE
+> Task :expo-constants:parseDebugLocalResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :expo-constants:generateDebugRFile UP-TO-DATE
+> Task :expo-constants:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :expo-constants:generateDebugBuildConfig UP-TO-DATE
+> Task :expo-modules-core:processDebugJavaRes UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :expo-constants:compileDebugKotlin UP-TO-DATE
+> Task :expo-constants:javaPreCompileDebug UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :expo-constants:compileDebugJavaWithJavac UP-TO-DATE
+> Task :expo-constants:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :expo-modules-core:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :expo-constants:mergeDebugShaders UP-TO-DATE
+> Task :expo-constants:compileDebugShaders NO-SOURCE
+> Task :expo-constants:generateDebugAssets UP-TO-DATE
+> Task :expo-constants:mergeDebugAssets UP-TO-DATE
+> Task :expo-constants:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :expo-constants:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :expo-constants:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :expo-constants:mergeDebugJniLibFolders UP-TO-DATE
+> Task :expo-constants:mergeDebugNativeLibs NO-SOURCE
+> Task :expo-constants:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :expo-modules-core:configureCMakeDebug[arm64-v8a]
+> Task :expo-modules-core:buildCMakeDebug[arm64-v8a]
+> Task :expo-modules-core:mergeDebugJniLibFolders UP-TO-DATE
+> Task :expo-modules-core:mergeDebugNativeLibs UP-TO-DATE
+> Task :expo-modules-core:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+
+> Task :cool-pdf:compileDebugKotlin
+w: file:///Users/tylerwilliams/cool-pdf/android/src/main/java/expo/modules/coolpdf/CoolPdfModule.kt:46:34 Unchecked cast of 'Map<*, *>' to 'Map<String, Any?>'.
+
+> Task :cool-pdf:compileDebugJavaWithJavac UP-TO-DATE
+> Task :cool-pdf:processDebugJavaRes UP-TO-DATE
+> Task :cool-pdf:bundleLibCompileToJarDebug
+> Task :cool-pdf:bundleLibRuntimeToJarDebug
+> Task :cool-pdf:bundleLibRuntimeToDirDebug
+> Task :expo:compileDebugKotlin
+> Task :expo:compileDebugJavaWithJavac
+> Task :expo:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :expo:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :expo:processDebugJavaRes UP-TO-DATE
+> Task :expo:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:compileDebugKotlin
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug
+
+[Incubating] Problems report is available at: file:///Users/tylerwilliams/cool-pdf/example/android/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1s
+155 actionable tasks: 14 executed, 141 up-to-date
+Waiting on http://localhost:8081
+› Installing /Users/tylerwilliams/cool-pdf/example/android/app/build/outputs/apk/debug/app-debug.apk
+› Opening expo.modules.coolpdf.example/.MainActivity on Medium_Phone_API_35

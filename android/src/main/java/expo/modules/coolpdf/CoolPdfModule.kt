@@ -2,7 +2,7 @@ package expo.modules.coolpdf
 
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
-import java.net.URL
+import expo.modules.kotlin.types.Either
 
 class CoolPdfModule : Module() {
   // Each module class must implement the definition function. The definition consists of components
@@ -39,12 +39,38 @@ class CoolPdfModule : Module() {
     // Enables the module to be used as a native view. Definition components that are accepted as part of
     // the view definition: Prop, Events.
     View(CoolPdfView::class) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { view: CoolPdfView, url: URL ->
-        view.webView.loadUrl(url.toString())
+      // Defines a setter for the `source` prop - can be a string URL or an object with uri/path/base64
+      Prop("source") { view: CoolPdfView, source: Any ->
+        val sourceMap = when (source) {
+          is String -> mapOf("uri" to source)
+          is Map<*, *> -> source as Map<String, Any?>
+          else -> mapOf<String, Any?>()
+        }
+        view.loadPdf(sourceMap)
       }
-      // Defines an event that the view can send to JavaScript.
-      Events("onLoad")
+
+      Prop("page") { view: CoolPdfView, page: Int ->
+        view.setPage(page)
+      }
+
+      Prop("scale") { view: CoolPdfView, scale: Float ->
+        view.setScale(scale)
+      }
+
+      Prop("horizontal") { view: CoolPdfView, horizontal: Boolean ->
+        view.setHorizontal(horizontal)
+      }
+
+      Prop("enablePaging") { view: CoolPdfView, enablePaging: Boolean ->
+        view.setEnablePaging(enablePaging)
+      }
+
+      Prop("spacing") { view: CoolPdfView, spacing: Int ->
+        view.setSpacing(spacing)
+      }
+
+      // Defines events that the view can send to JavaScript.
+      Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }
   }
 }

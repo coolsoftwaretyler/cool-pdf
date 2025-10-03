@@ -1,7 +1,29 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-export type OnLoadEventPayload = {
-  url: string;
+export type PdfSource = {
+  uri?: string;
+  path?: string;
+  base64?: string;
+  headers?: Record<string, string>;
+  cache?: boolean;
+};
+
+export type OnLoadCompleteEventPayload = {
+  numberOfPages: number;
+  path: string;
+};
+
+export type OnPageChangedEventPayload = {
+  page: number;
+  numberOfPages: number;
+};
+
+export type OnErrorEventPayload = {
+  error: string;
+};
+
+export type OnPageSingleTapEventPayload = {
+  page: number;
 };
 
 export type CoolPdfModuleEvents = {
@@ -13,7 +35,21 @@ export type ChangeEventPayload = {
 };
 
 export type CoolPdfViewProps = {
-  url: string;
-  onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
+  source: PdfSource | string;
+  page?: number;
+  scale?: number;
+  minScale?: number;
+  maxScale?: number;
+  horizontal?: boolean;
+  spacing?: number;
+  password?: string;
+  enablePaging?: boolean;
+  enableAnnotations?: boolean;
+  showsHorizontalScrollIndicator?: boolean;
+  showsVerticalScrollIndicator?: boolean;
+  onLoadComplete?: (event: { nativeEvent: OnLoadCompleteEventPayload }) => void;
+  onPageChanged?: (event: { nativeEvent: OnPageChangedEventPayload }) => void;
+  onError?: (event: { nativeEvent: OnErrorEventPayload }) => void;
+  onPageSingleTap?: (event: { nativeEvent: OnPageSingleTapEventPayload }) => void;
   style?: StyleProp<ViewStyle>;
 };

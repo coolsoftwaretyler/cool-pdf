@@ -35,14 +35,45 @@ public class CoolPdfModule: Module {
     // Enables the module to be used as a native view. Definition components that are accepted as part of the
     // view definition: Prop, Events.
     View(CoolPdfView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: CoolPdfView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
+      // Defines a setter for the `source` prop - can be a string URL or an object with uri/path/base64
+      Prop("source") { (view: CoolPdfView, source: Either<String, [String: Any]>) in
+        switch source {
+        case .left(let urlString):
+          view.loadPdf(from: ["uri": urlString])
+        case .right(let sourceDict):
+          view.loadPdf(from: sourceDict)
         }
       }
 
-      Events("onLoad")
+      Prop("page") { (view: CoolPdfView, page: Int) in
+        view.setPage(page)
+      }
+
+      Prop("scale") { (view: CoolPdfView, scale: Double) in
+        view.setScale(scale)
+      }
+
+      Prop("minScale") { (view: CoolPdfView, minScale: Double) in
+        view.setMinScale(minScale)
+      }
+
+      Prop("maxScale") { (view: CoolPdfView, maxScale: Double) in
+        view.setMaxScale(maxScale)
+      }
+
+      Prop("horizontal") { (view: CoolPdfView, horizontal: Bool) in
+        view.setHorizontal(horizontal)
+      }
+
+      Prop("enablePaging") { (view: CoolPdfView, enablePaging: Bool) in
+        view.setEnablePaging(enablePaging)
+      }
+
+      Prop("spacing") { (view: CoolPdfView, spacing: Double) in
+        view.setSpacing(spacing)
+      }
+
+      Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }
   }
 }
