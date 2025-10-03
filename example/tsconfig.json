@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "cool-pdf": ["../src/index"],
+      "cool-pdf/*": ["../src/*"]
+    }
+  }
+}
