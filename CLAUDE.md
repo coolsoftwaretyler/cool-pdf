@@ -84,3 +84,4 @@ The implementation should follow patterns from `react-native-pdf` (https://githu
 - PDF rendering approach for iOS (PDFKit) and Android (PdfRenderer)
 - Common props like page navigation, zoom, scale
 - Events for load completion, page changes, errors
+- Use Expo docs: https://docs.expo.dev/modules/native-view-tutorial/

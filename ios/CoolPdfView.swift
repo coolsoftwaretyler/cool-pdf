@@ -51,11 +51,11 @@ class CoolPdfView: ExpoView {
 
   @objc private func handlePageChanged(_ notification: Notification) {
     guard let currentPDFPage = pdfView.currentPage,
-          let document = pdfView.document,
-          let pageIndex = document.index(for: currentPDFPage) else {
+          let document = pdfView.document else {
       return
     }
 
+    let pageIndex = document.index(for: currentPDFPage)
     let newPage = pageIndex + 1
     if newPage != currentPage {
       currentPage = newPage

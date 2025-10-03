@@ -37,10 +37,9 @@ public class CoolPdfModule: Module {
     View(CoolPdfView.self) {
       // Defines a setter for the `source` prop - can be a string URL or an object with uri/path/base64
       Prop("source") { (view: CoolPdfView, source: Either<String, [String: Any]>) in
-        switch source {
-        case .left(let urlString):
+        if let urlString: String = source.get() {
           view.loadPdf(from: ["uri": urlString])
-        case .right(let sourceDict):
+        } else if let sourceDict: [String: Any] = source.get() {
           view.loadPdf(from: sourceDict)
         }
       }
