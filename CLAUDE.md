@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `cool-pdf` is an Expo module for displaying PDFs in React Native applications. The module provides a native view component that wraps platform-specific PDF rendering capabilities for iOS, Android, and web.
 
+It's intended to be a drop-in replacement for [react-native-pdf](https://github.com/wonday/react-native-pdf/), so we need to maintain parity over the long term.
+
 ## Architecture
 
 This is an **Expo module** built using `expo-module-scripts`. The architecture follows Expo's module pattern:
@@ -51,6 +53,7 @@ npm run open:android   # Opens Android project in Android Studio
 # Run the example app (from example/ directory)
 cd example
 npx expo start         # Start Expo dev server
+npx expo prebuild --clean # Run Expo prebuild for dev build
 npx expo run:ios       # Run on iOS simulator
 npx expo run:android   # Run on Android emulator
 ```
@@ -61,13 +64,6 @@ The `expo-module.config.json` defines platform support and native module names:
 - Platforms: apple, android, web
 - iOS module: `CoolPdfModule`
 - Android module: `expo.modules.coolpdf.CoolPdfModule`
-
-## Current Implementation Status
-
-The module currently has a **placeholder WebView implementation**. The goal is to replace this with native PDF rendering:
-- **iOS**: Will use PDFKit (PDFView)
-- **Android**: Will use PdfRenderer or similar PDF library
-- **Web**: Will use browser-native PDF capabilities or pdf.js
 
 ## Key Implementation Notes
 
