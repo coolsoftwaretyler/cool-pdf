@@ -1,0 +1,131 @@
+import { useState } from 'react';
+import { CoolPdfView } from 'cool-pdf';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import type { PdfScenario, ScenarioEvent } from '../scenarios';
+
+export default function CoolPdfScenarioScreen({ route }: any) {
+  const { scenario } = route.params as { scenario: PdfScenario };
+  const [events, setEvents] = useState<ScenarioEvent[]>([]);
+
+  const addEvent = (type: ScenarioEvent['type'], data: any) => {
+    setEvents((prev) => [
+      ...prev,
+      { timestamp: Date.now(), type, data },
+    ]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.implementation}>CoolPDF Implementation</Text>
+        <Text style={styles.scenarioName}>{scenario.name}</Text>
+        <Text style={styles.description}>{scenario.description}</Text>
+      </View>
+
+      <CoolPdfView
+        {...scenario.props}
+        onLoadComplete={(event) => {
+          addEvent('loadComplete', event.nativeEvent);
+        }}
+        onPageChanged={(event) => {
+          addEvent('pageChanged', event.nativeEvent);
+        }}
+        onError={(event) => {
+          addEvent('error', event.nativeEvent);
+        }}
+        onPageSingleTap={(event) => {
+          addEvent('pageSingleTap', event.nativeEvent);
+        }}
+        style={styles.pdf}
+      />
+
+      <View style={styles.eventLog}>
+        <Text style={styles.eventLogTitle}>Event Log</Text>
+        <ScrollView style={styles.eventScroll}>
+          {events.length === 0 ? (
+            <Text style={styles.noEvents}>No events yet</Text>
+          ) : (
+            events.map((event, index) => (
+              <View key={index} style={styles.event}>
+                <Text style={styles.eventType}>{event.type}</Text>
+                <Text style={styles.eventData}>
+                  {JSON.stringify(event.data, null, 2)}
+                </Text>
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    backgroundColor: '#5856d6',
+    padding: 16,
+  },
+  implementation: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 4,
+  },
+  scenarioName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 4,
+  },
+  description: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.9,
+  },
+  pdf: {
+    flex: 1,
+    backgroundColor: '#fff',
+    margin: 16,
+    borderRadius: 8,
+  },
+  eventLog: {
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    maxHeight: 150,
+  },
+  eventLogTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+  },
+  eventScroll: {
+    maxHeight: 120,
+  },
+  noEvents: {
+    padding: 8,
+    color: '#999',
+    fontStyle: 'italic',
+  },
+  event: {
+    padding: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  eventType: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#5856d6',
+    marginBottom: 4,
+  },
+  eventData: {
+    fontSize: 11,
+    fontFamily: 'monospace',
+    color: '#666',
+  },
+});
