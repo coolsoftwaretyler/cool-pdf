@@ -18,6 +18,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import android.util.Base64
+import android.util.Log
 
 class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
   private val onLoadComplete by EventDispatcher()
@@ -30,13 +31,21 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var parcelFileDescriptor: ParcelFileDescriptor? = null
   private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
+  companion object {
+    private const val TAG = "CoolPdfView"
+  }
+
   private val scrollView = ScrollView(context).apply {
     layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
   }
 
   private val contentLayout = LinearLayout(context).apply {
-    layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+    layoutParams = LinearLayout.LayoutParams(
+      LinearLayout.LayoutParams.MATCH_PARENT,
+      LinearLayout.LayoutParams.WRAP_CONTENT
+    )
     orientation = LinearLayout.VERTICAL
+    setBackgroundColor(android.graphics.Color.BLUE)
   }
 
   private var enablePaging: Boolean = false
@@ -46,50 +55,100 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   init {
     scrollView.addView(contentLayout)
     addView(scrollView)
+
+    // Make sure the view is visible for debugging
+    setBackgroundColor(android.graphics.Color.LTGRAY)
+    scrollView.setBackgroundColor(android.graphics.Color.RED)
+    contentLayout.setBackgroundColor(android.graphics.Color.BLUE)
+  }
+
+  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    super.onLayout(changed, left, top, right, bottom)
+    Log.d(TAG, "onLayout: changed=$changed, bounds=($left,$top,$right,$bottom), size=${right-left}x${bottom-top}")
+    Log.d(TAG, "scrollView size: ${scrollView.width}x${scrollView.height}, visibility: ${scrollView.visibility}")
+    Log.d(TAG, "contentLayout size: ${contentLayout.width}x${contentLayout.height}, childCount: ${contentLayout.childCount}")
   }
 
   fun loadPdf(source: Map<String, Any?>) {
-    scope.launch {
+    Log.d(TAG, "loadPdf called with source: $source")
+    scope.launch(Dispatchers.IO) {
       try {
         val file = when {
           source.containsKey("uri") -> {
-            val uri = source["uri"] as? String ?: return@launch
+            val uri = source["uri"] as? String ?: run {
+              Log.e(TAG, "URI is null or not a string")
+              withContext(Dispatchers.Main) {
+                onError(mapOf("error" to "URI is null or not a string"))
+              }
+              return@launch
+            }
+            Log.d(TAG, "Loading PDF from URI: $uri")
             if (uri.startsWith("http://") || uri.startsWith("https://")) {
+              Log.d(TAG, "Downloading PDF from URL: $uri")
               downloadPdf(uri, source["headers"] as? Map<String, String>)
             } else {
+              Log.d(TAG, "Loading PDF from local file: $uri")
               File(uri)
             }
           }
           source.containsKey("path") -> {
-            File(source["path"] as String)
+            val path = source["path"] as String
+            Log.d(TAG, "Loading PDF from path: $path")
+            File(path)
           }
           source.containsKey("base64") -> {
-            val base64 = source["base64"] as? String ?: return@launch
+            val base64 = source["base64"] as? String ?: run {
+              Log.e(TAG, "Base64 is null or not a string")
+              withContext(Dispatchers.Main) {
+                onError(mapOf("error" to "Base64 is null or not a string"))
+              }
+              return@launch
+            }
+            Log.d(TAG, "Loading PDF from base64 (length: ${base64.length})")
             val bytes = Base64.decode(base64, Base64.DEFAULT)
             val tempFile = File.createTempFile("pdf", ".pdf", context.cacheDir)
             FileOutputStream(tempFile).use { it.write(bytes) }
             tempFile
           }
           else -> {
-            onError(mapOf("error" to "Invalid source"))
+            Log.e(TAG, "Invalid source - no uri, path, or base64 found")
+            withContext(Dispatchers.Main) {
+              onError(mapOf("error" to "Invalid source"))
+            }
             return@launch
           }
         }
 
-        if (file == null || !file.exists()) {
-          onError(mapOf("error" to "PDF file not found"))
+        if (file == null) {
+          Log.e(TAG, "File is null after processing source")
+          withContext(Dispatchers.Main) {
+            onError(mapOf("error" to "Failed to get PDF file"))
+          }
           return@launch
         }
 
+        if (!file.exists()) {
+          Log.e(TAG, "PDF file does not exist: ${file.absolutePath}")
+          withContext(Dispatchers.Main) {
+            onError(mapOf("error" to "PDF file not found: ${file.absolutePath}"))
+          }
+          return@launch
+        }
+
+        Log.d(TAG, "PDF file exists, size: ${file.length()} bytes")
         renderPdf(file)
       } catch (e: Exception) {
-        onError(mapOf("error" to (e.message ?: "Unknown error")))
+        Log.e(TAG, "Error loading PDF", e)
+        withContext(Dispatchers.Main) {
+          onError(mapOf("error" to "${e.javaClass.simpleName}: ${e.message ?: "Unknown error"}"))
+        }
       }
     }
   }
 
   private suspend fun downloadPdf(urlString: String, headers: Map<String, String>?): File? = withContext(Dispatchers.IO) {
     try {
+      Log.d(TAG, "Starting download from: $urlString")
       val url = URL(urlString)
       val connection = url.openConnection()
       headers?.forEach { (key, value) ->
@@ -97,65 +156,104 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       }
 
       val tempFile = File.createTempFile("pdf", ".pdf", context.cacheDir)
+      Log.d(TAG, "Downloading to temp file: ${tempFile.absolutePath}")
+
+      var totalBytes = 0L
       connection.getInputStream().use { input ->
         FileOutputStream(tempFile).use { output ->
-          input.copyTo(output)
+          val buffer = ByteArray(8192)
+          var bytesRead: Int
+          while (input.read(buffer).also { bytesRead = it } != -1) {
+            output.write(buffer, 0, bytesRead)
+            totalBytes += bytesRead
+          }
         }
       }
+
+      Log.d(TAG, "Download complete: $totalBytes bytes written")
       tempFile
     } catch (e: Exception) {
+      Log.e(TAG, "Error downloading PDF", e)
+      withContext(Dispatchers.Main) {
+        onError(mapOf("error" to "Download failed: ${e.message}"))
+      }
       null
     }
   }
 
   private suspend fun renderPdf(file: File) = withContext(Dispatchers.Main) {
     try {
+      Log.d(TAG, "renderPdf called for: ${file.absolutePath}")
       closePdf()
 
+      Log.d(TAG, "Opening ParcelFileDescriptor")
       parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+
+      Log.d(TAG, "Creating PdfRenderer")
       pdfRenderer = PdfRenderer(parcelFileDescriptor!!)
 
       val pageCount = pdfRenderer?.pageCount ?: 0
+      Log.d(TAG, "PDF has $pageCount pages")
 
       onLoadComplete(mapOf(
         "numberOfPages" to pageCount,
         "path" to file.absolutePath
       ))
 
+      Log.d(TAG, "Starting to render pages")
       renderPages()
+      Log.d(TAG, "Finished rendering all pages")
     } catch (e: Exception) {
-      onError(mapOf("error" to "Failed to render PDF: ${e.message}"))
+      Log.e(TAG, "Error rendering PDF", e)
+      onError(mapOf("error" to "Failed to render PDF: ${e.javaClass.simpleName}: ${e.message}"))
     }
   }
 
   private fun renderPages() {
     contentLayout.removeAllViews()
 
-    val renderer = pdfRenderer ?: return
+    val renderer = pdfRenderer ?: run {
+      Log.e(TAG, "pdfRenderer is null in renderPages")
+      return
+    }
     val pageCount = renderer.pageCount
+    Log.d(TAG, "Rendering $pageCount pages")
 
     for (i in 0 until pageCount) {
+      Log.d(TAG, "Rendering page ${i + 1}/$pageCount")
       val page = renderer.openPage(i)
 
       // Create bitmap with appropriate size
+      val width = page.width * 2
+      val height = page.height * 2
+      Log.d(TAG, "Page ${i + 1} dimensions: ${page.width}x${page.height}, bitmap: ${width}x${height}")
+
       val bitmap = Bitmap.createBitmap(
-        page.width * 2,
-        page.height * 2,
+        width,
+        height,
         Bitmap.Config.ARGB_8888
       )
 
       page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
       page.close()
 
+      // Calculate the height needed to maintain aspect ratio within the view width
+      val viewWidth = this.width
+      val aspectRatio = height.toFloat() / width.toFloat()
+      val calculatedHeight = (viewWidth * aspectRatio).toInt()
+
+      Log.d(TAG, "ImageView will be sized: width=MATCH_PARENT($viewWidth), height=$calculatedHeight")
+
       val imageView = ImageView(context).apply {
         setImageBitmap(bitmap)
         layoutParams = LinearLayout.LayoutParams(
           LinearLayout.LayoutParams.MATCH_PARENT,
-          LinearLayout.LayoutParams.WRAP_CONTENT
+          calculatedHeight
         ).apply {
           setMargins(0, pageSpacing, 0, pageSpacing)
         }
         scaleType = ImageView.ScaleType.FIT_CENTER
+        setBackgroundColor(android.graphics.Color.WHITE)
 
         // Add tap gesture
         val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
@@ -171,8 +269,37 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         }
       }
 
+      Log.d(TAG, "ImageView created with bitmap size: ${bitmap.width}x${bitmap.height}")
+
       contentLayout.addView(imageView)
+      Log.d(TAG, "Added ImageView for page ${i + 1} to contentLayout")
+      Log.d(TAG, "ImageView parent: ${imageView.parent}, visibility: ${imageView.visibility}")
+      Log.d(TAG, "ImageView layoutParams: ${imageView.layoutParams.width}x${imageView.layoutParams.height}")
     }
+
+    // Force a simple test view to verify contentLayout is working
+    val testView = View(context).apply {
+      layoutParams = LinearLayout.LayoutParams(200, 200)
+      setBackgroundColor(android.graphics.Color.GREEN)
+    }
+    contentLayout.addView(testView)
+    Log.d(TAG, "Added green test view")
+
+    Log.d(TAG, "contentLayout now has ${contentLayout.childCount} children")
+    Log.d(TAG, "View dimensions - this: ${width}x${height}, scrollView: ${scrollView.width}x${scrollView.height}")
+    Log.d(TAG, "contentLayout dimensions before requestLayout: ${contentLayout.left},${contentLayout.top}-${contentLayout.right},${contentLayout.bottom}")
+
+    // Force measure and layout
+    val widthSpec = View.MeasureSpec.makeMeasureSpec(scrollView.width, View.MeasureSpec.EXACTLY)
+    val heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    contentLayout.measure(widthSpec, heightSpec)
+    contentLayout.layout(0, 0, contentLayout.measuredWidth, contentLayout.measuredHeight)
+
+    Log.d(TAG, "contentLayout measured size: ${contentLayout.measuredWidth}x${contentLayout.measuredHeight}")
+    Log.d(TAG, "contentLayout dimensions after layout: ${contentLayout.left},${contentLayout.top}-${contentLayout.right},${contentLayout.bottom}")
+
+    scrollView.requestLayout()
+    invalidate()
   }
 
   fun setPage(pageNumber: Int) {

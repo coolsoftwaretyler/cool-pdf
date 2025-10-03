@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CoolPdfView } from 'cool-pdf';
-import { Button, SafeAreaView, ScrollView, Text, View, StyleSheet } from 'react-native';
+import { Button, ScrollView, Text, View, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
