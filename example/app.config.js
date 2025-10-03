@@ -1,0 +1,37 @@
+export default {
+  expo: {
+    name: 'cool-pdf-example',
+    slug: 'cool-pdf-example',
+    version: '1.0.0',
+    orientation: 'portrait',
+    icon: './assets/icon.png',
+    userInterfaceStyle: 'light',
+    newArchEnabled: true,
+    splash: {
+      image: './assets/splash-icon.png',
+      resizeMode: 'contain',
+      backgroundColor: '#ffffff',
+    },
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: 'expo.modules.coolpdf.example',
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: './assets/adaptive-icon.png',
+        backgroundColor: '#ffffff',
+      },
+      edgeToEdgeEnabled: true,
+      predictiveBackGestureEnabled: false,
+      package: 'expo.modules.coolpdf.example',
+      permissions: ['android.permission.INTERNET'],
+    },
+    web: {
+      favicon: './assets/favicon.png',
+    },
+    plugins: [
+      '@config-plugins/react-native-blob-util',
+      '@config-plugins/react-native-pdf',
+    ],
+  },
+};
