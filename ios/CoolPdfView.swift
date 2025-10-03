@@ -13,6 +13,7 @@ class CoolPdfView: ExpoView {
 
   private var currentPage: Int = 0
   private var gestureRecognizer: UITapGestureRecognizer?
+  private var isInitialLoad: Bool = false
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -51,6 +52,12 @@ class CoolPdfView: ExpoView {
   }
 
   @objc private func handlePageChanged(_ notification: Notification) {
+    // Suppress automatic page change notifications during initial load
+    // We'll fire it manually after onLoadComplete
+    if isInitialLoad {
+      return
+    }
+
     guard let currentPDFPage = pdfView.currentPage,
           let document = pdfView.document else {
       return
@@ -98,16 +105,19 @@ class CoolPdfView: ExpoView {
     }
 
     if let document = document {
+      // Suppress automatic pageChanged notification during initial load
+      isInitialLoad = true
       pdfView.document = document
       currentPage = 1
 
-      // Get dimensions from first page
+      // Get dimensions using rowSize (like react-native-pdf does)
+      // This returns the display size with layout transformations applied
       let dimensions: [String: Any]
       if let firstPage = document.page(at: 0) {
-        let bounds = firstPage.bounds(for: .mediaBox)
+        let pageSize = pdfView.rowSize(for: firstPage)
         dimensions = [
-          "width": Int(bounds.width),
-          "height": Int(bounds.height)
+          "width": pageSize.width,
+          "height": pageSize.height
         ]
       } else {
         dimensions = ["width": 0, "height": 0]
@@ -122,11 +132,15 @@ class CoolPdfView: ExpoView {
         "dimensions": dimensions,
         "tableContents": tableContents
       ])
-      // Fire onPageChanged for initial page
+
+      // Fire onPageChanged for initial page (after loadComplete)
       onPageChanged([
         "page": 1,
         "numberOfPages": document.pageCount
       ])
+
+      // Re-enable automatic page change notifications
+      isInitialLoad = false
     } else {
       onError([
         "error": "Failed to load PDF document"
@@ -156,16 +170,18 @@ class CoolPdfView: ExpoView {
     // If caching is enabled and file exists, use it
     if cache && FileManager.default.fileExists(atPath: cacheURL.path) {
       if let document = PDFDocument(url: cacheURL) {
+        // Suppress automatic pageChanged notification during initial load
+        self.isInitialLoad = true
         self.pdfView.document = document
         self.currentPage = 1
 
-        // Get dimensions from first page
+        // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
         if let firstPage = document.page(at: 0) {
-          let bounds = firstPage.bounds(for: .mediaBox)
+          let pageSize = self.pdfView.rowSize(for: firstPage)
           dimensions = [
-            "width": Int(bounds.width),
-            "height": Int(bounds.height)
+            "width": pageSize.width,
+            "height": pageSize.height
           ]
         } else {
           dimensions = ["width": 0, "height": 0]
@@ -180,10 +196,15 @@ class CoolPdfView: ExpoView {
           "dimensions": dimensions,
           "tableContents": tableContents
         ])
+
+        // Fire onPageChanged for initial page (after loadComplete)
         self.onPageChanged([
           "page": 1,
           "numberOfPages": document.pageCount
         ])
+
+        // Re-enable automatic page change notifications
+        self.isInitialLoad = false
         return
       }
     }
@@ -216,16 +237,18 @@ class CoolPdfView: ExpoView {
           try? data.write(to: cacheURL)
         }
 
+        // Suppress automatic pageChanged notification during initial load
+        self.isInitialLoad = true
         self.pdfView.document = document
         self.currentPage = 1
 
-        // Get dimensions from first page
+        // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
         if let firstPage = document.page(at: 0) {
-          let bounds = firstPage.bounds(for: .mediaBox)
+          let pageSize = self.pdfView.rowSize(for: firstPage)
           dimensions = [
-            "width": Int(bounds.width),
-            "height": Int(bounds.height)
+            "width": pageSize.width,
+            "height": pageSize.height
           ]
         } else {
           dimensions = ["width": 0, "height": 0]
@@ -240,11 +263,15 @@ class CoolPdfView: ExpoView {
           "dimensions": dimensions,
           "tableContents": tableContents
         ])
-        // Fire onPageChanged for initial page
+
+        // Fire onPageChanged for initial page (after loadComplete)
         self.onPageChanged([
           "page": 1,
           "numberOfPages": document.pageCount
         ])
+
+        // Re-enable automatic page change notifications
+        self.isInitialLoad = false
       }
     }.resume()
   }
