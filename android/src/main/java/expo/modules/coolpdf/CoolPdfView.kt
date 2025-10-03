@@ -194,6 +194,13 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         "path" to file.absolutePath
       ))
 
+      // Fire onPageChanged for initial page (page 1)
+      currentPage = 1
+      onPageChanged(mapOf(
+        "page" to 1,
+        "numberOfPages" to pageCount
+      ))
+
       Log.d(TAG, "Starting to render pages")
       renderPages()
       Log.d(TAG, "Finished rendering all pages")

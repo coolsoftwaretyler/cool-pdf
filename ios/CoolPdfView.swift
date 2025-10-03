@@ -101,6 +101,11 @@ class CoolPdfView: ExpoView {
         "numberOfPages": document.pageCount,
         "path": source["uri"] as? String ?? source["path"] as? String ?? ""
       ])
+      // Fire onPageChanged for initial page
+      onPageChanged([
+        "page": 1,
+        "numberOfPages": document.pageCount
+      ])
     } else {
       onError([
         "error": "Failed to load PDF document"
@@ -137,6 +142,11 @@ class CoolPdfView: ExpoView {
         self.onLoadComplete([
           "numberOfPages": document.pageCount,
           "path": url.absoluteString
+        ])
+        // Fire onPageChanged for initial page
+        self.onPageChanged([
+          "page": 1,
+          "numberOfPages": document.pageCount
         ])
       }
     }.resume()
