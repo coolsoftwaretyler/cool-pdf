@@ -23,6 +23,8 @@ import {
   CustomHeadersReactNativePdfScreen,
   Base64PdfRenderingCoolPdfScreen,
   Base64PdfRenderingReactNativePdfScreen,
+  RequireLocalPdfCoolPdfScreen,
+  RequireLocalPdfReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -64,6 +66,9 @@ type RootStackParamList = {
 
   Base64PdfRenderingCoolPdf: undefined;
   Base64PdfRenderingReactNativePdf: undefined;
+
+  RequireLocalPdfCoolPdf: undefined;
+  RequireLocalPdfReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -222,6 +227,17 @@ export default function App() {
             component={Base64PdfRenderingReactNativePdfScreen}
             options={{ title: "Base64 PDF Rendering (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="RequireLocalPdfCoolPdf"
+            component={RequireLocalPdfCoolPdfScreen}
+            options={{ title: "Require Local PDF (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="RequireLocalPdfReactNativePdf"
+            component={RequireLocalPdfReactNativePdfScreen}
+            options={{ title: "Require Local PDF (RN-PDF)" }}
+          />
+
 
 
 

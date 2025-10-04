@@ -15,6 +15,7 @@ import { RestrictedZoomScenario } from "./zoom/RestrictedZoomCoolPdfScreen";
 
 import { CustomHeadersScenario } from "./basic/CustomHeaders";
 import { Base64PdfRenderingScenario } from "./basic/Base64PdfRendering";
+import { RequireLocalPdfScenario } from "./basic/RequireLocalPdf";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -25,6 +26,7 @@ export {
   CustomHttpMethodScenario,
   CustomHeadersScenario,
   Base64PdfRenderingScenario,
+  RequireLocalPdfScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -58,6 +60,9 @@ export { default as CustomHeadersReactNativePdfScreen } from "./basic/CustomHead
 
 export { default as Base64PdfRenderingCoolPdfScreen } from "./basic/Base64PdfRenderingCoolPdfScreen";
 export { default as Base64PdfRenderingReactNativePdfScreen } from "./basic/Base64PdfRenderingReactNativePdfScreen";
+
+export { default as RequireLocalPdfCoolPdfScreen } from "./basic/RequireLocalPdfCoolPdfScreen";
+export { default as RequireLocalPdfReactNativePdfScreen } from "./basic/RequireLocalPdfReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -134,6 +139,12 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "Base64PdfRenderingCoolPdf",
     reactNativePdfScreen: "Base64PdfRenderingReactNativePdf",
   },
+  {
+    ...RequireLocalPdfScenario,
+    coolPdfScreen: "RequireLocalPdfCoolPdf",
+    reactNativePdfScreen: "RequireLocalPdfReactNativePdf",
+  },
+
   // Navigation
   {
     ...HorizontalScrollingScenario,

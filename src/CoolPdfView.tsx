@@ -1,5 +1,6 @@
 import { requireNativeView } from 'expo';
 import * as React from 'react';
+import { Image } from 'react-native';
 
 import { CoolPdfViewProps, PdfSource } from './CoolPdf.types';
 
@@ -14,7 +15,18 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
     // If source is a string or has a uri property, check for base64 data URI
     let transformedSource = source;
 
-    if (typeof source === 'object' && source.uri) {
+    // Handle require() by resolving asset source
+    if (typeof source === 'object' && source.uri && typeof source.uri === 'number') {
+      const resolved = Image.resolveAssetSource(source.uri);
+      if (resolved) {
+        transformedSource = {
+          ...source,
+          uri: resolved.uri,
+        };
+      }
+    }
+
+    if (typeof source === 'object' && source.uri && typeof source.uri === 'string') {
       const base64Match = source.uri.match(/^data:application\/pdf;base64,(.+)$/);
       if (base64Match) {
         // Extract base64 content and create new source object
