@@ -19,7 +19,12 @@
     "react-native",
     "expo",
     "cool-pdf",
-    "CoolPdf"
+    "CoolPdf",
+    "pdf",
+    "pdf-viewer",
+    "pdf-renderer",
+    "pdf-viewer-expo",
+    "react-native-pdf"
   ],
   "repository": "https://github.com/coolsoftwaretyler/cool-pdf",
   "bugs": {
