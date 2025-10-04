@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import Pdf from 'react-native-pdf';
-import { View, StyleSheet } from 'react-native';
-import { ScenarioEventLog, ScenarioEvent } from '../../../components/ScenarioEventLog';
-import { ScenarioHeader } from '../../../components/ScenarioHeader';
-import { BasicNoCacheScenario } from './BasicNoCacheCoolPdfScreen';
+import { useState } from "react";
+import Pdf from "react-native-pdf";
+import { View, StyleSheet } from "react-native";
+import {
+  ScenarioEventLog,
+  ScenarioEvent,
+} from "../../../components/ScenarioEventLog";
+import { ScenarioHeader } from "../../../components/ScenarioHeader";
+import { BasicNoCacheScenario } from "./BasicNoCache";
 
 export default function BasicNoCacheReactNativePdfScreen() {
   const [events, setEvents] = useState<ScenarioEvent[]>([]);
 
-  const addEvent = (type: ScenarioEvent['type'], data: any) => {
-    setEvents((prev) => [
-      ...prev,
-      { timestamp: Date.now(), type, data },
-    ]);
+  const addEvent = (type: ScenarioEvent["type"], data: any) => {
+    setEvents((prev) => [...prev, { timestamp: Date.now(), type, data }]);
   };
 
   return (
@@ -26,23 +26,27 @@ export default function BasicNoCacheReactNativePdfScreen() {
 
       <Pdf
         source={{
-          uri: 'https://craftinginterpreters.com/sample.pdf',
+          uri: "https://craftinginterpreters.com/sample.pdf",
           cache: false,
         }}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
-          addEvent('loadComplete', { numberOfPages, path, dimensions, tableContents });
+          addEvent("loadComplete", {
+            numberOfPages,
+            path,
+            dimensions,
+            tableContents,
+          });
         }}
         onPageChanged={(page, numberOfPages) => {
-          addEvent('pageChanged', { page, numberOfPages });
+          addEvent("pageChanged", { page, numberOfPages });
         }}
         onError={(error) => {
-          addEvent('error', { error });
+          addEvent("error", { error });
         }}
         onPageSingleTap={(page) => {
-          addEvent('pageSingleTap', { page });
+          addEvent("pageSingleTap", { page });
         }}
         style={styles.pdf}
-        trustAllCerts={false}
       />
 
       <ScenarioEventLog events={events} accentColor="#34c759" />
@@ -53,11 +57,11 @@ export default function BasicNoCacheReactNativePdfScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   pdf: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     margin: 16,
     borderRadius: 8,
   },

@@ -1,25 +1,17 @@
-import { useState } from 'react';
-import { CoolPdfView } from 'cool-pdf';
-import { View, StyleSheet } from 'react-native';
-import { ScenarioEventLog, ScenarioEvent } from '../../../components/ScenarioEventLog';
-import { ScenarioHeader } from '../../../components/ScenarioHeader';
-
-export const BasicNoCacheScenario = {
-  id: 'basic-no-cache',
-  name: 'Load PDF without Cache',
-  description: 'Load a PDF from URL without caching',
-  category: 'basic' as const,
-  expectedBehavior: 'PDF should load fresh from URL each time',
-};
-
+import { useState } from "react";
+import { CoolPdfView } from "cool-pdf";
+import { View, StyleSheet } from "react-native";
+import {
+  ScenarioEventLog,
+  ScenarioEvent,
+} from "../../../components/ScenarioEventLog";
+import { ScenarioHeader } from "../../../components/ScenarioHeader";
+import { BasicNoCacheScenario } from "./BasicNoCache";
 export default function BasicNoCacheCoolPdfScreen() {
   const [events, setEvents] = useState<ScenarioEvent[]>([]);
 
-  const addEvent = (type: ScenarioEvent['type'], data: any) => {
-    setEvents((prev) => [
-      ...prev,
-      { timestamp: Date.now(), type, data },
-    ]);
+  const addEvent = (type: ScenarioEvent["type"], data: any) => {
+    setEvents((prev) => [...prev, { timestamp: Date.now(), type, data }]);
   };
 
   return (
@@ -33,21 +25,30 @@ export default function BasicNoCacheCoolPdfScreen() {
 
       <CoolPdfView
         source={{
-          uri: 'https://craftinginterpreters.com/sample.pdf',
+          uri: "https://craftinginterpreters.com/sample.pdf",
           cache: false,
         }}
         onLoadComplete={(event) => {
-          const { numberOfPages, path, dimensions, tableContents } = event.nativeEvent;
-          addEvent('loadComplete', { numberOfPages, path, dimensions, tableContents });
+          const { numberOfPages, path, dimensions, tableContents } =
+            event.nativeEvent;
+          addEvent("loadComplete", {
+            numberOfPages,
+            path,
+            dimensions,
+            tableContents,
+          });
         }}
         onPageChanged={(event) => {
-          addEvent('pageChanged', event.nativeEvent);
+          const { page, numberOfPages } = event.nativeEvent;
+          addEvent("pageChanged", { page, numberOfPages });
         }}
         onError={(event) => {
-          addEvent('error', event.nativeEvent);
+          const { error } = event.nativeEvent;
+          addEvent("error", { error });
         }}
         onPageSingleTap={(event) => {
-          addEvent('pageSingleTap', event.nativeEvent);
+          const { page } = event.nativeEvent;
+          addEvent("pageSingleTap", { page });
         }}
         style={styles.pdf}
       />
@@ -60,11 +61,11 @@ export default function BasicNoCacheCoolPdfScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   pdf: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     margin: 16,
     borderRadius: 8,
   },
