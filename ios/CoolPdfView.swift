@@ -84,19 +84,31 @@ class CoolPdfView: ExpoView {
     var document: PDFDocument?
 
     if let uri = source["uri"] as? String {
-      if let url = URL(string: uri) {
-        // Handle remote URL
-        if uri.hasPrefix("http://") || uri.hasPrefix("https://") {
+      // Handle bundle-assets:// URIs
+      if uri.hasPrefix("bundle-assets://") {
+        if let bundleURL = resolveAssetPath(uri) {
+          document = PDFDocument(url: bundleURL)
+        } else {
+          onError([
+            "error": "Asset not found in bundle: \(uri)"
+          ])
+          return
+        }
+      }
+      // Handle remote URLs
+      else if uri.hasPrefix("http://") || uri.hasPrefix("https://") {
+        if let url = URL(string: uri) {
           let cache = source["cache"] as? Bool ?? false
           let cacheFileName = source["cacheFileName"] as? String
           let expiration = source["expiration"] as? Int
           let method = source["method"] as? String ?? "GET"
           loadRemotePdf(from: url, headers: source["headers"] as? [String: String], method: method, cache: cache, cacheFileName: cacheFileName, expiration: expiration)
           return
-        } else {
-          // Handle file URL
-          document = PDFDocument(url: url)
         }
+      }
+      // Handle other file URLs
+      else if let url = URL(string: uri) {
+        document = PDFDocument(url: url)
       }
     } else if let path = source["path"] as? String {
       let url = URL(fileURLWithPath: path)
@@ -336,6 +348,19 @@ class CoolPdfView: ExpoView {
       bottom: CGFloat(spacing),
       right: CGFloat(spacing)
     )
+  }
+
+  private func resolveAssetPath(_ uri: String) -> URL? {
+    // Strip bundle-assets:// prefix
+    let assetPath = uri.replacingOccurrences(of: "bundle-assets://", with: "")
+
+    // Split into filename and extension
+    let pathURL = URL(fileURLWithPath: assetPath)
+    let fileName = pathURL.deletingPathExtension().lastPathComponent
+    let fileExtension = pathURL.pathExtension
+
+    // Use Bundle.main to locate the resource
+    return Bundle.main.url(forResource: fileName, withExtension: fileExtension)
   }
 
   private func extractTableOfContents(from document: PDFDocument) -> [[String: Any]] {
