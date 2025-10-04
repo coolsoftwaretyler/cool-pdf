@@ -1,22 +1,13 @@
 import { useState } from "react";
 import { CoolPdfView } from "cool-pdf";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   ScenarioEventLog,
   ScenarioEvent,
 } from "../../../components/ScenarioEventLog";
 import { ScenarioHeader } from "../../../components/ScenarioHeader";
 import { CustomHeadersScenario } from "./CustomHeaders";
-
-// Helper to get the correct localhost URL for the platform
-const getLocalServerUrl = () => {
-  if (Platform.OS === 'android') {
-    // Android emulator uses special alias to host machine
-    return 'http://10.0.2.2:3000/sample.pdf';
-  }
-  // iOS simulator and web can use localhost
-  return 'http://localhost:3000/sample.pdf';
-};
+import { getLocalServerUrl } from "../../../utils/getLocalServerUrl";
 
 export default function CustomHeadersCoolPdfScreen() {
   const [events, setEvents] = useState<ScenarioEvent[]>([]);
