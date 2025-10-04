@@ -21,6 +21,8 @@ import {
   CustomHttpMethodReactNativePdfScreen,
   CustomHeadersCoolPdfScreen,
   CustomHeadersReactNativePdfScreen,
+  Base64PdfRenderingCoolPdfScreen,
+  Base64PdfRenderingReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -59,6 +61,9 @@ type RootStackParamList = {
   CustomHttpMethodReactNativePdf: undefined;
   CustomHeadersCoolPdf: undefined;
   CustomHeadersReactNativePdf: undefined;
+
+  Base64PdfRenderingCoolPdf: undefined;
+  Base64PdfRenderingReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -207,6 +212,17 @@ export default function App() {
             component={CustomHeadersReactNativePdfScreen}
             options={{ title: "Custom Headers (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="Base64PdfRenderingCoolPdf"
+            component={Base64PdfRenderingCoolPdfScreen}
+            options={{ title: "Base64 PDF Rendering (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="Base64PdfRenderingReactNativePdf"
+            component={Base64PdfRenderingReactNativePdfScreen}
+            options={{ title: "Base64 PDF Rendering (RN-PDF)" }}
+          />
+
 
 
           {/* Navigation scenarios */}
