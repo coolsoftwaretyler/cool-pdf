@@ -1,9 +1,9 @@
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { allScenarios, categoryLabels } from '../scenarios';
-import type { PdfScenario } from '../scenarios';
+import { allScenarios, categoryLabels } from './scenarios';
+import type { ScenarioMetadata } from './scenarios';
 
 export default function ScenarioListScreen({ navigation }: any) {
-  const renderScenario = ({ item }: { item: PdfScenario }) => (
+  const renderScenario = ({ item }: { item: ScenarioMetadata }) => (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.scenarioName}>{item.name}</Text>
@@ -21,17 +21,13 @@ export default function ScenarioListScreen({ navigation }: any) {
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={[styles.button, styles.coolPdfButton]}
-          onPress={() =>
-            navigation.navigate('CoolPdfScenario', { scenario: item })
-          }
+          onPress={() => navigation.navigate(item.coolPdfScreen)}
         >
           <Text style={styles.buttonText}>View in CoolPDF</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.reactNativePdfButton]}
-          onPress={() =>
-            navigation.navigate('ReactNativePdfScenario', { scenario: item })
-          }
+          onPress={() => navigation.navigate(item.reactNativePdfScreen)}
         >
           <Text style={styles.buttonText}>View in react-native-pdf</Text>
         </TouchableOpacity>
