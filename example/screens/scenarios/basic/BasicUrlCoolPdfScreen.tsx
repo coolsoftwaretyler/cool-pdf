@@ -33,7 +33,7 @@ export default function BasicUrlCoolPdfScreen() {
 
       <CoolPdfView
         source={{
-          uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+          uri: 'https://craftinginterpreters.com/sample.pdf',
           cache: true,
         }}
         onLoadComplete={(event) => {

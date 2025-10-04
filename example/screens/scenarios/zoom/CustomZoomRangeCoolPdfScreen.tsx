@@ -33,7 +33,7 @@ export default function CustomZoomRangeCoolPdfScreen() {
 
       <CoolPdfView
         source={{
-          uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+          uri: 'https://craftinginterpreters.com/sample.pdf',
           cache: true,
         }}
         minScale={0.5}

@@ -26,7 +26,7 @@ export default function PageSnappingReactNativePdfScreen() {
 
       <Pdf
         source={{
-          uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+          uri: 'https://craftinginterpreters.com/sample.pdf',
           cache: true,
         }}
         enablePaging={true}
