@@ -28,7 +28,6 @@ export default function CustomHttpMethodCoolPdfScreen() {
         source={{
           uri: "https://craftinginterpreters.com/sample.pdf",
           method: "POST",
-          cache: true,
         }}
         onLoadComplete={(event) => {
           const { numberOfPages, path, dimensions, tableContents } =

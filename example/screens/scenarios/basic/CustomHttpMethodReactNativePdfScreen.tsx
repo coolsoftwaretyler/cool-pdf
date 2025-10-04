@@ -28,7 +28,6 @@ export default function CustomHttpMethodReactNativePdfScreen() {
         source={{
           uri: "https://craftinginterpreters.com/sample.pdf",
           method: "POST",
-          cache: true,
         }}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
           addEvent("loadComplete", {
