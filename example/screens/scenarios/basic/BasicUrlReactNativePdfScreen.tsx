@@ -42,7 +42,6 @@ export default function BasicUrlReactNativePdfScreen() {
           addEvent('pageSingleTap', { page });
         }}
         style={styles.pdf}
-        trustAllCerts={false}
       />
 
       <ScenarioEventLog events={events} accentColor="#34c759" />
