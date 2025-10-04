@@ -4,6 +4,7 @@ import { BasicNoCacheScenario } from "./basic/BasicNoCache";
 import { BasicCacheFileNameScenario } from "./basic/BasicCacheFileName";
 import { BasicCacheExpirationScenario } from "./basic/BasicCacheExpiration";
 import { BasicPasswordScenario } from "./basic/BasicPasswordCoolPdfScreen";
+import { CustomHttpMethodScenario } from "./basic/CustomHttpMethod";
 import { HorizontalScrollingScenario } from "./navigation/HorizontalScrollingCoolPdfScreen";
 import { PageSnappingScenario } from "./navigation/PageSnappingCoolPdfScreen";
 import { HorizontalWithPagingScenario } from "./navigation/HorizontalWithPagingCoolPdfScreen";
@@ -19,6 +20,7 @@ export {
   BasicCacheFileNameScenario,
   BasicCacheExpirationScenario,
   BasicPasswordScenario,
+  CustomHttpMethodScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -43,6 +45,9 @@ export { default as BasicCacheExpirationReactNativePdfScreen } from "./basic/Bas
 
 export { default as BasicPasswordCoolPdfScreen } from "./basic/BasicPasswordCoolPdfScreen";
 export { default as BasicPasswordReactNativePdfScreen } from "./basic/BasicPasswordReactNativePdfScreen";
+
+export { default as CustomHttpMethodCoolPdfScreen } from "./basic/CustomHttpMethodCoolPdfScreen";
+export { default as CustomHttpMethodReactNativePdfScreen } from "./basic/CustomHttpMethodReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -108,6 +113,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...BasicPasswordScenario,
     coolPdfScreen: "BasicPasswordCoolPdf",
     reactNativePdfScreen: "BasicPasswordReactNativePdf",
+  },
+  {
+    ...CustomHttpMethodScenario,
+    coolPdfScreen: "CustomHttpMethodCoolPdf",
+    reactNativePdfScreen: "CustomHttpMethodReactNativePdf",
   },
   // Navigation
   {

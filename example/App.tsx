@@ -17,6 +17,8 @@ import {
   BasicCacheExpirationReactNativePdfScreen,
   BasicPasswordCoolPdfScreen,
   BasicPasswordReactNativePdfScreen,
+  CustomHttpMethodCoolPdfScreen,
+  CustomHttpMethodReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -51,6 +53,8 @@ type RootStackParamList = {
   BasicNoCacheReactNativePdf: undefined;
   BasicPasswordCoolPdf: undefined;
   BasicPasswordReactNativePdf: undefined;
+  CustomHttpMethodCoolPdf: undefined;
+  CustomHttpMethodReactNativePdf: undefined;
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
   HorizontalScrollingReactNativePdf: undefined;
@@ -177,6 +181,16 @@ export default function App() {
             name="BasicPasswordReactNativePdf"
             component={BasicPasswordReactNativePdfScreen}
             options={{ title: "Password Protected (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="CustomHttpMethodCoolPdf"
+            component={CustomHttpMethodCoolPdfScreen}
+            options={{ title: "Custom HTTP Method (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="CustomHttpMethodReactNativePdf"
+            component={CustomHttpMethodReactNativePdfScreen}
+            options={{ title: "Custom HTTP Method (RN-PDF)" }}
           />
 
           {/* Navigation scenarios */}
