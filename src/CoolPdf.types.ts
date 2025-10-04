@@ -8,6 +8,7 @@ export type PdfSource = {
   cache?: boolean;
   cacheFileName?: string;
   expiration?: number;
+  method?: string | undefined;
 };
 
 export type TableContentItem = {
