@@ -25,13 +25,7 @@ Start up Android or iOS
 ```tsx
 import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
-<CoolPdfView
-  source={{ uri: url }}
-  style={themed($pdf)}
-  onLoadComplete={() => {
-    console.log("PDF loaded complete");
-  }}
-/>;
+<CoolPdfView source={{ uri: url }} />;
 ```
 
 ### Props Compatibility with react-native-pdf
