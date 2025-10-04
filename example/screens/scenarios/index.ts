@@ -1,6 +1,7 @@
 // Import scenario metadata
 import { BasicWithCacheScenario } from "./basic/BasicWithCache";
 import { BasicNoCacheScenario } from "./basic/BasicNoCache";
+import { BasicCacheFileNameScenario } from "./basic/BasicCacheFileName";
 import { BasicPasswordScenario } from "./basic/BasicPasswordCoolPdfScreen";
 import { HorizontalScrollingScenario } from "./navigation/HorizontalScrollingCoolPdfScreen";
 import { PageSnappingScenario } from "./navigation/PageSnappingCoolPdfScreen";
@@ -11,7 +12,12 @@ import { CustomZoomRangeScenario } from "./zoom/CustomZoomRangeCoolPdfScreen";
 import { RestrictedZoomScenario } from "./zoom/RestrictedZoomCoolPdfScreen";
 
 // Re-export scenario metadata
-export { BasicWithCacheScenario, BasicNoCacheScenario, BasicPasswordScenario };
+export {
+  BasicWithCacheScenario,
+  BasicNoCacheScenario,
+  BasicCacheFileNameScenario,
+  BasicPasswordScenario,
+};
 export {
   HorizontalScrollingScenario,
   PageSnappingScenario,
@@ -26,6 +32,9 @@ export { default as BasicWithCacheReactNativePdfScreen } from "./basic/BasicWith
 
 export { default as BasicNoCacheCoolPdfScreen } from "./basic/BasicNoCacheCoolPdfScreen";
 export { default as BasicNoCacheReactNativePdfScreen } from "./basic/BasicNoCacheReactNativePdfScreen";
+
+export { default as BasicCacheFileNameCoolPdfScreen } from "./basic/BasicCacheFileNameCoolPdfScreen";
+export { default as BasicCacheFileNameReactNativePdfScreen } from "./basic/BasicCacheFileNameReactNativePdfScreen";
 
 export { default as BasicPasswordCoolPdfScreen } from "./basic/BasicPasswordCoolPdfScreen";
 export { default as BasicPasswordReactNativePdfScreen } from "./basic/BasicPasswordReactNativePdfScreen";
@@ -79,6 +88,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...BasicWithCacheScenario,
     coolPdfScreen: "BasicWithCacheCoolPdf",
     reactNativePdfScreen: "BasicWithCacheReactNativePdf",
+  },
+  {
+    ...BasicCacheFileNameScenario,
+    coolPdfScreen: "BasicCacheFileNameCoolPdf",
+    reactNativePdfScreen: "BasicCacheFileNameReactNativePdf",
   },
   {
     ...BasicPasswordScenario,
