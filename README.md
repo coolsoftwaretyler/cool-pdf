@@ -70,7 +70,7 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 | cache         | use cache or not                              | false            | ✔  | ✔      | ✔        |
 | cacheFileName | specific file name for cached pdf file        | SHA1(uri) result | ✔  | ✔      | ✔        |
 | expiration    | cache file expired seconds (0 is not expired) | 0                | ✔  | ✔      | ✔        |
-| method        | request method when uri is a url              | "GET"            | ✔  | ✔      | ✖        |
+| method        | request method when uri is a url              | "GET"            | ✔  | ✔      | ✔        |
 | headers       | request headers when uri is a url             | {}               | ✔  | ✔      | ✖        |
 
 #### types of source.uri

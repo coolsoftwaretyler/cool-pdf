@@ -90,7 +90,8 @@ class CoolPdfView: ExpoView {
           let cache = source["cache"] as? Bool ?? false
           let cacheFileName = source["cacheFileName"] as? String
           let expiration = source["expiration"] as? Int
-          loadRemotePdf(from: url, headers: source["headers"] as? [String: String], cache: cache, cacheFileName: cacheFileName, expiration: expiration)
+          let method = source["method"] as? String ?? "GET"
+          loadRemotePdf(from: url, headers: source["headers"] as? [String: String], method: method, cache: cache, cacheFileName: cacheFileName, expiration: expiration)
           return
         } else {
           // Handle file URL
@@ -149,7 +150,7 @@ class CoolPdfView: ExpoView {
     }
   }
 
-  private func loadRemotePdf(from url: URL, headers: [String: String]?, cache: Bool, cacheFileName: String?, expiration: Int?) {
+  private func loadRemotePdf(from url: URL, headers: [String: String]?, method: String, cache: Bool, cacheFileName: String?, expiration: Int?) {
     // Determine cache file name
     let fileName: String
     if let customFileName = cacheFileName {
@@ -231,6 +232,7 @@ class CoolPdfView: ExpoView {
     }
 
     var request = URLRequest(url: url)
+    request.httpMethod = method
     headers?.forEach { key, value in
       request.setValue(value, forHTTPHeaderField: key)
     }

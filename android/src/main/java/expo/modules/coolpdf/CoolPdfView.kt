@@ -15,6 +15,7 @@ import expo.modules.kotlin.views.ExpoView
 import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
 import java.net.URL
 
 class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
@@ -65,7 +66,8 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
               val cache = source["cache"] as? Boolean ?: false
               val cacheFileName = source["cacheFileName"] as? String
               val expiration = (source["expiration"] as? Double)?.toInt()
-              downloadPdf(uri, source["headers"] as? Map<String, String>, cache, cacheFileName, expiration)
+              val method = source["method"] as? String ?: "GET"
+              downloadPdf(uri, source["headers"] as? Map<String, String>, method, cache, cacheFileName, expiration)
             } else {
               Log.d(TAG, "Loading PDF from local file: $uri")
               File(uri)
@@ -131,6 +133,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private suspend fun downloadPdf(
     urlString: String,
     headers: Map<String, String>?,
+    method: String,
     cache: Boolean,
     cacheFileName: String?,
     expiration: Int?
@@ -168,9 +171,10 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         }
       }
 
-      Log.d(TAG, "Starting download from: $urlString")
+      Log.d(TAG, "Starting download from: $urlString with method: $method")
       val url = URL(urlString)
-      val connection = url.openConnection()
+      val connection = url.openConnection() as HttpURLConnection
+      connection.requestMethod = method
       headers?.forEach { (key, value) ->
         connection.setRequestProperty(key, value)
       }
