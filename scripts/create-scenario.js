@@ -207,11 +207,16 @@ function updateIndexFile(scenarioName, category) {
   const exportMatch = content.match(categoryExportMap[category]);
   if (exportMatch) {
     const exportBlock = exportMatch[0];
-    const updatedExportBlock = exportBlock.replace(
-      /\};/,
-      `,\n  ${pascalName}Scenario,\n};`
-    );
-    content = content.replace(exportBlock, updatedExportBlock);
+    // Find the last line before the closing brace
+    const lines = exportBlock.split('\n');
+    const closingBraceIndex = lines.findIndex(line => line.trim() === '};');
+
+    if (closingBraceIndex > 0) {
+      // Insert the new scenario before the closing brace
+      lines.splice(closingBraceIndex, 0, `  ${pascalName}Scenario,`);
+      const updatedExportBlock = lines.join('\n');
+      content = content.replace(exportBlock, updatedExportBlock);
+    }
   }
 
   // Add screen exports
