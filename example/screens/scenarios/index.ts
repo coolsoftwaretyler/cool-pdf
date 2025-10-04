@@ -13,6 +13,7 @@ import { InitialZoomScenario } from "./zoom/InitialZoomCoolPdfScreen";
 import { CustomZoomRangeScenario } from "./zoom/CustomZoomRangeCoolPdfScreen";
 import { RestrictedZoomScenario } from "./zoom/RestrictedZoomCoolPdfScreen";
 
+import { CustomHeadersScenario } from "./basic/CustomHeaders";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -21,6 +22,7 @@ export {
   BasicCacheExpirationScenario,
   BasicPasswordScenario,
   CustomHttpMethodScenario,
+  CustomHeadersScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -48,6 +50,9 @@ export { default as BasicPasswordReactNativePdfScreen } from "./basic/BasicPassw
 
 export { default as CustomHttpMethodCoolPdfScreen } from "./basic/CustomHttpMethodCoolPdfScreen";
 export { default as CustomHttpMethodReactNativePdfScreen } from "./basic/CustomHttpMethodReactNativePdfScreen";
+
+export { default as CustomHeadersCoolPdfScreen } from "./basic/CustomHeadersCoolPdfScreen";
+export { default as CustomHeadersReactNativePdfScreen } from "./basic/CustomHeadersReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -113,6 +118,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...CustomHttpMethodScenario,
     coolPdfScreen: "CustomHttpMethodCoolPdf",
     reactNativePdfScreen: "CustomHttpMethodReactNativePdf",
+  },
+  {
+    ...CustomHeadersScenario,
+    coolPdfScreen: "CustomHeadersCoolPdf",
+    reactNativePdfScreen: "CustomHeadersReactNativePdf",
   },
   {
     ...BasicPasswordScenario,
