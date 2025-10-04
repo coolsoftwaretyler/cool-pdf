@@ -1,15 +1,14 @@
 package expo.modules.coolpdf
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.pdf.PdfRenderer
-import android.os.ParcelFileDescriptor
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
-import android.widget.ImageView
-import android.widget.ScrollView
-import android.widget.LinearLayout
+import android.util.Base64
+import android.util.Log
+import com.github.barteksc.pdfviewer.PDFView
+import com.github.barteksc.pdfviewer.listener.OnErrorListener
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
+import com.github.barteksc.pdfviewer.listener.OnTapListener
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
 import expo.modules.kotlin.views.ExpoView
@@ -17,8 +16,6 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
-import android.util.Base64
-import android.util.Log
 
 class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
   private val onLoadComplete by EventDispatcher()
@@ -26,41 +23,27 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private val onError by EventDispatcher()
   private val onPageSingleTap by EventDispatcher()
 
-  private var pdfRenderer: PdfRenderer? = null
-  private var currentPage: Int = 0
-  private var parcelFileDescriptor: ParcelFileDescriptor? = null
   private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+  private var currentPage: Int = 0
+  private var totalPages: Int = 0
 
   companion object {
     private const val TAG = "CoolPdfView"
   }
 
-  private val scrollView = ScrollView(context).apply {
+  private val pdfView = PDFView(context, null).apply {
     layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-  }
-
-  private val contentLayout = LinearLayout(context).apply {
-    layoutParams = LinearLayout.LayoutParams(
-      LinearLayout.LayoutParams.MATCH_PARENT,
-      LinearLayout.LayoutParams.WRAP_CONTENT
-    )
-    orientation = LinearLayout.VERTICAL
   }
 
   private var enablePaging: Boolean = false
   private var horizontal: Boolean = false
   private var pageSpacing: Int = 10
+  private var minScale: Float = 1.0f
+  private var maxScale: Float = 3.0f
+  private var scale: Float = 1.0f
 
   init {
-    scrollView.addView(contentLayout)
-    addView(scrollView)
-  }
-
-  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-    super.onLayout(changed, left, top, right, bottom)
-    Log.d(TAG, "onLayout: changed=$changed, bounds=($left,$top,$right,$bottom), size=${right-left}x${bottom-top}")
-    Log.d(TAG, "scrollView size: ${scrollView.width}x${scrollView.height}, visibility: ${scrollView.visibility}")
-    Log.d(TAG, "contentLayout size: ${contentLayout.width}x${contentLayout.height}, childCount: ${contentLayout.childCount}")
+    addView(pdfView)
   }
 
   fun loadPdf(source: Map<String, Any?>) {
@@ -132,7 +115,9 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         }
 
         Log.d(TAG, "PDF file exists, size: ${file.length()} bytes")
-        renderPdf(file)
+        withContext(Dispatchers.Main) {
+          renderPdf(file)
+        }
       } catch (e: Exception) {
         Log.e(TAG, "Error loading PDF", e)
         withContext(Dispatchers.Main) {
@@ -198,192 +183,153 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     }
   }
 
-  private suspend fun renderPdf(file: File) = withContext(Dispatchers.Main) {
+  private fun renderPdf(file: File) {
     try {
       Log.d(TAG, "renderPdf called for: ${file.absolutePath}")
-      closePdf()
 
-      Log.d(TAG, "Opening ParcelFileDescriptor")
-      parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+      val configurator = pdfView.fromFile(file)
+        .enableAntialiasing(true)
+        .enableAnnotationRendering(true)
+        .spacing(pageSpacing)
+        .swipeHorizontal(horizontal)
+        .pageFitPolicy(com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH)
+        .enableDoubletap(true)
+        .defaultPage(0)
+        .onLoad(OnLoadCompleteListener { nbPages ->
+          totalPages = nbPages
+          Log.d(TAG, "PDF loaded with $nbPages pages")
 
-      Log.d(TAG, "Creating PdfRenderer")
-      pdfRenderer = PdfRenderer(parcelFileDescriptor!!)
+          // Get display density for scaling dimensions (to match react-native-pdf behavior)
+          // AndroidPdfViewer (used by RNPDF) scales using a specific formula
+          // Formula appears to be: densityDpi / 274 (empirically determined)
+          val densityDpi = context.resources.displayMetrics.densityDpi
+          val scaleFactor = densityDpi / 274f
+          Log.d(TAG, "Display densityDpi: $densityDpi, scaleFactor: $scaleFactor")
 
-      val pageCount = pdfRenderer?.pageCount ?: 0
-      Log.d(TAG, "PDF has $pageCount pages")
+          // Get dimensions from first page
+          val dimensions = if (nbPages > 0) {
+            // AndroidPdfViewer provides page size in points (1/72 inch)
+            // We need to scale it similar to how react-native-pdf does
+            val pageSize = pdfView.getPageSize(0)
+            if (pageSize != null) {
+              mapOf(
+                "width" to (pageSize.width * scaleFactor).toInt(),
+                "height" to (pageSize.height * scaleFactor).toInt()
+              )
+            } else {
+              mapOf("width" to 0, "height" to 0)
+            }
+          } else {
+            mapOf("width" to 0, "height" to 0)
+          }
 
-      // Get display density for scaling dimensions (to match react-native-pdf behavior)
-      // AndroidPdfViewer (used by RNPDF) scales using a specific formula rather than raw density
-      // Formula appears to be: densityDpi / 274 (empirically determined)
-      val densityDpi = context.resources.displayMetrics.densityDpi
-      val scaleFactor = densityDpi / 274f
-      Log.d(TAG, "Display densityDpi: $densityDpi, scaleFactor: $scaleFactor")
+          Log.d(TAG, "Dimensions: $dimensions")
 
-      // Get dimensions from first page, scaled to match RNPDF
-      val dimensions = if (pageCount > 0) {
-        val firstPage = pdfRenderer!!.openPage(0)
-        val dims = mapOf(
-          "width" to (firstPage.width * scaleFactor).toInt(),
-          "height" to (firstPage.height * scaleFactor).toInt()
-        )
-        Log.d(TAG, "Raw page dimensions: ${firstPage.width} x ${firstPage.height}, scaled: ${dims["width"]} x ${dims["height"]}")
-        firstPage.close()
-        dims
-      } else {
-        mapOf("width" to 0, "height" to 0)
+          // Note: Android's PdfRenderer doesn't provide access to table of contents/bookmarks
+          // AndroidPdfViewer might provide this, but for now sending empty array to match react-native-pdf structure
+          onLoadComplete(mapOf(
+            "numberOfPages" to nbPages,
+            "path" to file.absolutePath,
+            "dimensions" to dimensions,
+            "tableContents" to emptyList<Map<String, Any>>()
+          ))
+
+          // Fire initial page change
+          currentPage = 1
+          onPageChanged(mapOf(
+            "page" to 1,
+            "numberOfPages" to nbPages
+          ))
+        })
+        .onPageChange(OnPageChangeListener { page, pageCount ->
+          val newPage = page + 1 // AndroidPdfViewer uses 0-based indexing
+          if (newPage != currentPage) {
+            currentPage = newPage
+            Log.d(TAG, "Page changed to $newPage of $pageCount")
+            onPageChanged(mapOf(
+              "page" to newPage,
+              "numberOfPages" to pageCount
+            ))
+          }
+        })
+        .onError(OnErrorListener { t ->
+          Log.e(TAG, "Error rendering PDF", t)
+          onError(mapOf("error" to "Failed to render PDF: ${t.message}"))
+        })
+        .onTap { e ->
+          Log.d(TAG, "PDF tapped on page $currentPage")
+          onPageSingleTap(mapOf("page" to currentPage))
+          false // Return false to allow other gestures
+        }
+
+      // Apply paging if enabled
+      if (enablePaging) {
+        configurator.pageSnap(true).autoSpacing(true)
       }
 
-      // Note: Android's PdfRenderer doesn't provide access to table of contents/bookmarks
-      // Sending empty array to match react-native-pdf structure
-      onLoadComplete(mapOf(
-        "numberOfPages" to pageCount,
-        "path" to file.absolutePath,
-        "dimensions" to dimensions,
-        "tableContents" to emptyList<Map<String, Any>>()
-      ))
+      configurator.load()
 
-      currentPage = 1
-      onPageChanged(mapOf(
-        "page" to 1,
-        "numberOfPages" to pageCount
-      ))
+      // Apply scale settings after load
+      if (minScale != 1.0f) {
+        pdfView.setMinZoom(minScale)
+      }
+      if (maxScale != 3.0f) {
+        pdfView.setMaxZoom(maxScale)
+      }
 
-      Log.d(TAG, "Starting to render pages")
-      renderPages()
-      Log.d(TAG, "Finished rendering all pages")
     } catch (e: Exception) {
-      Log.e(TAG, "Error rendering PDF", e)
+      Log.e(TAG, "Error in renderPdf", e)
       onError(mapOf("error" to "Failed to render PDF: ${e.javaClass.simpleName}: ${e.message}"))
     }
   }
 
-  private fun renderPages() {
-    contentLayout.removeAllViews()
-
-    val renderer = pdfRenderer ?: run {
-      Log.e(TAG, "pdfRenderer is null in renderPages")
+  fun setPage(pageNumber: Int) {
+    if (pageNumber < 1 || pageNumber > totalPages) {
+      Log.w(TAG, "Invalid page number: $pageNumber (total pages: $totalPages)")
       return
     }
-    val pageCount = renderer.pageCount
-    Log.d(TAG, "Rendering $pageCount pages")
-
-    for (i in 0 until pageCount) {
-      Log.d(TAG, "Rendering page ${i + 1}/$pageCount")
-      val page = renderer.openPage(i)
-
-      // Create bitmap with appropriate size
-      val width = page.width * 2
-      val height = page.height * 2
-      Log.d(TAG, "Page ${i + 1} dimensions: ${page.width}x${page.height}, bitmap: ${width}x${height}")
-
-      val bitmap = Bitmap.createBitmap(
-        width,
-        height,
-        Bitmap.Config.ARGB_8888
-      )
-
-      page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-      page.close()
-
-      // Calculate the height needed to maintain aspect ratio within the view width
-      val viewWidth = this.width
-      val aspectRatio = height.toFloat() / width.toFloat()
-      val calculatedHeight = (viewWidth * aspectRatio).toInt()
-
-      Log.d(TAG, "ImageView will be sized: width=MATCH_PARENT($viewWidth), height=$calculatedHeight")
-
-      val imageView = ImageView(context).apply {
-        setImageBitmap(bitmap)
-        layoutParams = LinearLayout.LayoutParams(
-          LinearLayout.LayoutParams.MATCH_PARENT,
-          calculatedHeight
-        ).apply {
-          setMargins(0, pageSpacing, 0, pageSpacing)
-        }
-        scaleType = ImageView.ScaleType.FIT_CENTER
-
-        // Add tap gesture
-        val gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-          override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-            onPageSingleTap(mapOf("page" to (i + 1)))
-            return true
-          }
-        })
-
-        setOnTouchListener { _, event ->
-          gestureDetector.onTouchEvent(event)
-          true
-        }
-      }
-
-      Log.d(TAG, "ImageView created with bitmap size: ${bitmap.width}x${bitmap.height}")
-
-      contentLayout.addView(imageView)
-    }
-
-    // Force measure and layout to ensure views are displayed
-    val widthSpec = View.MeasureSpec.makeMeasureSpec(scrollView.width, View.MeasureSpec.EXACTLY)
-    val heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-    contentLayout.measure(widthSpec, heightSpec)
-    contentLayout.layout(0, 0, contentLayout.measuredWidth, contentLayout.measuredHeight)
-
-    scrollView.requestLayout()
-    invalidate()
-  }
-
-  fun setPage(pageNumber: Int) {
-    val renderer = pdfRenderer ?: return
-    if (pageNumber < 1 || pageNumber > renderer.pageCount) return
 
     currentPage = pageNumber
-
-    // Scroll to the page
-    val pageIndex = pageNumber - 1
-    scrollView.post {
-      val child = contentLayout.getChildAt(pageIndex)
-      if (child != null) {
-        scrollView.smoothScrollTo(0, child.top)
-        onPageChanged(mapOf(
-          "page" to pageNumber,
-          "numberOfPages" to renderer.pageCount
-        ))
-      }
-    }
+    // AndroidPdfViewer uses 0-based indexing
+    pdfView.jumpTo(pageNumber - 1, false)
   }
 
-  fun setScale(scale: Float) {
-    contentLayout.scaleX = scale
-    contentLayout.scaleY = scale
+  fun setScale(newScale: Float) {
+    scale = newScale
+    pdfView.zoomTo(newScale)
+  }
+
+  fun setMinScale(newMinScale: Float) {
+    minScale = newMinScale
+    pdfView.setMinZoom(newMinScale)
+  }
+
+  fun setMaxScale(newMaxScale: Float) {
+    maxScale = newMaxScale
+    pdfView.setMaxZoom(newMaxScale)
   }
 
   fun setHorizontal(isHorizontal: Boolean) {
     horizontal = isHorizontal
-    contentLayout.orientation = if (isHorizontal) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
+    // Note: This would require reloading the PDF with new configuration
+    // For now, we'll just store the value for next load
   }
 
   fun setEnablePaging(enabled: Boolean) {
     enablePaging = enabled
-    // Note: Full paging support would require a ViewPager or similar
+    // Note: This would require reloading the PDF with new configuration
+    // For now, we'll just store the value for next load
   }
 
   fun setSpacing(spacing: Int) {
     pageSpacing = spacing
-    // Rerender pages with new spacing if PDF is loaded
-    if (pdfRenderer != null) {
-      renderPages()
-    }
-  }
-
-  private fun closePdf() {
-    pdfRenderer?.close()
-    pdfRenderer = null
-    parcelFileDescriptor?.close()
-    parcelFileDescriptor = null
+    // Note: This would require reloading the PDF with new configuration
+    // For now, we'll just store the value for next load
   }
 
   override fun onDetachedFromWindow() {
     super.onDetachedFromWindow()
-    closePdf()
+    pdfView.recycle()
     scope.cancel()
   }
 }
