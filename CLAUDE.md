@@ -81,3 +81,26 @@ The implementation should follow patterns from `react-native-pdf` (https://githu
 - Common props like page navigation, zoom, scale
 - Events for load completion, page changes, errors
 - Use Expo docs: https://docs.expo.dev/modules/native-view-tutorial/
+
+## Creating Test Scenarios
+
+The example app includes a scenario-based testing system to compare CoolPDF with react-native-pdf. Use the scaffold script to create new scenarios:
+
+```bash
+node scripts/create-scenario.js --name "Your Scenario Name" --category basic --id your-scenario-id
+```
+
+**Categories**: `basic`, `navigation`, `zoom`
+
+The script creates:
+1. Scenario metadata file (e.g., `YourScenarioName.ts`)
+2. CoolPDF screen implementation
+3. react-native-pdf screen implementation
+4. Automatically updates navigation and routing
+
+After running, edit the generated files to add:
+- Scenario description and expected behavior
+- PDF component props for both implementations
+- Any custom event handlers
+
+See [scripts/README.md](scripts/README.md) for detailed usage.
