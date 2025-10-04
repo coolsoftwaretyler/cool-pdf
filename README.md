@@ -28,7 +28,16 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 <CoolPdfView source={{ uri: url }} />;
 ```
 
-### Props Compatibility with react-native-pdf
+## Compatibility with react-native-pdf
+
+Overall compatibility: 15%
+
+- 1/29 props
+- 6/6 source parameters
+- 1/9 types of source uri
+- 7/44 total props supported
+
+### Props
 
 | Property                       |                             Type                              |         Default          | Description                                                                                                                                                                 | iOS | Android | Supported |
 | ------------------------------ | :-----------------------------------------------------------: | :----------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- | ------- | --------- |
