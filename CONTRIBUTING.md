@@ -20,73 +20,122 @@ If you're adding new functionality that needs to have parity with react-native-p
 
 ## Writing Test Scenarios
 
-To ensure parity with react-native-pdf, we use a scenario-based testing system. Scenarios are defined once and can be rendered in both implementations for comparison.
+To ensure parity with react-native-pdf, we use a scenario-based testing system. Each scenario consists of two screen implementations (one for CoolPDF and one for react-native-pdf) that can be compared side-by-side.
 
 ### Scenario Structure
 
-Each scenario is a TypeScript object with the following structure:
+Each scenario consists of:
+
+1. **Scenario metadata** - exported from the CoolPDF screen file
+2. **CoolPDF screen** - implementation using CoolPDF
+3. **react-native-pdf screen** - implementation using react-native-pdf
+
+Example scenario metadata:
 
 ```typescript
-type PdfScenario = {
-  id: string; // Unique identifier
-  name: string; // Display name
-  description: string; // What this scenario tests
-  category: "basic" | "navigation" | "zoom" | "annotations" | "performance";
-  props: {
-    // Props to pass to PDF viewer
-    source: PdfSource;
-    page?: number;
-    scale?: number;
-    // ... other props
-  };
-  expectedBehavior?: string; // What should happen
-  notes?: string; // Additional context
+export const BasicUrlScenario = {
+  id: "basic-url",
+  name: "Load PDF from URL",
+  description: "Load a simple PDF from a public URL with caching enabled",
+  category: "basic" as const,
+  expectedBehavior:
+    "PDF should load and display the first page. Both onLoadComplete and onPageChanged should fire.",
+  notes: "Optional notes about edge cases or limitations",
 };
 ```
 
 ### Adding a New Scenario
 
-1. **Choose or create a category file** in `example/scenarios/definitions/`:
-   - `basic.ts` - Basic PDF loading
-   - `navigation.ts` - Page navigation, scrolling
-   - `zoom.ts` - Zoom and scale
-   - Create new files for other categories as needed
+1. **Choose a category** in `example/screens/scenarios/`:
+   - `basic/` - Basic PDF loading (URL, cache, password, etc.)
+   - `navigation/` - Page navigation, scrolling, paging
+   - `zoom/` - Zoom and scale functionality
+   - Create a new category folder if needed
 
-2. **Define your scenario**:
+2. **Create the CoolPDF screen** (e.g., `example/screens/scenarios/basic/MyFeatureCoolPdfScreen.tsx`):
 
 ```typescript
-// example/scenarios/definitions/navigation.ts
-export const navigationScenarios: PdfScenario[] = [
+import { useState } from 'react';
+import { CoolPdfView } from 'cool-pdf';
+import { View, StyleSheet } from 'react-native';
+import { ScenarioEventLog, ScenarioEvent } from '../../../components/ScenarioEventLog';
+import { ScenarioHeader } from '../../../components/ScenarioHeader';
+
+export const MyFeatureScenario = {
+  id: 'my-feature',
+  name: 'My Feature Test',
+  description: 'Tests my cool feature',
+  category: 'basic' as const,
+  expectedBehavior: 'Should do something cool',
+};
+
+export default function MyFeatureCoolPdfScreen() {
+  const [events, setEvents] = useState<ScenarioEvent[]>([]);
+
+  const addEvent = (type: ScenarioEvent['type'], data: any) => {
+    setEvents((prev) => [...prev, { timestamp: Date.now(), type, data }]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScenarioHeader
+        implementation="CoolPDF Implementation"
+        name={MyFeatureScenario.name}
+        description={MyFeatureScenario.description}
+        backgroundColor="#5856d6"
+      />
+
+      <CoolPdfView
+        source={{ uri: 'https://example.com/test.pdf', cache: true }}
+        onLoadComplete={(event) => addEvent('loadComplete', event.nativeEvent)}
+        onPageChanged={(event) => addEvent('pageChanged', event.nativeEvent)}
+        onError={(event) => addEvent('error', event.nativeEvent)}
+        style={styles.pdf}
+      />
+
+      <ScenarioEventLog events={events} accentColor="#5856d6" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  pdf: { flex: 1, backgroundColor: '#fff', margin: 16, borderRadius: 8 },
+});
+```
+
+3. **Create the react-native-pdf screen** (e.g., `example/screens/scenarios/basic/MyFeatureReactNativePdfScreen.tsx`):
+
+```typescript
+// Same structure as CoolPDF screen, but:
+// - Import from 'react-native-pdf' instead of 'cool-pdf'
+// - Use Pdf component instead of CoolPdfView
+// - Use backgroundColor="#34c759" for the header
+// - Adjust event handlers to match react-native-pdf's API (they use callbacks instead of nativeEvent)
+```
+
+4. **Register the scenario** in `example/screens/scenarios/index.ts`:
+
+```typescript
+// Import the scenario metadata
+import { MyFeatureScenario } from "./basic/MyFeatureCoolPdfScreen";
+
+// Import the screens
+export { default as MyFeatureCoolPdfScreen } from "./basic/MyFeatureCoolPdfScreen";
+export { default as MyFeatureReactNativePdfScreen } from "./basic/MyFeatureReactNativePdfScreen";
+
+// Add to allScenarios array
+export const allScenarios: ScenarioMetadata[] = [
+  // ... existing scenarios
   {
-    id: "nav-horizontal-paging",
-    name: "Horizontal with Paging",
-    description: "Combine horizontal scrolling with page snapping",
-    category: "navigation",
-    props: {
-      source: {
-        uri: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-        cache: true,
-      },
-      horizontal: true,
-      enablePaging: true,
-    },
-    expectedBehavior: "Pages should scroll horizontally and snap",
+    ...MyFeatureScenario,
+    coolPdfScreen: "MyFeatureCoolPdf",
+    reactNativePdfScreen: "MyFeatureReactNativePdf",
   },
-  // ... more scenarios
 ];
 ```
 
-3. **Export from the index file** (`example/scenarios/index.ts`):
-
-```typescript
-import { navigationScenarios } from "./definitions/navigation";
-
-export const scenariosByCategory: Record<ScenarioCategory, PdfScenario[]> = {
-  // ...
-  navigation: navigationScenarios,
-  // ...
-};
-```
+5. **Add routes** in `example/App.tsx` (Stack.Screen entries for both screens)
 
 ### Testing a Scenario
 
@@ -101,9 +150,10 @@ export const scenariosByCategory: Record<ScenarioCategory, PdfScenario[]> = {
 - **Use descriptive names** that clearly indicate what's being tested
 - **Include expectedBehavior** to document what should happen
 - **Add notes** for edge cases or known limitations
-- **Group related scenarios** in the same category file
+- **Keep implementations identical** except for the component being used
 - **Test one thing** per scenario when possible
-- **When adding new props** to cool-pdf, create corresponding scenarios to test them
+- **Use the event log** to verify both implementations fire the same events
+- **Match the styling** between CoolPDF and react-native-pdf screens for fair comparison
 
 ## Publishing
 
