@@ -11,6 +11,8 @@ import {
   BasicWithCacheReactNativePdfScreen,
   BasicNoCacheCoolPdfScreen,
   BasicNoCacheReactNativePdfScreen,
+  BasicCacheFileNameCoolPdfScreen,
+  BasicCacheFileNameReactNativePdfScreen,
   BasicPasswordCoolPdfScreen,
   BasicPasswordReactNativePdfScreen,
   // Navigation scenarios
@@ -39,6 +41,8 @@ type RootStackParamList = {
   // Basic scenarios
   BasicWithCacheCoolPdf: undefined;
   BasicWithCacheReactNativePdf: undefined;
+  BasicCacheFileNameCoolPdf: undefined;
+  BasicCacheFileNameReactNativePdf: undefined;
   BasicNoCacheCoolPdf: undefined;
   BasicNoCacheReactNativePdf: undefined;
   BasicPasswordCoolPdf: undefined;
@@ -135,6 +139,20 @@ export default function App() {
             name="BasicNoCacheReactNativePdf"
             component={BasicNoCacheReactNativePdfScreen}
             options={{ title: "No Cache (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="BasicCacheFileNameCoolPdf"
+            component={BasicCacheFileNameCoolPdfScreen}
+            options={{
+              title: "Load PDF from URL with Custom Cache Filename (CoolPDF)",
+            }}
+          />
+          <Stack.Screen
+            name="BasicCacheFileNameReactNativePdf"
+            component={BasicCacheFileNameReactNativePdfScreen}
+            options={{
+              title: "Load PDF from URL with Custom Cache Filename (RN-PDF)",
+            }}
           />
           <Stack.Screen
             name="BasicPasswordCoolPdf"

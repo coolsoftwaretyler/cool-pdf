@@ -6,6 +6,7 @@ export type PdfSource = {
   base64?: string;
   headers?: Record<string, string>;
   cache?: boolean;
+  cacheFileName?: string;
 };
 
 export type TableContentItem = {
