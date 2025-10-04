@@ -64,7 +64,8 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
               Log.d(TAG, "Downloading PDF from URL: $uri")
               val cache = source["cache"] as? Boolean ?: false
               val cacheFileName = source["cacheFileName"] as? String
-              downloadPdf(uri, source["headers"] as? Map<String, String>, cache, cacheFileName)
+              val expiration = (source["expiration"] as? Double)?.toInt()
+              downloadPdf(uri, source["headers"] as? Map<String, String>, cache, cacheFileName, expiration)
             } else {
               Log.d(TAG, "Loading PDF from local file: $uri")
               File(uri)
@@ -131,7 +132,8 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     urlString: String,
     headers: Map<String, String>?,
     cache: Boolean,
-    cacheFileName: String?
+    cacheFileName: String?,
+    expiration: Int?
   ): File? = withContext(Dispatchers.IO) {
     try {
       // Determine cache file name
@@ -144,10 +146,26 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
 
       val cacheFile = File(context.cacheDir, "$fileName.pdf")
 
-      // If caching is enabled and file exists, return it
+      // If caching is enabled and file exists, check expiration
       if (cache && cacheFile.exists()) {
-        Log.d(TAG, "Using cached PDF: ${cacheFile.absolutePath}")
-        return@withContext cacheFile
+        var shouldUseCache = true
+
+        // Check expiration if set
+        if (expiration != null && expiration > 0) {
+          val lastModified = cacheFile.lastModified()
+          val expirationTimeMs = lastModified + (expiration * 1000L)
+          val currentTimeMs = System.currentTimeMillis()
+          if (currentTimeMs > expirationTimeMs) {
+            // Cache has expired
+            shouldUseCache = false
+            Log.d(TAG, "Cache expired for: ${cacheFile.absolutePath}")
+          }
+        }
+
+        if (shouldUseCache) {
+          Log.d(TAG, "Using cached PDF: ${cacheFile.absolutePath}")
+          return@withContext cacheFile
+        }
       }
 
       Log.d(TAG, "Starting download from: $urlString")

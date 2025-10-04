@@ -7,6 +7,7 @@ export type PdfSource = {
   headers?: Record<string, string>;
   cache?: boolean;
   cacheFileName?: string;
+  expiration?: number;
 };
 
 export type TableContentItem = {

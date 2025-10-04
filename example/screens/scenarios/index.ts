@@ -100,14 +100,14 @@ export const allScenarios: ScenarioMetadata[] = [
     reactNativePdfScreen: "BasicCacheFileNameReactNativePdf",
   },
   {
-    ...BasicPasswordScenario,
-    coolPdfScreen: "BasicPasswordCoolPdf",
-    reactNativePdfScreen: "BasicPasswordReactNativePdf",
-  },
-  {
     ...BasicCacheExpirationScenario,
     coolPdfScreen: "BasicCacheExpirationCoolPdf",
     reactNativePdfScreen: "BasicCacheExpirationReactNativePdf",
+  },
+  {
+    ...BasicPasswordScenario,
+    coolPdfScreen: "BasicPasswordCoolPdf",
+    reactNativePdfScreen: "BasicPasswordReactNativePdf",
   },
   // Navigation
   {

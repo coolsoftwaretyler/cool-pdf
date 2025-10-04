@@ -89,7 +89,8 @@ class CoolPdfView: ExpoView {
         if uri.hasPrefix("http://") || uri.hasPrefix("https://") {
           let cache = source["cache"] as? Bool ?? false
           let cacheFileName = source["cacheFileName"] as? String
-          loadRemotePdf(from: url, headers: source["headers"] as? [String: String], cache: cache, cacheFileName: cacheFileName)
+          let expiration = source["expiration"] as? Int
+          loadRemotePdf(from: url, headers: source["headers"] as? [String: String], cache: cache, cacheFileName: cacheFileName, expiration: expiration)
           return
         } else {
           // Handle file URL
@@ -148,7 +149,7 @@ class CoolPdfView: ExpoView {
     }
   }
 
-  private func loadRemotePdf(from url: URL, headers: [String: String]?, cache: Bool, cacheFileName: String?) {
+  private func loadRemotePdf(from url: URL, headers: [String: String]?, cache: Bool, cacheFileName: String?, expiration: Int?) {
     // Determine cache file name
     let fileName: String
     if let customFileName = cacheFileName {
@@ -167,9 +168,29 @@ class CoolPdfView: ExpoView {
     let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
       .appendingPathComponent("\(fileName).pdf")
 
-    // If caching is enabled and file exists, use it
+    // If caching is enabled and file exists, check expiration
     if cache && FileManager.default.fileExists(atPath: cacheURL.path) {
-      if let document = PDFDocument(url: cacheURL) {
+      var shouldUseCache = true
+
+      // Check expiration if set
+      if let expiration = expiration, expiration > 0 {
+        do {
+          let attributes = try FileManager.default.attributesOfItem(atPath: cacheURL.path)
+          if let modificationDate = attributes[.modificationDate] as? Date {
+            let expirationTime = modificationDate.addingTimeInterval(TimeInterval(expiration))
+            let currentTime = Date()
+            if currentTime > expirationTime {
+              // Cache has expired
+              shouldUseCache = false
+            }
+          }
+        } catch {
+          // If we can't get attributes, treat as expired
+          shouldUseCache = false
+        }
+      }
+
+      if shouldUseCache, let document = PDFDocument(url: cacheURL) {
         // Suppress automatic pageChanged notification during initial load
         self.isInitialLoad = true
         self.pdfView.document = document
