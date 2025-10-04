@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		7488B9D02E91EA9000CD969F /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7488B9CF2E91EA9000CD969F /* sample.pdf */; };
 		8493D6BEF295588900C842C5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D16E8148DA0BB2D911785929 /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		C295F88FE15EEEC95583105B /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747BD45362198204743BB358 /* ExpoModulesProvider.swift */; };
@@ -23,10 +24,11 @@
 		188BC0DBD6B55B7EEEEECF18 /* Pods-coolpdfexample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coolpdfexample.release.xcconfig"; path = "Target Support Files/Pods-coolpdfexample/Pods-coolpdfexample.release.xcconfig"; sourceTree = "<group>"; };
 		1CD107331F148D96ADB40F87 /* Pods-coolpdfexample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coolpdfexample.debug.xcconfig"; path = "Target Support Files/Pods-coolpdfexample/Pods-coolpdfexample.debug.xcconfig"; sourceTree = "<group>"; };
 		747BD45362198204743BB358 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-coolpdfexample/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		7488B9CF2E91EA9000CD969F /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		90EDD151BF11CB1EF3C3CE3F /* libPods-coolpdfexample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-coolpdfexample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = coolpdfexample/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		D16E8148DA0BB2D911785929 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = coolpdfexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D16E8148DA0BB2D911785929 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = coolpdfexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = coolpdfexample/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* coolpdfexample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "coolpdfexample-Bridging-Header.h"; path = "coolpdfexample/coolpdfexample-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 		13B07FAE1A68108700A75B9A /* coolpdfexample */ = {
 			isa = PBXGroup;
 			children = (
+				7488B9CF2E91EA9000CD969F /* sample.pdf */,
 				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
 				F11748442D0722820044C1D9 /* coolpdfexample-Bridging-Header.h */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
@@ -128,7 +131,6 @@
 				1CD107331F148D96ADB40F87 /* Pods-coolpdfexample.debug.xcconfig */,
 				188BC0DBD6B55B7EEEEECF18 /* Pods-coolpdfexample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -197,6 +199,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				8493D6BEF295588900C842C5 /* PrivacyInfo.xcprivacy in Resources */,
+				7488B9D02E91EA9000CD969F /* sample.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
