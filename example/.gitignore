@@ -36,6 +36,8 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+# Do not gitignore generated native folders,
+# we use these to test bundle-assets:// paths.
+# TODO: make this a config plugin or something so we can go back to CNG totally?
+# /ios
+# /android
