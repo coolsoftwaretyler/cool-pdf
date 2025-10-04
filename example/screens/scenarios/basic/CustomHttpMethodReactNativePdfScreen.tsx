@@ -1,12 +1,22 @@
 import { useState } from "react";
 import Pdf from "react-native-pdf";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import {
   ScenarioEventLog,
   ScenarioEvent,
 } from "../../../components/ScenarioEventLog";
 import { ScenarioHeader } from "../../../components/ScenarioHeader";
 import { CustomHttpMethodScenario } from "./CustomHttpMethod";
+
+// Helper to get the correct localhost URL for the platform
+const getLocalServerUrl = () => {
+  if (Platform.OS === 'android') {
+    // Android emulator uses special alias to host machine
+    return 'http://10.0.2.2:3000/sample.pdf';
+  }
+  // iOS simulator and web can use localhost
+  return 'http://localhost:3000/sample.pdf';
+};
 
 export default function CustomHttpMethodReactNativePdfScreen() {
   const [events, setEvents] = useState<ScenarioEvent[]>([]);
@@ -26,7 +36,7 @@ export default function CustomHttpMethodReactNativePdfScreen() {
 
       <Pdf
         source={{
-          uri: "https://craftinginterpreters.com/sample.pdf",
+          uri: getLocalServerUrl(),
           method: "POST",
         }}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
