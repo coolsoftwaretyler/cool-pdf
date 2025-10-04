@@ -61,16 +61,25 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
               return@launch
             }
             Log.d(TAG, "Loading PDF from URI: $uri")
-            if (uri.startsWith("http://") || uri.startsWith("https://")) {
-              Log.d(TAG, "Downloading PDF from URL: $uri")
-              val cache = source["cache"] as? Boolean ?: false
-              val cacheFileName = source["cacheFileName"] as? String
-              val expiration = (source["expiration"] as? Double)?.toInt()
-              val method = source["method"] as? String ?: "GET"
-              downloadPdf(uri, source["headers"] as? Map<String, String>, method, cache, cacheFileName, expiration)
-            } else {
-              Log.d(TAG, "Loading PDF from local file: $uri")
-              File(uri)
+            when {
+              uri.startsWith("bundle-assets://") -> {
+                // Extract asset path (remove bundle-assets:// prefix)
+                val assetPath = uri.removePrefix("bundle-assets://")
+                Log.d(TAG, "Loading PDF from assets: $assetPath")
+                copyAssetToCache(assetPath)
+              }
+              uri.startsWith("http://") || uri.startsWith("https://") -> {
+                Log.d(TAG, "Downloading PDF from URL: $uri")
+                val cache = source["cache"] as? Boolean ?: false
+                val cacheFileName = source["cacheFileName"] as? String
+                val expiration = (source["expiration"] as? Double)?.toInt()
+                val method = source["method"] as? String ?: "GET"
+                downloadPdf(uri, source["headers"] as? Map<String, String>, method, cache, cacheFileName, expiration)
+              }
+              else -> {
+                Log.d(TAG, "Loading PDF from local file: $uri")
+                File(uri)
+              }
             }
           }
           source.containsKey("path") -> {
@@ -347,6 +356,29 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     pageSpacing = spacing
     // Note: This would require reloading the PDF with new configuration
     // For now, we'll just store the value for next load
+  }
+
+  private fun copyAssetToCache(assetPath: String): File? {
+    return try {
+      val assetManager = context.assets
+      val cacheFile = File(context.cacheDir, assetPath)
+
+      // Create parent directories if needed
+      cacheFile.parentFile?.mkdirs()
+
+      // Copy asset to cache using Kotlin's idiomatic approach
+      assetManager.open(assetPath).use { input ->
+        cacheFile.outputStream().use { output ->
+          input.copyTo(output)
+        }
+      }
+
+      Log.d(TAG, "Asset copied to cache: ${cacheFile.absolutePath}")
+      cacheFile
+    } catch (e: Exception) {
+      Log.e(TAG, "Error copying asset $assetPath to cache", e)
+      null
+    }
   }
 
   override fun onDetachedFromWindow() {

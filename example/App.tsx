@@ -25,6 +25,8 @@ import {
   Base64PdfRenderingReactNativePdfScreen,
   RequireLocalPdfCoolPdfScreen,
   RequireLocalPdfReactNativePdfScreen,
+  BundleAssetsPdfCoolPdfScreen,
+  BundleAssetsPdfReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -69,6 +71,9 @@ type RootStackParamList = {
 
   RequireLocalPdfCoolPdf: undefined;
   RequireLocalPdfReactNativePdf: undefined;
+
+  BundleAssetsPdfCoolPdf: undefined;
+  BundleAssetsPdfReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -237,6 +242,17 @@ export default function App() {
             component={RequireLocalPdfReactNativePdfScreen}
             options={{ title: "Require Local PDF (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="BundleAssetsPdfCoolPdf"
+            component={BundleAssetsPdfCoolPdfScreen}
+            options={{ title: "Bundle Assets PDF (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="BundleAssetsPdfReactNativePdf"
+            component={BundleAssetsPdfReactNativePdfScreen}
+            options={{ title: "Bundle Assets PDF (RN-PDF)" }}
+          />
+
 
 
 
