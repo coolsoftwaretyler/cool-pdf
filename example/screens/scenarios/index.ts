@@ -1,5 +1,5 @@
 // Import scenario metadata
-import { BasicUrlScenario } from "./basic/BasicUrlCoolPdfScreen";
+import { BasicWithCacheScenario } from "./basic/BasicWithCache";
 import { BasicNoCacheScenario } from "./basic/BasicNoCache";
 import { BasicPasswordScenario } from "./basic/BasicPasswordCoolPdfScreen";
 import { HorizontalScrollingScenario } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -11,7 +11,7 @@ import { CustomZoomRangeScenario } from "./zoom/CustomZoomRangeCoolPdfScreen";
 import { RestrictedZoomScenario } from "./zoom/RestrictedZoomCoolPdfScreen";
 
 // Re-export scenario metadata
-export { BasicUrlScenario, BasicNoCacheScenario, BasicPasswordScenario };
+export { BasicWithCacheScenario, BasicNoCacheScenario, BasicPasswordScenario };
 export {
   HorizontalScrollingScenario,
   PageSnappingScenario,
@@ -21,8 +21,8 @@ export {
 export { InitialZoomScenario, CustomZoomRangeScenario, RestrictedZoomScenario };
 
 // Basic scenarios
-export { default as BasicUrlCoolPdfScreen } from "./basic/BasicUrlCoolPdfScreen";
-export { default as BasicUrlReactNativePdfScreen } from "./basic/BasicUrlReactNativePdfScreen";
+export { default as BasicWithCacheCoolPdfScreen } from "./basic/BasicWithCacheCoolPdfScreen";
+export { default as BasicWithCacheReactNativePdfScreen } from "./basic/BasicWithCacheReactNativePdfScreen";
 
 export { default as BasicNoCacheCoolPdfScreen } from "./basic/BasicNoCacheCoolPdfScreen";
 export { default as BasicNoCacheReactNativePdfScreen } from "./basic/BasicNoCacheReactNativePdfScreen";
@@ -76,9 +76,9 @@ export const allScenarios: ScenarioMetadata[] = [
     reactNativePdfScreen: "BasicNoCacheReactNativePdf",
   },
   {
-    ...BasicUrlScenario,
-    coolPdfScreen: "BasicUrlCoolPdf",
-    reactNativePdfScreen: "BasicUrlReactNativePdf",
+    ...BasicWithCacheScenario,
+    coolPdfScreen: "BasicWithCacheCoolPdf",
+    reactNativePdfScreen: "BasicWithCacheReactNativePdf",
   },
   {
     ...BasicPasswordScenario,
