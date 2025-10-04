@@ -2,6 +2,7 @@
 import { BasicWithCacheScenario } from "./basic/BasicWithCache";
 import { BasicNoCacheScenario } from "./basic/BasicNoCache";
 import { BasicCacheFileNameScenario } from "./basic/BasicCacheFileName";
+import { BasicCacheExpirationScenario } from "./basic/BasicCacheExpiration";
 import { BasicPasswordScenario } from "./basic/BasicPasswordCoolPdfScreen";
 import { HorizontalScrollingScenario } from "./navigation/HorizontalScrollingCoolPdfScreen";
 import { PageSnappingScenario } from "./navigation/PageSnappingCoolPdfScreen";
@@ -16,6 +17,7 @@ export {
   BasicWithCacheScenario,
   BasicNoCacheScenario,
   BasicCacheFileNameScenario,
+  BasicCacheExpirationScenario,
   BasicPasswordScenario,
 };
 export {
@@ -35,6 +37,9 @@ export { default as BasicNoCacheReactNativePdfScreen } from "./basic/BasicNoCach
 
 export { default as BasicCacheFileNameCoolPdfScreen } from "./basic/BasicCacheFileNameCoolPdfScreen";
 export { default as BasicCacheFileNameReactNativePdfScreen } from "./basic/BasicCacheFileNameReactNativePdfScreen";
+
+export { default as BasicCacheExpirationCoolPdfScreen } from "./basic/BasicCacheExpirationCoolPdfScreen";
+export { default as BasicCacheExpirationReactNativePdfScreen } from "./basic/BasicCacheExpirationReactNativePdfScreen";
 
 export { default as BasicPasswordCoolPdfScreen } from "./basic/BasicPasswordCoolPdfScreen";
 export { default as BasicPasswordReactNativePdfScreen } from "./basic/BasicPasswordReactNativePdfScreen";
@@ -98,6 +103,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...BasicPasswordScenario,
     coolPdfScreen: "BasicPasswordCoolPdf",
     reactNativePdfScreen: "BasicPasswordReactNativePdf",
+  },
+  {
+    ...BasicCacheExpirationScenario,
+    coolPdfScreen: "BasicCacheExpirationCoolPdf",
+    reactNativePdfScreen: "BasicCacheExpirationReactNativePdf",
   },
   // Navigation
   {
