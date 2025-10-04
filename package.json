@@ -1,5 +1,5 @@
 {
-  "name": "cool-pdf",
+  "name": "@coolsoftwaretyler/cool-pdf",
   "version": "0.1.0",
   "description": "PDF View Component for Expo",
   "main": "build/index.js",
