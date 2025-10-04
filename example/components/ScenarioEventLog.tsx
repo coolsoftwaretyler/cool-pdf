@@ -14,9 +14,7 @@ type Props = {
 
 export function ScenarioEventLog({ events, accentColor = '#5856d6' }: Props) {
   const copyEventLog = async () => {
-    const logText = events.map(event =>
-      `[${event.type}]\n${JSON.stringify(event.data, null, 2)}`
-    ).join('\n\n');
+    const logText = JSON.stringify(events, null, 2);
 
     await Clipboard.setStringAsync(logText);
     Alert.alert('Copied!', 'Event log copied to clipboard');

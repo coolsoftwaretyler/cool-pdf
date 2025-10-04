@@ -38,18 +38,6 @@ export default function BasicNoCacheCoolPdfScreen() {
             tableContents,
           });
         }}
-        onPageChanged={(event) => {
-          const { page, numberOfPages } = event.nativeEvent;
-          addEvent("pageChanged", { page, numberOfPages });
-        }}
-        onError={(event) => {
-          const { error } = event.nativeEvent;
-          addEvent("error", { error });
-        }}
-        onPageSingleTap={(event) => {
-          const { page } = event.nativeEvent;
-          addEvent("pageSingleTap", { page });
-        }}
         style={styles.pdf}
       />
 

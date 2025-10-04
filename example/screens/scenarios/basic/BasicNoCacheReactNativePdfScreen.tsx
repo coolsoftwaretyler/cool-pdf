@@ -37,15 +37,6 @@ export default function BasicNoCacheReactNativePdfScreen() {
             tableContents,
           });
         }}
-        onPageChanged={(page, numberOfPages) => {
-          addEvent("pageChanged", { page, numberOfPages });
-        }}
-        onError={(error) => {
-          addEvent("error", { error });
-        }}
-        onPageSingleTap={(page) => {
-          addEvent("pageSingleTap", { page });
-        }}
         style={styles.pdf}
         trustAllCerts={false}
       />
