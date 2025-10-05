@@ -30,6 +30,7 @@ import { FitPolicyPropScenario } from "./zoom/FitPolicyProp";
 import { StylePropScenario } from "./basic/StyleProp";
 import { EnablePagingPropScenario } from "./navigation/EnablePagingProp";
 import { HorizontalPropScenario } from "./navigation/HorizontalProp";
+import { ShowsHorizontalScrollIndicatorScenario } from "./basic/ShowsHorizontalScrollIndicator";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -47,6 +48,7 @@ export {
   ShowsVerticalScrollIndicatorScenario,
   ScrollEnabledScenario,
   StylePropScenario,
+  ShowsHorizontalScrollIndicatorScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -105,6 +107,9 @@ export { default as ScrollEnabledReactNativePdfScreen } from "./basic/ScrollEnab
 
 export { default as StylePropCoolPdfScreen } from "./basic/StylePropCoolPdfScreen";
 export { default as StylePropReactNativePdfScreen } from "./basic/StylePropReactNativePdfScreen";
+
+export { default as ShowsHorizontalScrollIndicatorCoolPdfScreen } from "./basic/ShowsHorizontalScrollIndicatorCoolPdfScreen";
+export { default as ShowsHorizontalScrollIndicatorReactNativePdfScreen } from "./basic/ShowsHorizontalScrollIndicatorReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -245,6 +250,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...StylePropScenario,
     coolPdfScreen: "StylePropCoolPdf",
     reactNativePdfScreen: "StylePropReactNativePdf",
+  },
+
+  {
+    ...ShowsHorizontalScrollIndicatorScenario,
+    coolPdfScreen: "ShowsHorizontalScrollIndicatorCoolPdf",
+    reactNativePdfScreen: "ShowsHorizontalScrollIndicatorReactNativePdf",
   },
 
   // Navigation
