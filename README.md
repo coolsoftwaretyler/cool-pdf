@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 25%
+Overall compatibility: 27%
 
 - 1/29 props
 - 6/6 source parameters
-- 5/9 types of source uri
-- 11/44 total props supported
+- 6/9 types of source uri
+- 12/44 total props supported
 
 ### Props
 
@@ -91,7 +91,7 @@ Overall compatibility: 25%
 | `{uri:"bundle-assets://path/to/xxx.pdf"}`                            | load pdf from assets, the file should be at android/app/src/main/assets/path/to/xxx.pdf   | ✖   | ✔      | ✔        |
 | `{uri:"bundle-assets://xxx.pdf"}`                                    | load pdf from assets, you must add pdf to project by xcode. this does not support folder. | ✔   | ✖      | ✔        |
 | `{uri:"data:application/pdf;base64,JVBERi0xLjcKJc..."}`              | load pdf from base64 string                                                               | ✔   | ✔      | ✔        |
-| `{uri:"file:///absolute/path/to/xxx.pdf"}`                           | load pdf from local file system                                                           | ✔   | ✔      | ✖        |
+| `{uri:"file:///absolute/path/to/xxx.pdf"}`                           | load pdf from local file system                                                           | ✔   | ✔      | ✔        |
 | `{uri:"ms-appx:///xxx.pdf"}}`                                        | load pdf bundled with UWP app                                                             | ✖   | ✖      | ✖        |
 | `{uri:"content://com.example.blobs/xxxxxxxx-...?offset=0&size=xxx"}` | load pdf from content URI                                                                 | ✔\* | ✖      | ✖        |
 | `{uri:"blob:xxxxxxxx-...?offset=0&size=xxx"}`                        | load pdf from blob URL                                                                    | ✖   | ✔      | ✖        |

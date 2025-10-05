@@ -218,7 +218,9 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     try {
       Log.d(TAG, "renderPdf called for: ${file.absolutePath}")
 
-      val configurator = pdfView.fromFile(file)
+      // Use fromUri instead of fromFile to support file:// URIs properly
+      val uri = android.net.Uri.fromFile(file)
+      val configurator = pdfView.fromUri(uri)
         .enableAntialiasing(true)
         .enableAnnotationRendering(true)
         .spacing(pageSpacing)
