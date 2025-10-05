@@ -29,6 +29,7 @@ import { SpacingPropScenario } from "./navigation/SpacingProp";
 import { FitPolicyPropScenario } from "./zoom/FitPolicyProp";
 import { StylePropScenario } from "./basic/StyleProp";
 import { EnablePagingPropScenario } from "./navigation/EnablePagingProp";
+import { HorizontalPropScenario } from "./navigation/HorizontalProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -55,6 +56,7 @@ export {
   PagePropScenario,
   SpacingPropScenario,
   EnablePagingPropScenario,
+  HorizontalPropScenario,
 };
 export { InitialZoomScenario, CustomZoomRangeScenario, RestrictedZoomScenario };
 
@@ -125,6 +127,9 @@ export { default as SpacingPropReactNativePdfScreen } from "./navigation/Spacing
 
 export { default as EnablePagingPropCoolPdfScreen } from "./navigation/EnablePagingPropCoolPdfScreen";
 export { default as EnablePagingPropReactNativePdfScreen } from "./navigation/EnablePagingPropReactNativePdfScreen";
+
+export { default as HorizontalPropCoolPdfScreen } from "./navigation/HorizontalPropCoolPdfScreen";
+export { default as HorizontalPropReactNativePdfScreen } from "./navigation/HorizontalPropReactNativePdfScreen";
 
 // Zoom scenarios
 export { default as InitialZoomCoolPdfScreen } from "./zoom/InitialZoomCoolPdfScreen";
@@ -279,6 +284,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...EnablePagingPropScenario,
     coolPdfScreen: "EnablePagingPropCoolPdf",
     reactNativePdfScreen: "EnablePagingPropReactNativePdf",
+  },
+
+  {
+    ...HorizontalPropScenario,
+    coolPdfScreen: "HorizontalPropCoolPdf",
+    reactNativePdfScreen: "HorizontalPropReactNativePdf",
   },
 
   // Zoom
