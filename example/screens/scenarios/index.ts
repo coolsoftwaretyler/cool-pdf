@@ -19,6 +19,7 @@ import { RequireLocalPdfScenario } from "./basic/RequireLocalPdf";
 import { BundleAssetsPdfScenario } from "./basic/BundleAssetsPdf";
 import { FileUriLocalPdfScenario } from "./basic/FileUriLocalPdf";
 import { PagePropScenario } from "./navigation/PageProp";
+import { ScalePropScenario } from "./zoom/ScaleProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -101,6 +102,9 @@ export { default as CustomZoomRangeReactNativePdfScreen } from "./zoom/CustomZoo
 
 export { default as RestrictedZoomCoolPdfScreen } from "./zoom/RestrictedZoomCoolPdfScreen";
 export { default as RestrictedZoomReactNativePdfScreen } from "./zoom/RestrictedZoomReactNativePdfScreen";
+
+export { default as ScalePropCoolPdfScreen } from "./zoom/ScalePropCoolPdfScreen";
+export { default as ScalePropReactNativePdfScreen } from "./zoom/ScalePropReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory = "basic" | "navigation" | "zoom";
@@ -214,6 +218,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...RestrictedZoomScenario,
     coolPdfScreen: "RestrictedZoomCoolPdf",
     reactNativePdfScreen: "RestrictedZoomReactNativePdf",
+  },
+
+  {
+    ...ScalePropScenario,
+    coolPdfScreen: "ScalePropCoolPdf",
+    reactNativePdfScreen: "ScalePropReactNativePdf",
   },
 ];
 

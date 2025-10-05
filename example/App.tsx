@@ -47,6 +47,8 @@ import {
   CustomZoomRangeReactNativePdfScreen,
   RestrictedZoomCoolPdfScreen,
   RestrictedZoomReactNativePdfScreen,
+  ScalePropCoolPdfScreen,
+  ScalePropReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -101,6 +103,9 @@ type RootStackParamList = {
   CustomZoomRangeReactNativePdf: undefined;
   RestrictedZoomCoolPdf: undefined;
   RestrictedZoomReactNativePdf: undefined;
+
+  ScalePropCoolPdf: undefined;
+  ScalePropReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -362,7 +367,18 @@ export default function App() {
             component={RestrictedZoomReactNativePdfScreen}
             options={{ title: "Restricted Zoom (RN-PDF)" }}
           />
-        </Stack.Navigator>
+        
+          <Stack.Screen
+            name="ScalePropCoolPdf"
+            component={ScalePropCoolPdfScreen}
+            options={{ title: "Scale Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="ScalePropReactNativePdf"
+            component={ScalePropReactNativePdfScreen}
+            options={{ title: "Scale Prop (RN-PDF)" }}
+          />
+</Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
