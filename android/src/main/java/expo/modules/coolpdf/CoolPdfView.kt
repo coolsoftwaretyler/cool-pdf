@@ -27,6 +27,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
   private var currentPage: Int = 0
   private var totalPages: Int = 0
+  private var pendingPage: Int = 1
 
   companion object {
     private const val TAG = "CoolPdfView"
@@ -227,7 +228,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         .swipeHorizontal(horizontal)
         .pageFitPolicy(com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH)
         .enableDoubletap(true)
-        .defaultPage(0)
+        .defaultPage(pendingPage - 1)
         .onLoad(OnLoadCompleteListener { nbPages ->
           totalPages = nbPages
           Log.d(TAG, "PDF loaded with $nbPages pages")
@@ -267,10 +268,10 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
             "tableContents" to emptyList<Map<String, Any>>()
           ))
 
-          // Fire initial page change
-          currentPage = 1
+          // Fire initial page change with the actual page we're on
+          currentPage = if (pendingPage in 1..nbPages) pendingPage else 1
           onPageChanged(mapOf(
-            "page" to 1,
+            "page" to currentPage,
             "numberOfPages" to nbPages
           ))
         })
@@ -317,14 +318,20 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   }
 
   fun setPage(pageNumber: Int) {
-    if (pageNumber < 1 || pageNumber > totalPages) {
-      Log.w(TAG, "Invalid page number: $pageNumber (total pages: $totalPages)")
-      return
-    }
+    // Store the pending page for when the PDF loads
+    pendingPage = pageNumber
 
-    currentPage = pageNumber
-    // AndroidPdfViewer uses 0-based indexing
-    pdfView.jumpTo(pageNumber - 1, false)
+    // If PDF is already loaded, navigate immediately
+    if (totalPages > 0) {
+      if (pageNumber < 1 || pageNumber > totalPages) {
+        Log.w(TAG, "Invalid page number: $pageNumber (total pages: $totalPages)")
+        return
+      }
+
+      currentPage = pageNumber
+      // AndroidPdfViewer uses 0-based indexing
+      pdfView.jumpTo(pageNumber - 1, false)
+    }
   }
 
   fun setScale(newScale: Float) {

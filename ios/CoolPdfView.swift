@@ -12,6 +12,7 @@ class CoolPdfView: ExpoView {
   let onPageSingleTap = EventDispatcher()
 
   private var currentPage: Int = 0
+  private var pendingPage: Int = 1
   private var gestureRecognizer: UITapGestureRecognizer?
   private var isInitialLoad: Bool = false
 
@@ -122,7 +123,29 @@ class CoolPdfView: ExpoView {
       // Suppress automatic pageChanged notification during initial load
       isInitialLoad = true
       pdfView.document = document
-      currentPage = 1
+
+      // Navigate to the pending page if it's been set
+      if pendingPage > 1 && pendingPage <= document.pageCount {
+        if let page = document.page(at: pendingPage - 1) {
+          let pdfPageRect = page.bounds(for: .cropBox)
+
+          // Handle page rotation
+          var adjustedRect = pdfPageRect
+          if page.rotation == 90 || page.rotation == 270 {
+            adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
+          }
+
+          let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
+          let pdfDest = PDFDestination(page: page, at: pointLeftTop)
+
+          DispatchQueue.main.async {
+            self.pdfView.go(to: pdfDest)
+          }
+        }
+        currentPage = pendingPage
+      } else {
+        currentPage = 1
+      }
 
       // Get dimensions using rowSize (like react-native-pdf does)
       // This returns the display size with layout transformations applied
@@ -149,7 +172,7 @@ class CoolPdfView: ExpoView {
 
       // Fire onPageChanged for initial page (after loadComplete)
       onPageChanged([
-        "page": 1,
+        "page": currentPage,
         "numberOfPages": document.pageCount
       ])
 
@@ -207,7 +230,29 @@ class CoolPdfView: ExpoView {
         // Suppress automatic pageChanged notification during initial load
         self.isInitialLoad = true
         self.pdfView.document = document
-        self.currentPage = 1
+
+        // Navigate to the pending page if it's been set
+        if self.pendingPage > 1 && self.pendingPage <= document.pageCount {
+          if let page = document.page(at: self.pendingPage - 1) {
+            let pdfPageRect = page.bounds(for: .cropBox)
+
+            // Handle page rotation
+            var adjustedRect = pdfPageRect
+            if page.rotation == 90 || page.rotation == 270 {
+              adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
+            }
+
+            let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
+            let pdfDest = PDFDestination(page: page, at: pointLeftTop)
+
+            DispatchQueue.main.async {
+              self.pdfView.go(to: pdfDest)
+            }
+          }
+          self.currentPage = self.pendingPage
+        } else {
+          self.currentPage = 1
+        }
 
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
@@ -233,7 +278,7 @@ class CoolPdfView: ExpoView {
 
         // Fire onPageChanged for initial page (after loadComplete)
         self.onPageChanged([
-          "page": 1,
+          "page": self.currentPage,
           "numberOfPages": document.pageCount
         ])
 
@@ -275,7 +320,29 @@ class CoolPdfView: ExpoView {
         // Suppress automatic pageChanged notification during initial load
         self.isInitialLoad = true
         self.pdfView.document = document
-        self.currentPage = 1
+
+        // Navigate to the pending page if it's been set
+        if self.pendingPage > 1 && self.pendingPage <= document.pageCount {
+          if let page = document.page(at: self.pendingPage - 1) {
+            let pdfPageRect = page.bounds(for: .cropBox)
+
+            // Handle page rotation
+            var adjustedRect = pdfPageRect
+            if page.rotation == 90 || page.rotation == 270 {
+              adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
+            }
+
+            let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
+            let pdfDest = PDFDestination(page: page, at: pointLeftTop)
+
+            DispatchQueue.main.async {
+              self.pdfView.go(to: pdfDest)
+            }
+          }
+          self.currentPage = self.pendingPage
+        } else {
+          self.currentPage = 1
+        }
 
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
@@ -301,7 +368,7 @@ class CoolPdfView: ExpoView {
 
         // Fire onPageChanged for initial page (after loadComplete)
         self.onPageChanged([
-          "page": 1,
+          "page": self.currentPage,
           "numberOfPages": document.pageCount
         ])
 
@@ -312,6 +379,10 @@ class CoolPdfView: ExpoView {
   }
 
   func setPage(_ pageNumber: Int) {
+    // Store the pending page for when the PDF loads
+    pendingPage = pageNumber
+
+    // If document is already loaded, navigate immediately
     guard let document = pdfView.document,
           pageNumber > 0,
           pageNumber <= document.pageCount,
@@ -319,6 +390,7 @@ class CoolPdfView: ExpoView {
       return
     }
     pdfView.go(to: page)
+    currentPage = pageNumber
   }
 
   func setScale(_ scale: Double) {
