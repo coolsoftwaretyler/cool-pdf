@@ -77,6 +77,10 @@ class CoolPdfModule : Module() {
         view.setSpacing(spacing)
       }
 
+      Prop("fitPolicy") { view: CoolPdfView, fitPolicy: Int ->
+        view.setFitPolicy(fitPolicy)
+      }
+
       // Defines events that the view can send to JavaScript.
       Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }

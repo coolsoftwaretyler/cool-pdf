@@ -72,6 +72,10 @@ public class CoolPdfModule: Module {
         view.setSpacing(spacing)
       }
 
+      Prop("fitPolicy") { (view: CoolPdfView, fitPolicy: Int) in
+        view.setFitPolicy(fitPolicy)
+      }
+
       Prop("showsVerticalScrollIndicator") { (view: CoolPdfView, showsVerticalScrollIndicator: Bool) in
         view.setShowsVerticalScrollIndicator(showsVerticalScrollIndicator)
       }

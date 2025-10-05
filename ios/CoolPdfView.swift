@@ -19,6 +19,7 @@ class CoolPdfView: ExpoView {
   private var pendingScale: Double = 1.0
   private var pendingMinScale: Double = 1.0
   private var pendingMaxScale: Double = 3.0
+  private var fitPolicy: Int = 2 // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -69,6 +70,7 @@ class CoolPdfView: ExpoView {
     }
 
     print("🔵 CoolPDF applying scale settings:")
+    print("🔵   fitPolicy: \(fitPolicy)")
     print("🔵   pendingMinScale: \(pendingMinScale)")
     print("🔵   pendingMaxScale: \(pendingMaxScale)")
     print("🔵   pendingScale: \(pendingScale)")
@@ -84,25 +86,32 @@ class CoolPdfView: ExpoView {
     print("🔵   PDF page rect (adjusted): \(pdfPageRect)")
     print("🔵   PDF page rotation: \(firstPage.rotation)")
 
-    // React-native-pdf calculates a fixScaleFactor based on fit policy
-    // Default fitPolicy is 2 (BOTH) - see line 261 in RNPDFPdfView.mm
-    // Lines 431-443 show the calculation for fitPolicy = 2 (BOTH)
-    let pageAspect = pdfPageRect.width / pdfPageRect.height
-    let viewAspect = self.frame.width / self.frame.height
-
+    // Calculate fixScaleFactor based on fitPolicy (matching react-native-pdf lines 420-444)
     let fixScaleFactor: CGFloat
-    if viewAspect > pageAspect {
-      // Height is the limiting factor
+
+    if fitPolicy == 0 {
+      // FIT WIDTH - line 420-424
+      fixScaleFactor = self.frame.width / pdfPageRect.width
+    } else if fitPolicy == 1 {
+      // FIT HEIGHT - line 425-429
       fixScaleFactor = self.frame.height / pdfPageRect.height
     } else {
-      // Width is the limiting factor
-      fixScaleFactor = self.frame.width / pdfPageRect.width
+      // FIT BOTH (default) - lines 430-444
+      let pageAspect = pdfPageRect.width / pdfPageRect.height
+      let viewAspect = self.frame.width / self.frame.height
+
+      if viewAspect > pageAspect {
+        // Height is the limiting factor
+        fixScaleFactor = self.frame.height / pdfPageRect.height
+      } else {
+        // Width is the limiting factor
+        fixScaleFactor = self.frame.width / pdfPageRect.width
+      }
     }
 
-    print("🔵   pageAspect: \(pageAspect), viewAspect: \(viewAspect)")
     print("🔵   fixScaleFactor: \(fixScaleFactor)")
 
-    // Set min/max scale factors multiplied by fixScaleFactor (lines 436, 437, 441, 442)
+    // Set min/max scale factors multiplied by fixScaleFactor
     pdfView.minScaleFactor = fixScaleFactor * CGFloat(pendingMinScale)
     pdfView.maxScaleFactor = fixScaleFactor * CGFloat(pendingMaxScale)
 
@@ -511,6 +520,15 @@ class CoolPdfView: ExpoView {
       if let scrollView = subview as? UIScrollView {
         scrollView.isScrollEnabled = enabled
       }
+    }
+  }
+
+  func setFitPolicy(_ policy: Int) {
+    print("🔵 CoolPDF setFitPolicy called with: \(policy)")
+    fitPolicy = policy
+    // Re-apply scale settings if document is already loaded
+    if pdfView.document != nil {
+      applyScaleSettings()
     }
   }
 

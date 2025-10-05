@@ -59,6 +59,7 @@ export type CoolPdfViewProps = {
   password?: string;
   enablePaging?: boolean;
   enableAnnotations?: boolean;
+  fitPolicy?: 0 | 1 | 2; // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
   showsHorizontalScrollIndicator?: boolean;
   showsVerticalScrollIndicator?: boolean;
   scrollEnabled?: boolean;

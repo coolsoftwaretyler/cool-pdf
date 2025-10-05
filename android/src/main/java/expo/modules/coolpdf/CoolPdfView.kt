@@ -43,6 +43,8 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var minScale: Float = 1.0f
   private var maxScale: Float = 3.0f
   private var scale: Float = 1.0f
+  private var fitPolicy: com.github.barteksc.pdfviewer.util.FitPolicy = com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH
+  private var currentFile: File? = null
 
   init {
     addView(pdfView)
@@ -129,6 +131,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
 
         Log.d(TAG, "PDF file exists, size: ${file.length()} bytes")
         withContext(Dispatchers.Main) {
+          currentFile = file
           renderPdf(file)
         }
       } catch (e: Exception) {
@@ -226,7 +229,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         .enableAnnotationRendering(true)
         .spacing(pageSpacing)
         .swipeHorizontal(horizontal)
-        .pageFitPolicy(com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH)
+        .pageFitPolicy(fitPolicy)
         .enableDoubletap(true)
         .defaultPage(pendingPage - 1)
         .onLoad(OnLoadCompleteListener { nbPages ->
@@ -379,6 +382,22 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     pageSpacing = spacing
     // Note: This would require reloading the PDF with new configuration
     // For now, we'll just store the value for next load
+  }
+
+  fun setFitPolicy(policy: Int) {
+    fitPolicy = when (policy) {
+      0 -> com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH
+      1 -> com.github.barteksc.pdfviewer.util.FitPolicy.HEIGHT
+      2 -> com.github.barteksc.pdfviewer.util.FitPolicy.BOTH
+      else -> com.github.barteksc.pdfviewer.util.FitPolicy.BOTH
+    }
+    Log.d(TAG, "setFitPolicy: $policy -> $fitPolicy")
+
+    // Reload the PDF if it's already loaded (like react-native-pdf does)
+    currentFile?.let { file ->
+      pdfView.recycle()
+      renderPdf(file)
+    }
   }
 
   private fun copyAssetToCache(assetPath: String): File? {
