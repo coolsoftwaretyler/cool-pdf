@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 50%
+Overall compatibility: 55%
 
-- 10/29 props
+- 12/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 22/44 total props supported
+- 24/44 total props supported
 
 ### Props
 
@@ -53,11 +53,11 @@ Overall compatibility: 50%
 | fitPolicy                      |                            number                             |            2             | 0:fit width, 1:fit height, 2:fit both(default)                                                                                                                              | ✔  | ✔      | ✔        |
 | spacing                        |                            number                             |            10            | the breaker size between pages                                                                                                                                              | ✔  | ✔      | ✔        |
 | password                       |                            string                             |            ""            | pdf password, if password error, will call OnError() with message "Password required or incorrect password."                                                                | ✔  | ✔      | ✖        |
-| style                          |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✖        |
+| style                          |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✔        |
 | progressContainerStyle         |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✖        |
 | renderActivityIndicator        |                    (progress) => Component                    |      <ProgressBar/>      | when loading show it as an indicator, you can use your component                                                                                                            | ✔  | ✔      | ✖        |
 | enableAntialiasing             |                             bool                              |           true           | improve rendering a little bit on low-res screens, but maybe course some problem on Android 4.4, so add a switch                                                            | ✖  | ✔      | ✖        |
-| enablePaging                   |                             bool                              |          false           | only show one page in screen                                                                                                                                                | ✔  | ✔      | ✖        |
+| enablePaging                   |                             bool                              |          false           | only show one page in screen                                                                                                                                                | ✔  | ✔      | ✔        |
 | enableRTL                      |                             bool                              |          false           | scroll page as "page3, page2, page1"                                                                                                                                        | ✔  | ✖      | ✖        |
 | enableAnnotationRendering      |                             bool                              |           true           | enable rendering annotation, notice:iOS only support initial setting,not support realtime changing                                                                          | ✔  | ✔      | ✖        |
 | enableDoubleTapZoom            |                             bool                              |           true           | Enable double tap to zoom gesture                                                                                                                                           | ✔  | ✔      | ✖        |
