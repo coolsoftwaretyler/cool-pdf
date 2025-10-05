@@ -15,6 +15,7 @@ class CoolPdfView: ExpoView {
   private var pendingPage: Int = 1
   private var gestureRecognizer: UITapGestureRecognizer?
   private var isInitialLoad: Bool = false
+  private var needsPageNavigation: Bool = false
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -50,6 +51,43 @@ class CoolPdfView: ExpoView {
   override func layoutSubviews() {
     super.layoutSubviews()
     pdfView.frame = bounds
+
+    // Perform pending page navigation after layout (like react-native-pdf does in reactSetFrame)
+    if needsPageNavigation {
+      needsPageNavigation = false
+      performPageNavigation()
+    }
+  }
+
+  private func performPageNavigation() {
+    guard let document = pdfView.document else { return }
+
+    // Navigate to the pending page (matching react-native-pdf logic)
+    if let page = document.page(at: pendingPage - 1), pendingPage >= 1 && pendingPage <= document.pageCount {
+      if pendingPage == 1 {
+        // Special case for page 1 - use goToRect with max Y to align to top
+        DispatchQueue.main.async {
+          self.pdfView.go(to: CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1), on: page)
+        }
+      } else {
+        // For other pages, use goToDestination
+        let pdfPageRect = page.bounds(for: .cropBox)
+
+        // Handle page rotation
+        var adjustedRect = pdfPageRect
+        if page.rotation == 90 || page.rotation == 270 {
+          adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
+        }
+
+        let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
+        let pdfDest = PDFDestination(page: page, at: pointLeftTop)
+        pdfView.go(to: pdfDest)
+      }
+      currentPage = pendingPage
+
+      // Layout the document view after navigation
+      pdfView.layoutDocumentView()
+    }
   }
 
   @objc private func handlePageChanged(_ notification: Notification) {
@@ -124,28 +162,9 @@ class CoolPdfView: ExpoView {
       isInitialLoad = true
       pdfView.document = document
 
-      // Navigate to the pending page if it's been set
-      if pendingPage > 1 && pendingPage <= document.pageCount {
-        if let page = document.page(at: pendingPage - 1) {
-          let pdfPageRect = page.bounds(for: .cropBox)
-
-          // Handle page rotation
-          var adjustedRect = pdfPageRect
-          if page.rotation == 90 || page.rotation == 270 {
-            adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
-          }
-
-          let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
-          let pdfDest = PDFDestination(page: page, at: pointLeftTop)
-
-          DispatchQueue.main.async {
-            self.pdfView.go(to: pdfDest)
-          }
-        }
-        currentPage = pendingPage
-      } else {
-        currentPage = 1
-      }
+      // Mark that we need to navigate to the page after layout
+      needsPageNavigation = true
+      currentPage = (pendingPage >= 1 && pendingPage <= document.pageCount) ? pendingPage : 1
 
       // Get dimensions using rowSize (like react-native-pdf does)
       // This returns the display size with layout transformations applied
@@ -231,28 +250,9 @@ class CoolPdfView: ExpoView {
         self.isInitialLoad = true
         self.pdfView.document = document
 
-        // Navigate to the pending page if it's been set
-        if self.pendingPage > 1 && self.pendingPage <= document.pageCount {
-          if let page = document.page(at: self.pendingPage - 1) {
-            let pdfPageRect = page.bounds(for: .cropBox)
-
-            // Handle page rotation
-            var adjustedRect = pdfPageRect
-            if page.rotation == 90 || page.rotation == 270 {
-              adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
-            }
-
-            let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
-            let pdfDest = PDFDestination(page: page, at: pointLeftTop)
-
-            DispatchQueue.main.async {
-              self.pdfView.go(to: pdfDest)
-            }
-          }
-          self.currentPage = self.pendingPage
-        } else {
-          self.currentPage = 1
-        }
+        // Mark that we need to navigate to the page after layout
+        self.needsPageNavigation = true
+        self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
 
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
@@ -321,28 +321,9 @@ class CoolPdfView: ExpoView {
         self.isInitialLoad = true
         self.pdfView.document = document
 
-        // Navigate to the pending page if it's been set
-        if self.pendingPage > 1 && self.pendingPage <= document.pageCount {
-          if let page = document.page(at: self.pendingPage - 1) {
-            let pdfPageRect = page.bounds(for: .cropBox)
-
-            // Handle page rotation
-            var adjustedRect = pdfPageRect
-            if page.rotation == 90 || page.rotation == 270 {
-              adjustedRect = CGRect(x: 0, y: 0, width: pdfPageRect.size.height, height: pdfPageRect.size.width)
-            }
-
-            let pointLeftTop = CGPoint(x: 0, y: adjustedRect.size.height)
-            let pdfDest = PDFDestination(page: page, at: pointLeftTop)
-
-            DispatchQueue.main.async {
-              self.pdfView.go(to: pdfDest)
-            }
-          }
-          self.currentPage = self.pendingPage
-        } else {
-          self.currentPage = 1
-        }
+        // Mark that we need to navigate to the page after layout
+        self.needsPageNavigation = true
+        self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
 
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]

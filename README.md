@@ -30,19 +30,19 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 27%
+Overall compatibility: 30%
 
-- 1/29 props
+- 2/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 12/44 total props supported
+- 13/44 total props supported
 
 ### Props
 
 | Property                       |                             Type                              |         Default          | Description                                                                                                                                                                 | iOS | Android | Supported |
 | ------------------------------ | :-----------------------------------------------------------: | :----------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- | ------- | --------- |
 | source                         |                            object                             |         not null         | PDF source like {uri:xxx, cache:false}. see the following for detail.                                                                                                       | ✔  | ✔      | ✔        |
-| page                           |                            number                             |            1             | initial page index                                                                                                                                                          | ✔  | ✔      | ✖        |
+| page                           |                            number                             |            1             | initial page index                                                                                                                                                          | ✔  | ✔      | ✔        |
 | scale                          |                            number                             |           1.0            | should minScale<=scale<=maxScale                                                                                                                                            | ✔  | ✔      | ✖        |
 | minScale                       |                            number                             |           1.0            | min scale                                                                                                                                                                   | ✔  | ✔      | ✖        |
 | maxScale                       |                            number                             |           3.0            | max scale                                                                                                                                                                   | ✔  | ✔      | ✖        |
