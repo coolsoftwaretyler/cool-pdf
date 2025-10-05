@@ -35,6 +35,20 @@ app.all('/sample.pdf', (req, res) => {
   res.sendFile(pdfPath);
 });
 
+// Serve the password-protected PDF file
+app.all('/password-protected.pdf', (req, res) => {
+  const pdfPath = path.join(__dirname, 'password-protected.pdf');
+
+  if (!fs.existsSync(pdfPath)) {
+    console.error('❌ Error: password-protected.pdf not found at', pdfPath);
+    return res.status(404).send('PDF file not found');
+  }
+
+  console.log('✅ Serving password-protected.pdf');
+  res.setHeader('Content-Type', 'application/pdf');
+  res.sendFile(pdfPath);
+});
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.send(`
@@ -42,7 +56,11 @@ app.get('/', (req, res) => {
       <body>
         <h1>PDF Test Server</h1>
         <p>Server is running on port ${PORT}</p>
-        <p>PDF available at: <a href="/sample.pdf">/sample.pdf</a></p>
+        <p>PDFs available:</p>
+        <ul>
+          <li><a href="/sample.pdf">/sample.pdf</a></li>
+          <li><a href="/password-protected.pdf">/password-protected.pdf</a> (password: "test123")</li>
+        </ul>
         <p>This server logs all HTTP methods and headers to the console.</p>
       </body>
     </html>
@@ -70,9 +88,14 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('\n' + '🚀'.repeat(30));
   console.log(`🌟 PDF Test Server running`);
   console.log(`\n📱 Use these URLs in your app:\n`);
-  console.log(`   iOS Simulator:     http://localhost:${PORT}/sample.pdf`);
-  console.log(`   Android Emulator:  http://10.0.2.2:${PORT}/sample.pdf`);
-  console.log(`   Physical Device:   http://${localIP}:${PORT}/sample.pdf`);
+  console.log(`   Sample PDF:`);
+  console.log(`     iOS Simulator:     http://localhost:${PORT}/sample.pdf`);
+  console.log(`     Android Emulator:  http://10.0.2.2:${PORT}/sample.pdf`);
+  console.log(`     Physical Device:   http://${localIP}:${PORT}/sample.pdf`);
+  console.log(`\n   Password-Protected PDF (password: "test123"):`);
+  console.log(`     iOS Simulator:     http://localhost:${PORT}/password-protected.pdf`);
+  console.log(`     Android Emulator:  http://10.0.2.2:${PORT}/password-protected.pdf`);
+  console.log(`     Physical Device:   http://${localIP}:${PORT}/password-protected.pdf`);
   console.log(`\n👀 Watching for HTTP requests...`);
   console.log('🚀'.repeat(30) + '\n');
 });

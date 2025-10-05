@@ -31,6 +31,7 @@ import { StylePropScenario } from "./basic/StyleProp";
 import { EnablePagingPropScenario } from "./navigation/EnablePagingProp";
 import { HorizontalPropScenario } from "./navigation/HorizontalProp";
 import { ShowsHorizontalScrollIndicatorScenario } from "./basic/ShowsHorizontalScrollIndicator";
+import { PasswordPropScenario } from "./basic/PasswordProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -49,6 +50,7 @@ export {
   ScrollEnabledScenario,
   StylePropScenario,
   ShowsHorizontalScrollIndicatorScenario,
+  PasswordPropScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -110,6 +112,9 @@ export { default as StylePropReactNativePdfScreen } from "./basic/StylePropReact
 
 export { default as ShowsHorizontalScrollIndicatorCoolPdfScreen } from "./basic/ShowsHorizontalScrollIndicatorCoolPdfScreen";
 export { default as ShowsHorizontalScrollIndicatorReactNativePdfScreen } from "./basic/ShowsHorizontalScrollIndicatorReactNativePdfScreen";
+
+export { default as PasswordPropCoolPdfScreen } from "./basic/PasswordPropCoolPdfScreen";
+export { default as PasswordPropReactNativePdfScreen } from "./basic/PasswordPropReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -256,6 +261,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...ShowsHorizontalScrollIndicatorScenario,
     coolPdfScreen: "ShowsHorizontalScrollIndicatorCoolPdf",
     reactNativePdfScreen: "ShowsHorizontalScrollIndicatorReactNativePdf",
+  },
+
+  {
+    ...PasswordPropScenario,
+    coolPdfScreen: "PasswordPropCoolPdf",
+    reactNativePdfScreen: "PasswordPropReactNativePdf",
   },
 
   // Navigation

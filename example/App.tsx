@@ -39,6 +39,8 @@ import {
   StylePropReactNativePdfScreen,
   ShowsHorizontalScrollIndicatorCoolPdfScreen,
   ShowsHorizontalScrollIndicatorReactNativePdfScreen,
+  PasswordPropCoolPdfScreen,
+  PasswordPropReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -120,6 +122,9 @@ type RootStackParamList = {
 
   ShowsHorizontalScrollIndicatorCoolPdf: undefined;
   ShowsHorizontalScrollIndicatorReactNativePdf: undefined;
+
+  PasswordPropCoolPdf: undefined;
+  PasswordPropReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -382,6 +387,17 @@ export default function App() {
             component={ShowsHorizontalScrollIndicatorReactNativePdfScreen}
             options={{ title: "Shows Horizontal Scroll Indicator (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="PasswordPropCoolPdf"
+            component={PasswordPropCoolPdfScreen}
+            options={{ title: "Password Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="PasswordPropReactNativePdf"
+            component={PasswordPropReactNativePdfScreen}
+            options={{ title: "Password Prop (RN-PDF)" }}
+          />
+
 
 
 
