@@ -183,7 +183,7 @@ export { default as EnableDoubleTapZoomPropCoolPdfScreen } from "./zoom/EnableDo
 export { default as EnableDoubleTapZoomPropReactNativePdfScreen } from "./zoom/EnableDoubleTapZoomPropReactNativePdfScreen";
 
 // Types
-export type ScenarioCategory = "basic" | "navigation" | "zoom";
+export type ScenarioCategory = "loading" | "basic" | "navigation" | "zoom";
 
 export type ScenarioMetadata = {
   id: string;
@@ -198,7 +198,7 @@ export type ScenarioMetadata = {
 
 // All scenarios metadata
 export const allScenarios: ScenarioMetadata[] = [
-  // Basic
+  // Loading
   {
     ...BasicNoCacheScenario,
     coolPdfScreen: "BasicNoCacheCoolPdf",
@@ -239,67 +239,57 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "RequireLocalPdfCoolPdf",
     reactNativePdfScreen: "RequireLocalPdfReactNativePdf",
   },
-
   {
     ...BundleAssetsPdfScenario,
     coolPdfScreen: "BundleAssetsPdfCoolPdf",
     reactNativePdfScreen: "BundleAssetsPdfReactNativePdf",
   },
-
   {
     ...FileUriLocalPdfScenario,
     coolPdfScreen: "FileUriLocalPdfCoolPdf",
     reactNativePdfScreen: "FileUriLocalPdfReactNativePdf",
   },
-
+  // Basic
   {
     ...OnLoadCompleteScenario,
     coolPdfScreen: "OnLoadCompleteCoolPdf",
     reactNativePdfScreen: "OnLoadCompleteReactNativePdf",
   },
-
   {
     ...ShowsVerticalScrollIndicatorScenario,
     coolPdfScreen: "ShowsVerticalScrollIndicatorCoolPdf",
     reactNativePdfScreen: "ShowsVerticalScrollIndicatorReactNativePdf",
   },
-
   {
     ...ScrollEnabledScenario,
     coolPdfScreen: "ScrollEnabledCoolPdf",
     reactNativePdfScreen: "ScrollEnabledReactNativePdf",
   },
-
   {
     ...StylePropScenario,
     coolPdfScreen: "StylePropCoolPdf",
     reactNativePdfScreen: "StylePropReactNativePdf",
   },
-
   {
     ...ShowsHorizontalScrollIndicatorScenario,
     coolPdfScreen: "ShowsHorizontalScrollIndicatorCoolPdf",
     reactNativePdfScreen: "ShowsHorizontalScrollIndicatorReactNativePdf",
   },
-
   {
     ...PasswordPropScenario,
     coolPdfScreen: "PasswordPropCoolPdf",
     reactNativePdfScreen: "PasswordPropReactNativePdf",
   },
-
   {
     ...PasswordCorrectScenario,
     coolPdfScreen: "PasswordCorrectCoolPdf",
     reactNativePdfScreen: "PasswordCorrectReactNativePdf",
   },
-
   {
     ...PasswordIncorrectScenario,
     coolPdfScreen: "PasswordIncorrectCoolPdf",
     reactNativePdfScreen: "PasswordIncorrectReactNativePdf",
   },
-
   // Navigation
   {
     ...HorizontalScrollingScenario,
@@ -326,31 +316,26 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "PagePropCoolPdf",
     reactNativePdfScreen: "PagePropReactNativePdf",
   },
-
   {
     ...SpacingPropScenario,
     coolPdfScreen: "SpacingPropCoolPdf",
     reactNativePdfScreen: "SpacingPropReactNativePdf",
   },
-
   {
     ...EnablePagingPropScenario,
     coolPdfScreen: "EnablePagingPropCoolPdf",
     reactNativePdfScreen: "EnablePagingPropReactNativePdf",
   },
-
   {
     ...HorizontalPropScenario,
     coolPdfScreen: "HorizontalPropCoolPdf",
     reactNativePdfScreen: "HorizontalPropReactNativePdf",
   },
-
   {
     ...EnableRtlPropScenario,
     coolPdfScreen: "EnableRtlPropCoolPdf",
     reactNativePdfScreen: "EnableRtlPropReactNativePdf",
   },
-
   // Zoom
   {
     ...InitialZoomScenario,
@@ -367,31 +352,26 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "RestrictedZoomCoolPdf",
     reactNativePdfScreen: "RestrictedZoomReactNativePdf",
   },
-
   {
     ...ScalePropScenario,
     coolPdfScreen: "ScalePropCoolPdf",
     reactNativePdfScreen: "ScalePropReactNativePdf",
   },
-
   {
     ...MinScalePropScenario,
     coolPdfScreen: "MinScalePropCoolPdf",
     reactNativePdfScreen: "MinScalePropReactNativePdf",
   },
-
   {
     ...MaxScalePropScenario,
     coolPdfScreen: "MaxScalePropCoolPdf",
     reactNativePdfScreen: "MaxScalePropReactNativePdf",
   },
-
   {
     ...FitPolicyPropScenario,
     coolPdfScreen: "FitPolicyPropCoolPdf",
     reactNativePdfScreen: "FitPolicyPropReactNativePdf",
   },
-
   {
     ...EnableDoubleTapZoomPropScenario,
     coolPdfScreen: "EnableDoubleTapZoomPropCoolPdf",
@@ -401,12 +381,14 @@ export const allScenarios: ScenarioMetadata[] = [
 
 export const scenariosByCategory: Record<ScenarioCategory, ScenarioMetadata[]> =
   {
+    loading: allScenarios.filter((s) => s.category === "loading"),
     basic: allScenarios.filter((s) => s.category === "basic"),
     navigation: allScenarios.filter((s) => s.category === "navigation"),
     zoom: allScenarios.filter((s) => s.category === "zoom"),
   };
 
 export const categoryLabels: Record<ScenarioCategory, string> = {
+  loading: "Loading",
   basic: "Basic",
   navigation: "Navigation",
   zoom: "Zoom & Scale",

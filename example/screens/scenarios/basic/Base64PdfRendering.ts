@@ -2,7 +2,7 @@ export const Base64PdfRenderingScenario = {
   id: "base64-pdf",
   name: "Base64 PDF Rendering",
   description: "Render a PDF from base64 string",
-  category: "basic" as const,
+  category: "loading" as const,
   expectedBehavior: "PDF should load and display",
 };
 

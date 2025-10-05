@@ -2,7 +2,7 @@ export const CustomHeadersScenario = {
   id: "custom-headers",
   name: "Custom Headers",
   description: "Load a PDF from URL with custom headers",
-  category: "basic" as const,
+  category: "loading" as const,
   expectedBehavior: "PDF should load successfully with the custom headers",
   testingInstructions: `
   To verify the headers are correctly used:
