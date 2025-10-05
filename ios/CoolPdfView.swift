@@ -505,6 +505,15 @@ class CoolPdfView: ExpoView {
     }
   }
 
+  func setScrollEnabled(_ enabled: Bool) {
+    // Find and update all UIScrollView subviews (matching react-native-pdf)
+    for subview in pdfView.subviews {
+      if let scrollView = subview as? UIScrollView {
+        scrollView.isScrollEnabled = enabled
+      }
+    }
+  }
+
   private func resolveAssetPath(_ uri: String) -> URL? {
     // Strip bundle-assets:// prefix
     let assetPath = uri.replacingOccurrences(of: "bundle-assets://", with: "")

@@ -76,6 +76,10 @@ public class CoolPdfModule: Module {
         view.setShowsVerticalScrollIndicator(showsVerticalScrollIndicator)
       }
 
+      Prop("scrollEnabled") { (view: CoolPdfView, scrollEnabled: Bool) in
+        view.setScrollEnabled(scrollEnabled)
+      }
+
       Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }
   }

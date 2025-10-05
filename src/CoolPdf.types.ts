@@ -61,6 +61,7 @@ export type CoolPdfViewProps = {
   enableAnnotations?: boolean;
   showsHorizontalScrollIndicator?: boolean;
   showsVerticalScrollIndicator?: boolean;
+  scrollEnabled?: boolean;
   onLoadComplete?: (event: { nativeEvent: OnLoadCompleteEventPayload }) => void;
   onPageChanged?: (event: { nativeEvent: OnPageChangedEventPayload }) => void;
   onError?: (event: { nativeEvent: OnErrorEventPayload }) => void;
