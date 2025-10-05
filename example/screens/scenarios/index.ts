@@ -32,6 +32,8 @@ import { EnablePagingPropScenario } from "./navigation/EnablePagingProp";
 import { HorizontalPropScenario } from "./navigation/HorizontalProp";
 import { ShowsHorizontalScrollIndicatorScenario } from "./basic/ShowsHorizontalScrollIndicator";
 import { PasswordPropScenario } from "./basic/PasswordProp";
+import { PasswordCorrectScenario } from "./basic/PasswordCorrect";
+import { PasswordIncorrectScenario } from "./basic/PasswordIncorrect";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -51,6 +53,8 @@ export {
   StylePropScenario,
   ShowsHorizontalScrollIndicatorScenario,
   PasswordPropScenario,
+  PasswordCorrectScenario,
+  PasswordIncorrectScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -115,6 +119,12 @@ export { default as ShowsHorizontalScrollIndicatorReactNativePdfScreen } from ".
 
 export { default as PasswordPropCoolPdfScreen } from "./basic/PasswordPropCoolPdfScreen";
 export { default as PasswordPropReactNativePdfScreen } from "./basic/PasswordPropReactNativePdfScreen";
+
+export { default as PasswordCorrectCoolPdfScreen } from "./basic/PasswordCorrectCoolPdfScreen";
+export { default as PasswordCorrectReactNativePdfScreen } from "./basic/PasswordCorrectReactNativePdfScreen";
+
+export { default as PasswordIncorrectCoolPdfScreen } from "./basic/PasswordIncorrectCoolPdfScreen";
+export { default as PasswordIncorrectReactNativePdfScreen } from "./basic/PasswordIncorrectReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -267,6 +277,18 @@ export const allScenarios: ScenarioMetadata[] = [
     ...PasswordPropScenario,
     coolPdfScreen: "PasswordPropCoolPdf",
     reactNativePdfScreen: "PasswordPropReactNativePdf",
+  },
+
+  {
+    ...PasswordCorrectScenario,
+    coolPdfScreen: "PasswordCorrectCoolPdf",
+    reactNativePdfScreen: "PasswordCorrectReactNativePdf",
+  },
+
+  {
+    ...PasswordIncorrectScenario,
+    coolPdfScreen: "PasswordIncorrectCoolPdf",
+    reactNativePdfScreen: "PasswordIncorrectReactNativePdf",
   },
 
   // Navigation

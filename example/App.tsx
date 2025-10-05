@@ -41,6 +41,10 @@ import {
   ShowsHorizontalScrollIndicatorReactNativePdfScreen,
   PasswordPropCoolPdfScreen,
   PasswordPropReactNativePdfScreen,
+  PasswordCorrectCoolPdfScreen,
+  PasswordCorrectReactNativePdfScreen,
+  PasswordIncorrectCoolPdfScreen,
+  PasswordIncorrectReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -125,6 +129,12 @@ type RootStackParamList = {
 
   PasswordPropCoolPdf: undefined;
   PasswordPropReactNativePdf: undefined;
+
+  PasswordCorrectCoolPdf: undefined;
+  PasswordCorrectReactNativePdf: undefined;
+
+  PasswordIncorrectCoolPdf: undefined;
+  PasswordIncorrectReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -397,6 +407,28 @@ export default function App() {
             component={PasswordPropReactNativePdfScreen}
             options={{ title: "Password Prop (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="PasswordCorrectCoolPdf"
+            component={PasswordCorrectCoolPdfScreen}
+            options={{ title: "Password Correct (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="PasswordCorrectReactNativePdf"
+            component={PasswordCorrectReactNativePdfScreen}
+            options={{ title: "Password Correct (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="PasswordIncorrectCoolPdf"
+            component={PasswordIncorrectCoolPdfScreen}
+            options={{ title: "Password Incorrect (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="PasswordIncorrectReactNativePdf"
+            component={PasswordIncorrectReactNativePdfScreen}
+            options={{ title: "Password Incorrect (RN-PDF)" }}
+          />
+
+
 
 
 
