@@ -57,6 +57,14 @@ class CoolPdfModule : Module() {
         view.setScale(scale)
       }
 
+      Prop("minScale") { view: CoolPdfView, minScale: Float ->
+        view.setMinScale(minScale)
+      }
+
+      Prop("maxScale") { view: CoolPdfView, maxScale: Float ->
+        view.setMaxScale(maxScale)
+      }
+
       Prop("horizontal") { view: CoolPdfView, horizontal: Boolean ->
         view.setHorizontal(horizontal)
       }

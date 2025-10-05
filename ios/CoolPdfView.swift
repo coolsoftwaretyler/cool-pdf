@@ -16,6 +16,9 @@ class CoolPdfView: ExpoView {
   private var gestureRecognizer: UITapGestureRecognizer?
   private var isInitialLoad: Bool = false
   private var needsPageNavigation: Bool = false
+  private var pendingScale: Double = 1.0
+  private var pendingMinScale: Double = 1.0
+  private var pendingMaxScale: Double = 3.0
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -57,6 +60,73 @@ class CoolPdfView: ExpoView {
       needsPageNavigation = false
       performPageNavigation()
     }
+  }
+
+  private func applyScaleSettings() {
+    guard let document = pdfView.document, let firstPage = document.page(at: 0) else {
+      print("🔵 CoolPDF applyScaleSettings: no document or first page")
+      return
+    }
+
+    print("🔵 CoolPDF applying scale settings:")
+    print("🔵   pendingMinScale: \(pendingMinScale)")
+    print("🔵   pendingMaxScale: \(pendingMaxScale)")
+    print("🔵   pendingScale: \(pendingScale)")
+    print("🔵   view frame size: \(self.frame.size)")
+
+    var pdfPageRect = firstPage.bounds(for: .cropBox)
+
+    // Adjust for rotation like react-native-pdf does (lines 416-418)
+    if firstPage.rotation == 90 || firstPage.rotation == 270 {
+      pdfPageRect = CGRect(x: 0, y: 0, width: pdfPageRect.height, height: pdfPageRect.width)
+    }
+
+    print("🔵   PDF page rect (adjusted): \(pdfPageRect)")
+    print("🔵   PDF page rotation: \(firstPage.rotation)")
+
+    // React-native-pdf calculates a fixScaleFactor based on fit policy
+    // Default fitPolicy is 2 (BOTH) - see line 261 in RNPDFPdfView.mm
+    // Lines 431-443 show the calculation for fitPolicy = 2 (BOTH)
+    let pageAspect = pdfPageRect.width / pdfPageRect.height
+    let viewAspect = self.frame.width / self.frame.height
+
+    let fixScaleFactor: CGFloat
+    if viewAspect > pageAspect {
+      // Height is the limiting factor
+      fixScaleFactor = self.frame.height / pdfPageRect.height
+    } else {
+      // Width is the limiting factor
+      fixScaleFactor = self.frame.width / pdfPageRect.width
+    }
+
+    print("🔵   pageAspect: \(pageAspect), viewAspect: \(viewAspect)")
+    print("🔵   fixScaleFactor: \(fixScaleFactor)")
+
+    // Set min/max scale factors multiplied by fixScaleFactor (lines 436, 437, 441, 442)
+    pdfView.minScaleFactor = fixScaleFactor * CGFloat(pendingMinScale)
+    pdfView.maxScaleFactor = fixScaleFactor * CGFloat(pendingMaxScale)
+
+    // Apply scale with bounds checking (like react-native-pdf lines 448-451)
+    var finalScale = CGFloat(pendingScale) * fixScaleFactor
+    if finalScale > pdfView.maxScaleFactor {
+      finalScale = pdfView.maxScaleFactor
+    }
+    if finalScale < pdfView.minScaleFactor {
+      finalScale = pdfView.minScaleFactor
+    }
+
+    print("🔵   finalScale before applying: \(finalScale)")
+
+    let wasAutoScaling = pdfView.autoScales
+    pdfView.autoScales = false
+    pdfView.scaleFactor = finalScale
+    pdfView.autoScales = wasAutoScaling
+
+    print("🔵 CoolPDF after applying scale:")
+    print("🔵   scaleFactor: \(pdfView.scaleFactor)")
+    print("🔵   minScaleFactor: \(pdfView.minScaleFactor)")
+    print("🔵   maxScaleFactor: \(pdfView.maxScaleFactor)")
+    print("🔵   autoScales: \(pdfView.autoScales)")
   }
 
   private func performPageNavigation() {
@@ -179,6 +249,9 @@ class CoolPdfView: ExpoView {
         dimensions = ["width": 0, "height": 0]
       }
 
+      // Apply scale settings after document loads (like react-native-pdf does)
+      applyScaleSettings()
+
       // Get table of contents
       let tableContents = extractTableOfContents(from: document)
 
@@ -254,6 +327,9 @@ class CoolPdfView: ExpoView {
         self.needsPageNavigation = true
         self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
 
+        // Apply scale settings after document loads (like react-native-pdf does)
+        self.applyScaleSettings()
+
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
         if let firstPage = document.page(at: 0) {
@@ -325,6 +401,9 @@ class CoolPdfView: ExpoView {
         self.needsPageNavigation = true
         self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
 
+        // Apply scale settings after document loads (like react-native-pdf does)
+        self.applyScaleSettings()
+
         // Get dimensions using rowSize (like react-native-pdf does)
         let dimensions: [String: Any]
         if let firstPage = document.page(at: 0) {
@@ -375,15 +454,21 @@ class CoolPdfView: ExpoView {
   }
 
   func setScale(_ scale: Double) {
-    pdfView.scaleFactor = CGFloat(scale)
+    print("🔵 CoolPDF setScale called with: \(scale)")
+    pendingScale = scale
+    // Will be applied after document loads
   }
 
   func setMinScale(_ minScale: Double) {
-    pdfView.minScaleFactor = CGFloat(minScale)
+    print("🔵 CoolPDF setMinScale called with: \(minScale)")
+    pendingMinScale = minScale
+    // Will be applied after document loads
   }
 
   func setMaxScale(_ maxScale: Double) {
-    pdfView.maxScaleFactor = CGFloat(maxScale)
+    print("🔵 CoolPDF setMaxScale called with: \(maxScale)")
+    pendingMaxScale = maxScale
+    // Will be applied after document loads
   }
 
   func setHorizontal(_ horizontal: Bool) {

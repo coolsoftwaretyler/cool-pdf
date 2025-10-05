@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 33%
+Overall compatibility: 36%
 
-- 3/29 props
+- 4/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 14/44 total props supported
+- 15/44 total props supported
 
 ### Props
 
@@ -44,7 +44,7 @@ Overall compatibility: 33%
 | source                         |                            object                             |         not null         | PDF source like {uri:xxx, cache:false}. see the following for detail.                                                                                                       | ✔  | ✔      | ✔        |
 | page                           |                            number                             |            1             | initial page index                                                                                                                                                          | ✔  | ✔      | ✔        |
 | scale                          |                            number                             |           1.0            | should minScale<=scale<=maxScale                                                                                                                                            | ✔  | ✔      | ✔        |
-| minScale                       |                            number                             |           1.0            | min scale                                                                                                                                                                   | ✔  | ✔      | ✖        |
+| minScale                       |                            number                             |           1.0            | min scale                                                                                                                                                                   | ✔  | ✔      | ✔        |
 | maxScale                       |                            number                             |           3.0            | max scale                                                                                                                                                                   | ✔  | ✔      | ✖        |
 | horizontal                     |                             bool                              |          false           | draw page direction, if you want to listen the orientation change, you can use [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker) | ✔  | ✔      | ✖        |
 | showsHorizontalScrollIndicator |                             bool                              |           true           | shows or hides the horizontal scroll bar indicator on iOS                                                                                                                   | ✔  |         | ✖        |
