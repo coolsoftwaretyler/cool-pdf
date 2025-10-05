@@ -26,6 +26,7 @@ import { OnLoadCompleteScenario } from "./basic/OnLoadComplete";
 import { ShowsVerticalScrollIndicatorScenario } from "./basic/ShowsVerticalScrollIndicator";
 import { ScrollEnabledScenario } from "./basic/ScrollEnabled";
 import { SpacingPropScenario } from "./navigation/SpacingProp";
+import { FitPolicyPropScenario } from "./zoom/FitPolicyProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -133,6 +134,9 @@ export { default as MinScalePropReactNativePdfScreen } from "./zoom/MinScaleProp
 
 export { default as MaxScalePropCoolPdfScreen } from "./zoom/MaxScalePropCoolPdfScreen";
 export { default as MaxScalePropReactNativePdfScreen } from "./zoom/MaxScalePropReactNativePdfScreen";
+
+export { default as FitPolicyPropCoolPdfScreen } from "./zoom/FitPolicyPropCoolPdfScreen";
+export { default as FitPolicyPropReactNativePdfScreen } from "./zoom/FitPolicyPropReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory = "basic" | "navigation" | "zoom";
@@ -288,6 +292,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...MaxScalePropScenario,
     coolPdfScreen: "MaxScalePropCoolPdf",
     reactNativePdfScreen: "MaxScalePropReactNativePdf",
+  },
+
+  {
+    ...FitPolicyPropScenario,
+    coolPdfScreen: "FitPolicyPropCoolPdf",
+    reactNativePdfScreen: "FitPolicyPropReactNativePdf",
   },
 ];
 
