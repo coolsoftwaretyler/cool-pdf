@@ -27,6 +27,7 @@ import { ShowsVerticalScrollIndicatorScenario } from "./basic/ShowsVerticalScrol
 import { ScrollEnabledScenario } from "./basic/ScrollEnabled";
 import { SpacingPropScenario } from "./navigation/SpacingProp";
 import { FitPolicyPropScenario } from "./zoom/FitPolicyProp";
+import { StylePropScenario } from "./basic/StyleProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -43,6 +44,7 @@ export {
   OnLoadCompleteScenario,
   ShowsVerticalScrollIndicatorScenario,
   ScrollEnabledScenario,
+  StylePropScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -96,6 +98,9 @@ export { default as ShowsVerticalScrollIndicatorReactNativePdfScreen } from "./b
 
 export { default as ScrollEnabledCoolPdfScreen } from "./basic/ScrollEnabledCoolPdfScreen";
 export { default as ScrollEnabledReactNativePdfScreen } from "./basic/ScrollEnabledReactNativePdfScreen";
+
+export { default as StylePropCoolPdfScreen } from "./basic/StylePropCoolPdfScreen";
+export { default as StylePropReactNativePdfScreen } from "./basic/StylePropReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -224,6 +229,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...ScrollEnabledScenario,
     coolPdfScreen: "ScrollEnabledCoolPdf",
     reactNativePdfScreen: "ScrollEnabledReactNativePdf",
+  },
+
+  {
+    ...StylePropScenario,
+    coolPdfScreen: "StylePropCoolPdf",
+    reactNativePdfScreen: "StylePropReactNativePdf",
   },
 
   // Navigation

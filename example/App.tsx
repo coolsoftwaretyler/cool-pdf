@@ -35,6 +35,8 @@ import {
   ShowsVerticalScrollIndicatorReactNativePdfScreen,
   ScrollEnabledCoolPdfScreen,
   ScrollEnabledReactNativePdfScreen,
+  StylePropCoolPdfScreen,
+  StylePropReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -106,6 +108,9 @@ type RootStackParamList = {
 
   ScrollEnabledCoolPdf: undefined;
   ScrollEnabledReactNativePdf: undefined;
+
+  StylePropCoolPdf: undefined;
+  StylePropReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -342,6 +347,17 @@ export default function App() {
             component={ScrollEnabledReactNativePdfScreen}
             options={{ title: "Scroll Enabled (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="StylePropCoolPdf"
+            component={StylePropCoolPdfScreen}
+            options={{ title: "Style Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="StylePropReactNativePdf"
+            component={StylePropReactNativePdfScreen}
+            options={{ title: "Style Prop (RN-PDF)" }}
+          />
+
 
 
 
