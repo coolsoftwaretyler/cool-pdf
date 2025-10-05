@@ -49,6 +49,8 @@ import {
   RestrictedZoomReactNativePdfScreen,
   ScalePropCoolPdfScreen,
   ScalePropReactNativePdfScreen,
+  MinScalePropCoolPdfScreen,
+  MinScalePropReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -106,6 +108,9 @@ type RootStackParamList = {
 
   ScalePropCoolPdf: undefined;
   ScalePropReactNativePdf: undefined;
+
+  MinScalePropCoolPdf: undefined;
+  MinScalePropReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -377,6 +382,17 @@ export default function App() {
             name="ScalePropReactNativePdf"
             component={ScalePropReactNativePdfScreen}
             options={{ title: "Scale Prop (RN-PDF)" }}
+          />
+
+          <Stack.Screen
+            name="MinScalePropCoolPdf"
+            component={MinScalePropCoolPdfScreen}
+            options={{ title: "Min Scale Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="MinScalePropReactNativePdf"
+            component={MinScalePropReactNativePdfScreen}
+            options={{ title: "Min Scale Prop (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
