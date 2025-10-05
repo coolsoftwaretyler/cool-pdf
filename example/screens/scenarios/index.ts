@@ -183,7 +183,7 @@ export { default as EnableDoubleTapZoomPropCoolPdfScreen } from "./zoom/EnableDo
 export { default as EnableDoubleTapZoomPropReactNativePdfScreen } from "./zoom/EnableDoubleTapZoomPropReactNativePdfScreen";
 
 // Types
-export type ScenarioCategory = "loading" | "basic" | "navigation" | "zoom";
+export type ScenarioCategory = "loading" | "events" | "basic" | "navigation" | "zoom";
 
 export type ScenarioMetadata = {
   id: string;
@@ -385,6 +385,7 @@ export const scenariosByCategory: Record<ScenarioCategory, ScenarioMetadata[]> =
     basic: allScenarios.filter((s) => s.category === "basic"),
     navigation: allScenarios.filter((s) => s.category === "navigation"),
     zoom: allScenarios.filter((s) => s.category === "zoom"),
+    events: allScenarios.filter((s) => s.category === "events"),
   };
 
 export const categoryLabels: Record<ScenarioCategory, string> = {
@@ -392,4 +393,5 @@ export const categoryLabels: Record<ScenarioCategory, string> = {
   basic: "Basic",
   navigation: "Navigation",
   zoom: "Zoom & Scale",
+  events: "Events",
 };
