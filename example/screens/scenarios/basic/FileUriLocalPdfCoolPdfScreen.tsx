@@ -1,0 +1,128 @@
+import { useState, useEffect } from "react";
+import { CoolPdfView } from "cool-pdf";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { File, Paths } from "expo-file-system";
+import {
+  ScenarioEventLog,
+  ScenarioEvent,
+} from "../../../components/ScenarioEventLog";
+import { ScenarioHeader } from "../../../components/ScenarioHeader";
+import { FileUriLocalPdfScenario } from "./FileUriLocalPdf";
+
+export default function FileUriLocalPdfCoolPdfScreen() {
+  const [events, setEvents] = useState<ScenarioEvent[]>([]);
+  const [pdfPath, setPdfPath] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const addEvent = (type: ScenarioEvent["type"], data: any) => {
+    setEvents((prev) => [...prev, { timestamp: Date.now(), type, data }]);
+  };
+
+  useEffect(() => {
+    async function downloadPDF() {
+      try {
+        const filename = "file-uri-test-sample.pdf";
+        const file = new File(Paths.cache, filename);
+
+        // Check if already downloaded
+        const exists = file.exists;
+
+        if (!exists) {
+          addEvent("info", { message: "Downloading PDF to cache..." });
+          // Download from a public URL
+          const downloadedFile = await File.downloadFileAsync(
+            "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            Paths.cache
+          );
+          addEvent("info", { message: `Downloaded to ${downloadedFile.uri}` });
+          setPdfPath(downloadedFile.uri);
+        } else {
+          addEvent("info", { message: `Using cached PDF at ${file.uri}` });
+          setPdfPath(file.uri);
+        }
+      } catch (e: any) {
+        setError(e.message);
+        addEvent("error", { message: e.message });
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    downloadPDF();
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <ScenarioHeader
+        implementation="CoolPDF Implementation"
+        name={FileUriLocalPdfScenario.name}
+        description={FileUriLocalPdfScenario.description}
+        backgroundColor="#5856d6"
+      />
+
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#5856d6" />
+          <Text style={styles.loadingText}>Downloading PDF...</Text>
+        </View>
+      ) : error ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>Error: {error}</Text>
+        </View>
+      ) : pdfPath ? (
+        <CoolPdfView
+          source={{ uri: pdfPath }}
+          onLoadComplete={(event) => {
+            const { numberOfPages, path, dimensions, tableContents } =
+              event.nativeEvent;
+            addEvent("loadComplete", {
+              numberOfPages,
+              path,
+              dimensions,
+              tableContents,
+            });
+          }}
+          style={styles.pdf}
+        />
+      ) : null}
+
+      <ScenarioEventLog events={events} accentColor="#5856d6" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  pdf: {
+    flex: 1,
+    backgroundColor: "#fff",
+    margin: 16,
+    borderRadius: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 16,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: "#666",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "#ff3b30",
+    textAlign: "center",
+  },
+});
