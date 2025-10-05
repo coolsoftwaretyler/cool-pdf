@@ -21,29 +21,35 @@ export default function FileUriLocalPdfCoolPdfScreen() {
 
   useEffect(() => {
     async function downloadPDF() {
+      const filename = "file-uri-test-sample.pdf";
+      const destinationFile = new File(Paths.cache, filename);
+
       try {
-        const filename = "file-uri-test-sample.pdf";
-        const file = new File(Paths.cache, filename);
-
         // Check if already downloaded
-        const exists = file.exists;
-
-        if (!exists) {
-          addEvent("info", { message: "Downloading PDF to cache..." });
-          // Download from a public URL
-          const downloadedFile = await File.downloadFileAsync(
-            "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-            Paths.cache
-          );
-          addEvent("info", { message: `Downloaded to ${downloadedFile.uri}` });
-          setPdfPath(downloadedFile.uri);
-        } else {
-          addEvent("info", { message: `Using cached PDF at ${file.uri}` });
-          setPdfPath(file.uri);
+        if (destinationFile.exists) {
+          addEvent("info", { message: `Using cached PDF at ${destinationFile.uri}` });
+          setPdfPath(destinationFile.uri);
+          setLoading(false);
+          return;
         }
+
+        addEvent("info", { message: "Downloading PDF to cache..." });
+        // Download to specific file path
+        const downloadedFile = await File.downloadFileAsync(
+          "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+          destinationFile
+        );
+        addEvent("info", { message: `Downloaded to ${downloadedFile.uri}` });
+        setPdfPath(downloadedFile.uri);
       } catch (e: any) {
-        setError(e.message);
-        addEvent("error", { message: e.message });
+        // If download fails due to file already existing, just use it
+        if (e.message?.includes("already exists") || e.message?.includes("Destination already exists")) {
+          addEvent("info", { message: `File already exists, using cached PDF at ${destinationFile.uri}` });
+          setPdfPath(destinationFile.uri);
+        } else {
+          setError(e.message);
+          addEvent("error", { message: e.message });
+        }
       } finally {
         setLoading(false);
       }
