@@ -29,6 +29,8 @@ import {
   BundleAssetsPdfReactNativePdfScreen,
   FileUriLocalPdfCoolPdfScreen,
   FileUriLocalPdfReactNativePdfScreen,
+  OnLoadCompleteCoolPdfScreen,
+  OnLoadCompleteReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -87,6 +89,9 @@ type RootStackParamList = {
 
   FileUriLocalPdfCoolPdf: undefined;
   FileUriLocalPdfReactNativePdf: undefined;
+
+  OnLoadCompleteCoolPdf: undefined;
+  OnLoadCompleteReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -287,6 +292,17 @@ export default function App() {
             component={FileUriLocalPdfReactNativePdfScreen}
             options={{ title: "File URI Local PDF (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="OnLoadCompleteCoolPdf"
+            component={OnLoadCompleteCoolPdfScreen}
+            options={{ title: "On Load Complete (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="OnLoadCompleteReactNativePdf"
+            component={OnLoadCompleteReactNativePdfScreen}
+            options={{ title: "On Load Complete (RN-PDF)" }}
+          />
+
 
 
 

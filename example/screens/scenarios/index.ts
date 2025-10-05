@@ -22,6 +22,7 @@ import { PagePropScenario } from "./navigation/PageProp";
 import { ScalePropScenario } from "./zoom/ScaleProp";
 import { MinScalePropScenario } from "./zoom/MinScaleProp";
 import { MaxScalePropScenario } from "./zoom/MaxScaleProp";
+import { OnLoadCompleteScenario } from "./basic/OnLoadComplete";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -35,6 +36,7 @@ export {
   RequireLocalPdfScenario,
   BundleAssetsPdfScenario,
   FileUriLocalPdfScenario,
+  OnLoadCompleteScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -78,6 +80,9 @@ export { default as BundleAssetsPdfReactNativePdfScreen } from "./basic/BundleAs
 
 export { default as FileUriLocalPdfCoolPdfScreen } from "./basic/FileUriLocalPdfCoolPdfScreen";
 export { default as FileUriLocalPdfReactNativePdfScreen } from "./basic/FileUriLocalPdfReactNativePdfScreen";
+
+export { default as OnLoadCompleteCoolPdfScreen } from "./basic/OnLoadCompleteCoolPdfScreen";
+export { default as OnLoadCompleteReactNativePdfScreen } from "./basic/OnLoadCompleteReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -182,6 +187,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...FileUriLocalPdfScenario,
     coolPdfScreen: "FileUriLocalPdfCoolPdf",
     reactNativePdfScreen: "FileUriLocalPdfReactNativePdf",
+  },
+
+  {
+    ...OnLoadCompleteScenario,
+    coolPdfScreen: "OnLoadCompleteCoolPdf",
+    reactNativePdfScreen: "OnLoadCompleteReactNativePdf",
   },
 
   // Navigation
