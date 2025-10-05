@@ -45,6 +45,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var scale: Float = 1.0f
   private var fitPolicy: com.github.barteksc.pdfviewer.util.FitPolicy = com.github.barteksc.pdfviewer.util.FitPolicy.WIDTH
   private var currentFile: File? = null
+  private var password: String? = null
 
   init {
     addView(pdfView)
@@ -231,6 +232,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         .swipeHorizontal(horizontal)
         .pageFitPolicy(fitPolicy)
         .enableDoubletap(true)
+        .password(password)
         .defaultPage(pendingPage - 1)
         .onLoad(OnLoadCompleteListener { nbPages ->
           totalPages = nbPages
@@ -304,7 +306,13 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         })
         .onError(OnErrorListener { t ->
           Log.e(TAG, "Error rendering PDF", t)
-          onError(mapOf("error" to "Failed to render PDF: ${t.message}"))
+          // Check for password error (matching react-native-pdf lines 178-181)
+          val errorMessage = if (t.message?.contains("Password required or incorrect password") == true) {
+            "Password required or incorrect password."
+          } else {
+            "Failed to render PDF: ${t.message}"
+          }
+          onError(mapOf("error" to errorMessage))
         })
         .onTap { e ->
           Log.d(TAG, "PDF tapped on page $currentPage")
@@ -392,6 +400,12 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     pageSpacing = spacing
     // Note: This would require reloading the PDF with new configuration
     // For now, we'll just store the value for next load
+  }
+
+  fun setPassword(newPassword: String?) {
+    password = newPassword
+    Log.d(TAG, "setPassword called")
+    // Note: Password is applied when document is loaded, not here
   }
 
   fun setFitPolicy(policy: Int) {

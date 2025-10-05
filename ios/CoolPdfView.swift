@@ -20,6 +20,7 @@ class CoolPdfView: ExpoView {
   private var pendingMinScale: Double = 1.0
   private var pendingMaxScale: Double = 3.0
   private var fitPolicy: Int = 2 // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
+  private var password: String? = nil
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -237,6 +238,19 @@ class CoolPdfView: ExpoView {
     }
 
     if let document = document {
+      // Check if document is locked and needs password (matching react-native-pdf lines 350-357)
+      if document.isLocked {
+        if let password = password, document.unlock(withPassword: password) {
+          print("🔵 CoolPDF: Document unlocked with password")
+        } else {
+          print("🔴 CoolPDF: Password required or incorrect password")
+          onError([
+            "error": "Password required or incorrect password."
+          ])
+          return
+        }
+      }
+
       // Suppress automatic pageChanged notification during initial load
       isInitialLoad = true
       pdfView.document = document
@@ -530,6 +544,12 @@ class CoolPdfView: ExpoView {
     if pdfView.document != nil {
       applyScaleSettings()
     }
+  }
+
+  func setPassword(_ newPassword: String?) {
+    print("🔵 CoolPDF setPassword called")
+    password = newPassword
+    // Note: Password is applied when document is loaded, not here
   }
 
   private func resolveAssetPath(_ uri: String) -> URL? {

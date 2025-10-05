@@ -77,6 +77,10 @@ class CoolPdfModule : Module() {
         view.setSpacing(spacing)
       }
 
+      Prop("password") { view: CoolPdfView, password: String? ->
+        view.setPassword(password)
+      }
+
       Prop("fitPolicy") { view: CoolPdfView, fitPolicy: Int ->
         view.setFitPolicy(fitPolicy)
       }
