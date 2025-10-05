@@ -1,8 +1,26 @@
-import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { allScenarios, categoryLabels } from './scenarios';
-import type { ScenarioMetadata } from './scenarios';
+import { FlatList, Text, View, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
+import { scenariosByCategory, categoryLabels } from './scenarios';
+import type { ScenarioMetadata, ScenarioCategory } from './scenarios';
+import { useRef } from 'react';
 
 export default function ScenarioListScreen({ navigation }: any) {
+  const sectionListRef = useRef<SectionList>(null);
+
+  const sections = Object.entries(scenariosByCategory).map(([category, scenarios]) => ({
+    title: categoryLabels[category as ScenarioCategory],
+    category: category as ScenarioCategory,
+    data: scenarios,
+  }));
+
+  const scrollToScenario = (sectionIndex: number, itemIndex: number) => {
+    sectionListRef.current?.scrollToLocation({
+      sectionIndex,
+      itemIndex,
+      animated: true,
+      viewPosition: 0,
+    });
+  };
+
   const renderScenario = ({ item }: { item: ScenarioMetadata }) => (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -37,11 +55,37 @@ export default function ScenarioListScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={allScenarios}
+      <SectionList
+        ref={sectionListRef}
+        sections={sections}
         renderItem={renderScenario}
+        renderSectionHeader={({ section }) => (
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionHeaderText}>{section.title}</Text>
+          </View>
+        )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
+        stickySectionHeadersEnabled={true}
+        ListHeaderComponent={
+          <View style={styles.tocContainer}>
+            <Text style={styles.tocTitle}>Test Scenarios</Text>
+            {sections.map((section, sectionIndex) => (
+              <View key={section.category} style={styles.categoryGroup}>
+                <Text style={styles.categoryLabel}>{section.title}</Text>
+                {section.data.map((scenario, itemIndex) => (
+                  <TouchableOpacity
+                    key={scenario.id}
+                    style={styles.tocItem}
+                    onPress={() => scrollToScenario(sectionIndex, itemIndex)}
+                  >
+                    <Text style={styles.tocItemText}>{scenario.name}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            ))}
+          </View>
+        }
       />
     </View>
   );
@@ -51,6 +95,48 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  tocContainer: {
+    backgroundColor: '#fff',
+    padding: 16,
+    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  tocTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: '#333',
+  },
+  categoryGroup: {
+    marginBottom: 16,
+  },
+  categoryLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#007AFF',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  tocItem: {
+    paddingVertical: 4,
+    paddingLeft: 12,
+  },
+  tocItemText: {
+    fontSize: 13,
+    color: '#555',
+  },
+  sectionHeader: {
+    backgroundColor: '#e8e8e8',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  sectionHeaderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
   },
   list: {
     padding: 16,
