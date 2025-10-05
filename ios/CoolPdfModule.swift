@@ -88,6 +88,10 @@ public class CoolPdfModule: Module {
         view.setScrollEnabled(scrollEnabled)
       }
 
+      Prop("enableDoubleTapZoom") { (view: CoolPdfView, enableDoubleTapZoom: Bool) in
+        view.setEnableDoubleTapZoom(enableDoubleTapZoom)
+      }
+
       Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }
   }

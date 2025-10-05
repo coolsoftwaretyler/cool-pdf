@@ -85,6 +85,10 @@ class CoolPdfModule : Module() {
         view.setFitPolicy(fitPolicy)
       }
 
+      Prop("enableDoubleTapZoom") { view: CoolPdfView, enableDoubleTapZoom: Boolean ->
+        view.setEnableDoubleTapZoom(enableDoubleTapZoom)
+      }
+
       // Defines events that the view can send to JavaScript.
       Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }

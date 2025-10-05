@@ -14,6 +14,7 @@ class CoolPdfView: ExpoView {
   private var currentPage: Int = 0
   private var pendingPage: Int = 1
   private var gestureRecognizer: UITapGestureRecognizer?
+  private var doubleTapRecognizer: UITapGestureRecognizer?
   private var isInitialLoad: Bool = false
   private var needsPageNavigation: Bool = false
   private var pendingScale: Double = 1.0
@@ -21,6 +22,8 @@ class CoolPdfView: ExpoView {
   private var pendingMaxScale: Double = 3.0
   private var fitPolicy: Int = 2 // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
   private var password: String? = nil
+  private var enableDoubleTapZoom: Bool = true
+  private var fixScaleFactor: CGFloat = 1.0
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -33,11 +36,23 @@ class CoolPdfView: ExpoView {
 
     addSubview(pdfView)
 
-    // Setup tap gesture
+    // Setup single tap gesture
     gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
     gestureRecognizer?.numberOfTapsRequired = 1
     if let recognizer = gestureRecognizer {
       pdfView.addGestureRecognizer(recognizer)
+    }
+
+    // Setup double tap gesture
+    doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+    doubleTapRecognizer?.numberOfTapsRequired = 2
+    if let recognizer = doubleTapRecognizer {
+      pdfView.addGestureRecognizer(recognizer)
+    }
+
+    // Single tap should wait for double tap to fail
+    if let singleTap = gestureRecognizer, let doubleTap = doubleTapRecognizer {
+      singleTap.require(toFail: doubleTap)
     }
 
     // Listen for page change notifications
@@ -88,8 +103,6 @@ class CoolPdfView: ExpoView {
     print("🔵   PDF page rotation: \(firstPage.rotation)")
 
     // Calculate fixScaleFactor based on fitPolicy (matching react-native-pdf lines 420-444)
-    let fixScaleFactor: CGFloat
-
     if fitPolicy == 0 {
       // FIT WIDTH - line 420-424
       fixScaleFactor = self.frame.width / pdfPageRect.width
@@ -197,6 +210,54 @@ class CoolPdfView: ExpoView {
     onPageSingleTap([
       "page": currentPage
     ])
+  }
+
+  @objc private func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
+    // Clear selection to prevent text selection on double tap
+    DispatchQueue.main.async {
+      self.pdfView.clearSelection()
+    }
+
+    if !enableDoubleTapZoom {
+      return
+    }
+
+    // Cycle through min/mid/max scale factors (matching react-native-pdf behavior)
+    let min = pdfView.minScaleFactor / fixScaleFactor
+    let max = pdfView.maxScaleFactor / fixScaleFactor
+    let mid = (max - min) / 2 + min
+    let currentScale = pdfView.scaleFactor / fixScaleFactor
+
+    var targetScale: CGFloat
+    if currentScale < mid {
+      targetScale = mid
+    } else if currentScale < max {
+      targetScale = max
+    } else {
+      targetScale = min
+    }
+
+    let newScale = targetScale * fixScaleFactor
+    let tapPoint = recognizer.location(in: pdfView)
+
+    // Get the tapped page
+    guard let tappedPage = pdfView.page(for: tapPoint, nearest: false) ?? pdfView.currentPage else {
+      return
+    }
+
+    let pagePoint = pdfView.convert(tapPoint, to: tappedPage)
+
+    // Create zoom rect
+    var zoomRect = CGRect.zero
+    zoomRect.size.width = pdfView.frame.size.width
+    zoomRect.size.height = 1
+    zoomRect.origin = pagePoint
+
+    // Animate zoom
+    UIView.animate(withDuration: 0.3) {
+      self.pdfView.scaleFactor = newScale
+      self.pdfView.go(to: zoomRect, on: tappedPage)
+    }
   }
 
   func loadPdf(from source: [String: Any]) {
@@ -563,6 +624,11 @@ class CoolPdfView: ExpoView {
     print("🔵 CoolPDF setPassword called")
     password = newPassword
     // Note: Password is applied when document is loaded, not here
+  }
+
+  func setEnableDoubleTapZoom(_ enabled: Bool) {
+    print("🔵 CoolPDF setEnableDoubleTapZoom called with: \(enabled)")
+    enableDoubleTapZoom = enabled
   }
 
   private func resolveAssetPath(_ uri: String) -> URL? {
