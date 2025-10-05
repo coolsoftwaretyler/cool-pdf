@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 59%
+Overall compatibility: 61%
 
-- 14/29 props
+- 15/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 26/44 total props supported
+- 27/44 total props supported
 
 ### Props
 
@@ -52,7 +52,7 @@ Overall compatibility: 59%
 | scrollEnabled                  |                             bool                              |           true           | enable or disable scroll                                                                                                                                                    | ✔  |         | ✔        |
 | fitPolicy                      |                            number                             |            2             | 0:fit width, 1:fit height, 2:fit both(default)                                                                                                                              | ✔  | ✔      | ✔        |
 | spacing                        |                            number                             |            10            | the breaker size between pages                                                                                                                                              | ✔  | ✔      | ✔        |
-| password                       |                            string                             |            ""            | pdf password, if password error, will call OnError() with message "Password required or incorrect password."                                                                | ✔  | ✔      | ✖        |
+| password                       |                            string                             |            ""            | pdf password, if password error, will call OnError() with message "Password required or incorrect password."                                                                | ✔  | ✔      | ✔        |
 | style                          |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✔        |
 | progressContainerStyle         |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✖        |
 | renderActivityIndicator        |                    (progress) => Component                    |      <ProgressBar/>      | when loading show it as an indicator, you can use your component                                                                                                            | ✔  | ✔      | ✖        |
