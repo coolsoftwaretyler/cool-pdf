@@ -31,6 +31,8 @@ import {
   FileUriLocalPdfReactNativePdfScreen,
   OnLoadCompleteCoolPdfScreen,
   OnLoadCompleteReactNativePdfScreen,
+  ShowsVerticalScrollIndicatorCoolPdfScreen,
+  ShowsVerticalScrollIndicatorReactNativePdfScreen,
   // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
@@ -92,6 +94,9 @@ type RootStackParamList = {
 
   OnLoadCompleteCoolPdf: undefined;
   OnLoadCompleteReactNativePdf: undefined;
+
+  ShowsVerticalScrollIndicatorCoolPdf: undefined;
+  ShowsVerticalScrollIndicatorReactNativePdf: undefined;
 
   // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
@@ -302,6 +307,17 @@ export default function App() {
             component={OnLoadCompleteReactNativePdfScreen}
             options={{ title: "On Load Complete (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="ShowsVerticalScrollIndicatorCoolPdf"
+            component={ShowsVerticalScrollIndicatorCoolPdfScreen}
+            options={{ title: "Shows Vertical Scroll Indicator (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="ShowsVerticalScrollIndicatorReactNativePdf"
+            component={ShowsVerticalScrollIndicatorReactNativePdfScreen}
+            options={{ title: "Shows Vertical Scroll Indicator (RN-PDF)" }}
+          />
+
 
 
 
