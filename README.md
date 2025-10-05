@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 55%
+Overall compatibility: 57%
 
-- 12/29 props
+- 13/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 24/44 total props supported
+- 25/44 total props supported
 
 ### Props
 
@@ -46,7 +46,7 @@ Overall compatibility: 55%
 | scale                          |                            number                             |           1.0            | should minScale<=scale<=maxScale                                                                                                                                            | ✔  | ✔      | ✔        |
 | minScale                       |                            number                             |           1.0            | min scale                                                                                                                                                                   | ✔  | ✔      | ✔        |
 | maxScale                       |                            number                             |           3.0            | max scale                                                                                                                                                                   | ✔  | ✔      | ✔        |
-| horizontal                     |                             bool                              |          false           | draw page direction, if you want to listen the orientation change, you can use [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker) | ✔  | ✔      | ✖        |
+| horizontal                     |                             bool                              |          false           | draw page direction, if you want to listen the orientation change, you can use [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker) | ✔  | ✔      | ✔        |
 | showsHorizontalScrollIndicator |                             bool                              |           true           | shows or hides the horizontal scroll bar indicator on iOS                                                                                                                   | ✔  |         | ✖        |
 | showsVerticalScrollIndicator   |                             bool                              |           true           | shows or hides the vertical scroll bar indicator on iOS                                                                                                                     | ✔  |         | ✔        |
 | scrollEnabled                  |                             bool                              |           true           | enable or disable scroll                                                                                                                                                    | ✔  |         | ✔        |

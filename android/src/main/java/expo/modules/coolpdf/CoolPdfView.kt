@@ -368,14 +368,24 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
 
   fun setHorizontal(isHorizontal: Boolean) {
     horizontal = isHorizontal
-    // Note: This would require reloading the PDF with new configuration
-    // For now, we'll just store the value for next load
+    Log.d(TAG, "setHorizontal: $isHorizontal")
+
+    // Reload the PDF if it's already loaded (like react-native-pdf does)
+    currentFile?.let { file ->
+      pdfView.recycle()
+      renderPdf(file)
+    }
   }
 
   fun setEnablePaging(enabled: Boolean) {
     enablePaging = enabled
-    // Note: This would require reloading the PDF with new configuration
-    // For now, we'll just store the value for next load
+    Log.d(TAG, "setEnablePaging: $enabled")
+
+    // Reload the PDF if it's already loaded (like react-native-pdf does)
+    currentFile?.let { file ->
+      pdfView.recycle()
+      renderPdf(file)
+    }
   }
 
   fun setSpacing(spacing: Int) {
