@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 45%
+Overall compatibility: 48%
 
-- 8/29 props
+- 9/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 20/44 total props supported
+- 21/44 total props supported
 
 ### Props
 
@@ -51,7 +51,7 @@ Overall compatibility: 45%
 | showsVerticalScrollIndicator   |                             bool                              |           true           | shows or hides the vertical scroll bar indicator on iOS                                                                                                                     | ✔  |         | ✔        |
 | scrollEnabled                  |                             bool                              |           true           | enable or disable scroll                                                                                                                                                    | ✔  |         | ✔        |
 | fitPolicy                      |                            number                             |            2             | 0:fit width, 1:fit height, 2:fit both(default)                                                                                                                              | ✔  | ✔      | ✖        |
-| spacing                        |                            number                             |            10            | the breaker size between pages                                                                                                                                              | ✔  | ✔      | ✖        |
+| spacing                        |                            number                             |            10            | the breaker size between pages                                                                                                                                              | ✔  | ✔      | ✔        |
 | password                       |                            string                             |            ""            | pdf password, if password error, will call OnError() with message "Password required or incorrect password."                                                                | ✔  | ✔      | ✖        |
 | style                          |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✖        |
 | progressContainerStyle         |                            object                             | {backgroundColor:"#eee"} | support normal view style, you can use this to set border/spacing color...                                                                                                  | ✔  | ✔      | ✖        |
