@@ -2,6 +2,10 @@
 
 PDF View Component for Expo. Intended as a drop-in replacement for [react-native-pdf](https://github.com/wonday/react-native-pdf/). Check [compatibility table for current progress](https://github.com/coolsoftwaretyler/cool-pdf?tab=readme-ov-file#props-compatibility-with-react-native-pdf). Contributions welcome.
 
+## Roadmap
+
+[See this GitHub issue explaining the motivation and intentions for the project](https://github.com/coolsoftwaretyler/cool-pdf/issues/1)
+
 ## Installation
 
 ### Add the package to your dependencies
