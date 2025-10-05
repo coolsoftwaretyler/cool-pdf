@@ -51,6 +51,8 @@ import {
   ScalePropReactNativePdfScreen,
   MinScalePropCoolPdfScreen,
   MinScalePropReactNativePdfScreen,
+  MaxScalePropCoolPdfScreen,
+  MaxScalePropReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -111,6 +113,9 @@ type RootStackParamList = {
 
   MinScalePropCoolPdf: undefined;
   MinScalePropReactNativePdf: undefined;
+
+  MaxScalePropCoolPdf: undefined;
+  MaxScalePropReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -393,6 +398,17 @@ export default function App() {
             name="MinScalePropReactNativePdf"
             component={MinScalePropReactNativePdfScreen}
             options={{ title: "Min Scale Prop (RN-PDF)" }}
+          />
+
+          <Stack.Screen
+            name="MaxScalePropCoolPdf"
+            component={MaxScalePropCoolPdfScreen}
+            options={{ title: "Max Scale Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="MaxScalePropReactNativePdf"
+            component={MaxScalePropReactNativePdfScreen}
+            options={{ title: "Max Scale Prop (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
