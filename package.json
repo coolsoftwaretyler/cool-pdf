@@ -1,6 +1,6 @@
 {
   "name": "@coolsoftwaretyler/cool-pdf",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "PDF View Component for Expo",
   "main": "build/index.js",
   "types": "build/index.d.ts",
