@@ -82,6 +82,8 @@ The implementation should follow patterns from `react-native-pdf` (https://githu
 - Events for load completion, page changes, errors
 - Use Expo docs: https://docs.expo.dev/modules/native-view-tutorial/
 
+**Important**: The react-native-pdf reference implementation is available in `example/node_modules/react-native-pdf/`. Check there first for implementation details, API references, and examples. Only search the web for react-native-pdf when checking for open issues, PRs, or other GitHub-specific information.
+
 ## Creating Test Scenarios
 
 The example app includes a scenario-based testing system to compare CoolPDF with react-native-pdf. Use the scaffold script to create new scenarios:
