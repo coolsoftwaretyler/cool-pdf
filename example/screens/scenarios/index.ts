@@ -34,6 +34,7 @@ import { ShowsHorizontalScrollIndicatorScenario } from "./basic/ShowsHorizontalS
 import { PasswordPropScenario } from "./basic/PasswordProp";
 import { PasswordCorrectScenario } from "./basic/PasswordCorrect";
 import { PasswordIncorrectScenario } from "./basic/PasswordIncorrect";
+import { EnableDoubleTapZoomPropScenario } from "./zoom/EnableDoubleTapZoomProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -172,6 +173,9 @@ export { default as MaxScalePropReactNativePdfScreen } from "./zoom/MaxScaleProp
 
 export { default as FitPolicyPropCoolPdfScreen } from "./zoom/FitPolicyPropCoolPdfScreen";
 export { default as FitPolicyPropReactNativePdfScreen } from "./zoom/FitPolicyPropReactNativePdfScreen";
+
+export { default as EnableDoubleTapZoomPropCoolPdfScreen } from "./zoom/EnableDoubleTapZoomPropCoolPdfScreen";
+export { default as EnableDoubleTapZoomPropReactNativePdfScreen } from "./zoom/EnableDoubleTapZoomPropReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory = "basic" | "navigation" | "zoom";
@@ -375,6 +379,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...FitPolicyPropScenario,
     coolPdfScreen: "FitPolicyPropCoolPdf",
     reactNativePdfScreen: "FitPolicyPropReactNativePdf",
+  },
+
+  {
+    ...EnableDoubleTapZoomPropScenario,
+    coolPdfScreen: "EnableDoubleTapZoomPropCoolPdf",
+    reactNativePdfScreen: "EnableDoubleTapZoomPropReactNativePdf",
   },
 ];
 
