@@ -24,6 +24,7 @@ import { MinScalePropScenario } from "./zoom/MinScaleProp";
 import { MaxScalePropScenario } from "./zoom/MaxScaleProp";
 import { OnLoadCompleteScenario } from "./basic/OnLoadComplete";
 import { ShowsVerticalScrollIndicatorScenario } from "./basic/ShowsVerticalScrollIndicator";
+import { ScrollEnabledScenario } from "./basic/ScrollEnabled";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -39,6 +40,7 @@ export {
   FileUriLocalPdfScenario,
   OnLoadCompleteScenario,
   ShowsVerticalScrollIndicatorScenario,
+  ScrollEnabledScenario,
 };
 export {
   HorizontalScrollingScenario,
@@ -88,6 +90,9 @@ export { default as OnLoadCompleteReactNativePdfScreen } from "./basic/OnLoadCom
 
 export { default as ShowsVerticalScrollIndicatorCoolPdfScreen } from "./basic/ShowsVerticalScrollIndicatorCoolPdfScreen";
 export { default as ShowsVerticalScrollIndicatorReactNativePdfScreen } from "./basic/ShowsVerticalScrollIndicatorReactNativePdfScreen";
+
+export { default as ScrollEnabledCoolPdfScreen } from "./basic/ScrollEnabledCoolPdfScreen";
+export { default as ScrollEnabledReactNativePdfScreen } from "./basic/ScrollEnabledReactNativePdfScreen";
 
 // Navigation scenarios
 export { default as HorizontalScrollingCoolPdfScreen } from "./navigation/HorizontalScrollingCoolPdfScreen";
@@ -204,6 +209,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...ShowsVerticalScrollIndicatorScenario,
     coolPdfScreen: "ShowsVerticalScrollIndicatorCoolPdf",
     reactNativePdfScreen: "ShowsVerticalScrollIndicatorReactNativePdf",
+  },
+
+  {
+    ...ScrollEnabledScenario,
+    coolPdfScreen: "ScrollEnabledCoolPdf",
+    reactNativePdfScreen: "ScrollEnabledReactNativePdf",
   },
 
   // Navigation
