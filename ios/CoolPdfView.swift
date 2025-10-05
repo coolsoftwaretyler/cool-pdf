@@ -488,6 +488,23 @@ class CoolPdfView: ExpoView {
     )
   }
 
+  func setShowsVerticalScrollIndicator(_ shows: Bool) {
+    // Recursively find and update all UIScrollView subviews
+    setScrollIndicators(pdfView, vertical: shows)
+  }
+
+  private func setScrollIndicators(_ view: UIView, vertical: Bool) {
+    // If this view is a scroll view, update its indicator
+    if let scrollView = view as? UIScrollView {
+      scrollView.showsVerticalScrollIndicator = vertical
+    }
+
+    // Recursively check all subviews
+    for subview in view.subviews {
+      setScrollIndicators(subview, vertical: vertical)
+    }
+  }
+
   private func resolveAssetPath(_ uri: String) -> URL? {
     // Strip bundle-assets:// prefix
     let assetPath = uri.replacingOccurrences(of: "bundle-assets://", with: "")

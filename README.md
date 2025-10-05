@@ -30,12 +30,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 40%
+Overall compatibility: 43%
 
-- 6/29 props
+- 7/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 18/44 total props supported
+- 19/44 total props supported
 
 ### Props
 
@@ -48,7 +48,7 @@ Overall compatibility: 40%
 | maxScale                       |                            number                             |           3.0            | max scale                                                                                                                                                                   | ✔  | ✔      | ✔        |
 | horizontal                     |                             bool                              |          false           | draw page direction, if you want to listen the orientation change, you can use [react-native-orientation-locker](https://github.com/wonday/react-native-orientation-locker) | ✔  | ✔      | ✖        |
 | showsHorizontalScrollIndicator |                             bool                              |           true           | shows or hides the horizontal scroll bar indicator on iOS                                                                                                                   | ✔  |         | ✖        |
-| showsVerticalScrollIndicator   |                             bool                              |           true           | shows or hides the vertical scroll bar indicator on iOS                                                                                                                     | ✔  |         | ✖        |
+| showsVerticalScrollIndicator   |                             bool                              |           true           | shows or hides the vertical scroll bar indicator on iOS                                                                                                                     | ✔  |         | ✔        |
 | scrollEnabled                  |                             bool                              |           true           | enable or disable scroll                                                                                                                                                    | ✔  |         | ✖        |
 | fitPolicy                      |                            number                             |            2             | 0:fit width, 1:fit height, 2:fit both(default)                                                                                                                              | ✔  | ✔      | ✖        |
 | spacing                        |                            number                             |            10            | the breaker size between pages                                                                                                                                              | ✔  | ✔      | ✖        |

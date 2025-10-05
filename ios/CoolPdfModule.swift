@@ -72,6 +72,10 @@ public class CoolPdfModule: Module {
         view.setSpacing(spacing)
       }
 
+      Prop("showsVerticalScrollIndicator") { (view: CoolPdfView, showsVerticalScrollIndicator: Bool) in
+        view.setShowsVerticalScrollIndicator(showsVerticalScrollIndicator)
+      }
+
       Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
     }
   }
