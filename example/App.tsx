@@ -2,8 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Button, View, StyleSheet, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import CoolPdfScreen from "./screens/CoolPdfScreen";
-import ReactNativePdfScreen from "./screens/ReactNativePdfScreen";
 import ScenarioListScreen from "./screens/ScenarioListScreen";
 import {
   // Basic scenarios
@@ -221,21 +219,6 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ title: "PDF Viewer Examples" }}
-          />
-          <Stack.Screen
-            name="CoolPdf"
-            component={CoolPdfScreen}
-            options={{ title: "CoolPDF" }}
-          />
-          <Stack.Screen
-            name="ReactNativePdf"
-            component={ReactNativePdfScreen}
-            options={{ title: "react-native-pdf" }}
-          />
           <Stack.Screen
             name="ScenarioList"
             component={ScenarioListScreen}
