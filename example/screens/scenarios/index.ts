@@ -35,6 +35,7 @@ import { PasswordPropScenario } from "./basic/PasswordProp";
 import { PasswordCorrectScenario } from "./basic/PasswordCorrect";
 import { PasswordIncorrectScenario } from "./basic/PasswordIncorrect";
 import { EnableDoubleTapZoomPropScenario } from "./zoom/EnableDoubleTapZoomProp";
+import { EnableRtlPropScenario } from "./navigation/EnableRtlProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -66,6 +67,7 @@ export {
   SpacingPropScenario,
   EnablePagingPropScenario,
   HorizontalPropScenario,
+  EnableRtlPropScenario,
 };
 export { InitialZoomScenario, CustomZoomRangeScenario, RestrictedZoomScenario };
 
@@ -151,6 +153,9 @@ export { default as EnablePagingPropReactNativePdfScreen } from "./navigation/En
 
 export { default as HorizontalPropCoolPdfScreen } from "./navigation/HorizontalPropCoolPdfScreen";
 export { default as HorizontalPropReactNativePdfScreen } from "./navigation/HorizontalPropReactNativePdfScreen";
+
+export { default as EnableRtlPropCoolPdfScreen } from "./navigation/EnableRtlPropCoolPdfScreen";
+export { default as EnableRtlPropReactNativePdfScreen } from "./navigation/EnableRtlPropReactNativePdfScreen";
 
 // Zoom scenarios
 export { default as InitialZoomCoolPdfScreen } from "./zoom/InitialZoomCoolPdfScreen";
@@ -338,6 +343,12 @@ export const allScenarios: ScenarioMetadata[] = [
     ...HorizontalPropScenario,
     coolPdfScreen: "HorizontalPropCoolPdf",
     reactNativePdfScreen: "HorizontalPropReactNativePdf",
+  },
+
+  {
+    ...EnableRtlPropScenario,
+    coolPdfScreen: "EnableRtlPropCoolPdf",
+    reactNativePdfScreen: "EnableRtlPropReactNativePdf",
   },
 
   // Zoom

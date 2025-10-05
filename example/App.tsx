@@ -62,6 +62,8 @@ import {
   EnablePagingPropReactNativePdfScreen,
   HorizontalPropCoolPdfScreen,
   HorizontalPropReactNativePdfScreen,
+  EnableRtlPropCoolPdfScreen,
+  EnableRtlPropReactNativePdfScreen,
   // Zoom scenarios
   InitialZoomCoolPdfScreen,
   InitialZoomReactNativePdfScreen,
@@ -158,6 +160,9 @@ type RootStackParamList = {
 
   HorizontalPropCoolPdf: undefined;
   HorizontalPropReactNativePdf: undefined;
+
+  EnableRtlPropCoolPdf: undefined;
+  EnableRtlPropReactNativePdf: undefined;
 
   // Zoom scenarios
   InitialZoomCoolPdf: undefined;
@@ -527,6 +532,17 @@ export default function App() {
             component={HorizontalPropReactNativePdfScreen}
             options={{ title: "Horizontal Prop (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="EnableRtlPropCoolPdf"
+            component={EnableRtlPropCoolPdfScreen}
+            options={{ title: "Enable RTL Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="EnableRtlPropReactNativePdf"
+            component={EnableRtlPropReactNativePdfScreen}
+            options={{ title: "Enable RTL Prop (RN-PDF)" }}
+          />
+
 
 
 
