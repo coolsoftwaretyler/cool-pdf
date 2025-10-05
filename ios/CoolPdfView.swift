@@ -411,6 +411,19 @@ class CoolPdfView: ExpoView {
           return
         }
 
+        // Check if document is locked and needs password (matching react-native-pdf lines 350-357)
+        if document.isLocked {
+          if let password = self.password, document.unlock(withPassword: password) {
+            print("🔵 CoolPDF: Document unlocked with password")
+          } else {
+            print("🔴 CoolPDF: Password required or incorrect password")
+            self.onError([
+              "error": "Password required or incorrect password."
+            ])
+            return
+          }
+        }
+
         // Save to cache if caching is enabled
         if cache {
           try? data.write(to: cacheURL)
