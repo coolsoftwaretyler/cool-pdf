@@ -261,6 +261,11 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
 
           // Note: Android's PdfRenderer doesn't provide access to table of contents/bookmarks
           // AndroidPdfViewer might provide this, but for now sending empty array to match react-native-pdf structure
+          // Apply scale after load (like react-native-pdf does)
+          if (scale != 1.0f) {
+            pdfView.zoomTo(scale)
+          }
+
           onLoadComplete(mapOf(
             "numberOfPages" to nbPages,
             "path" to file.absolutePath,
@@ -336,7 +341,8 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
 
   fun setScale(newScale: Float) {
     scale = newScale
-    pdfView.zoomTo(newScale)
+    // Don't apply immediately - will be applied in onLoadComplete
+    // (like react-native-pdf does)
   }
 
   fun setMinScale(newMinScale: Float) {
