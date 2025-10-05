@@ -18,6 +18,7 @@ import { Base64PdfRenderingScenario } from "./basic/Base64PdfRendering";
 import { RequireLocalPdfScenario } from "./basic/RequireLocalPdf";
 import { BundleAssetsPdfScenario } from "./basic/BundleAssetsPdf";
 import { FileUriLocalPdfScenario } from "./basic/FileUriLocalPdf";
+import { PagePropScenario } from "./navigation/PageProp";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -37,6 +38,7 @@ export {
   PageSnappingScenario,
   HorizontalWithPagingScenario,
   CustomSpacingScenario,
+  PagePropScenario,
 };
 export { InitialZoomScenario, CustomZoomRangeScenario, RestrictedZoomScenario };
 
@@ -86,6 +88,9 @@ export { default as HorizontalWithPagingReactNativePdfScreen } from "./navigatio
 
 export { default as CustomSpacingCoolPdfScreen } from "./navigation/CustomSpacingCoolPdfScreen";
 export { default as CustomSpacingReactNativePdfScreen } from "./navigation/CustomSpacingReactNativePdfScreen";
+
+export { default as PagePropCoolPdfScreen } from "./navigation/PagePropCoolPdfScreen";
+export { default as PagePropReactNativePdfScreen } from "./navigation/PagePropReactNativePdfScreen";
 
 // Zoom scenarios
 export { default as InitialZoomCoolPdfScreen } from "./zoom/InitialZoomCoolPdfScreen";
@@ -188,6 +193,12 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "CustomSpacingCoolPdf",
     reactNativePdfScreen: "CustomSpacingReactNativePdf",
   },
+  {
+    ...PagePropScenario,
+    coolPdfScreen: "PagePropCoolPdf",
+    reactNativePdfScreen: "PagePropReactNativePdf",
+  },
+
   // Zoom
   {
     ...InitialZoomScenario,

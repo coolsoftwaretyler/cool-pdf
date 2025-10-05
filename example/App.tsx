@@ -38,6 +38,8 @@ import {
   HorizontalWithPagingReactNativePdfScreen,
   CustomSpacingCoolPdfScreen,
   CustomSpacingReactNativePdfScreen,
+  PagePropCoolPdfScreen,
+  PagePropReactNativePdfScreen,
   // Zoom scenarios
   InitialZoomCoolPdfScreen,
   InitialZoomReactNativePdfScreen,
@@ -89,6 +91,9 @@ type RootStackParamList = {
   HorizontalWithPagingReactNativePdf: undefined;
   CustomSpacingCoolPdf: undefined;
   CustomSpacingReactNativePdf: undefined;
+  PagePropCoolPdf: undefined;
+  PagePropReactNativePdf: undefined;
+
   // Zoom scenarios
   InitialZoomCoolPdf: undefined;
   InitialZoomReactNativePdf: undefined;
@@ -314,6 +319,17 @@ export default function App() {
             component={CustomSpacingReactNativePdfScreen}
             options={{ title: "Custom Spacing (RN-PDF)" }}
           />
+          <Stack.Screen
+            name="PagePropCoolPdf"
+            component={PagePropCoolPdfScreen}
+            options={{ title: "Page Prop (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="PagePropReactNativePdf"
+            component={PagePropReactNativePdfScreen}
+            options={{ title: "Page Prop (RN-PDF)" }}
+          />
+
 
           {/* Zoom scenarios */}
           <Stack.Screen
