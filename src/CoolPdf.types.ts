@@ -85,5 +85,6 @@ export type CoolPdfViewProps = {
   onError?: (event: { nativeEvent: OnErrorEventPayload }) => void;
   onPageSingleTap?: (event: { nativeEvent: OnPageSingleTapEventPayload }) => void;
   renderActivityIndicator?: (progress: number) => React.ReactElement;
+  progressContainerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
 };

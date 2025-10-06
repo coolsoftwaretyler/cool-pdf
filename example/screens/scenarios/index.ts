@@ -44,6 +44,7 @@ import { OnPageSingleTapScenario } from "./events/OnPageSingleTap";
 import { OnScaleChangedScenario } from "./events/OnScaleChanged";
 import { OnPressLinkScenario } from "./events/OnPressLink";
 import { RenderActivityIndicatorScenario } from "./style/RenderActivityIndicator";
+import { ProgressContainerStyleScenario } from "./style/ProgressContainerStyle";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -210,6 +211,9 @@ export { default as OnPressLinkReactNativePdfScreen } from "./events/OnPressLink
 
 export { default as RenderActivityIndicatorCoolPdfScreen } from "./style/RenderActivityIndicatorCoolPdfScreen";
 export { default as RenderActivityIndicatorReactNativePdfScreen } from "./style/RenderActivityIndicatorReactNativePdfScreen";
+
+export { default as ProgressContainerStyleCoolPdfScreen } from "./style/ProgressContainerStyleCoolPdfScreen";
+export { default as ProgressContainerStyleReactNativePdfScreen } from "./style/ProgressContainerStyleReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -437,6 +441,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...RenderActivityIndicatorScenario,
     coolPdfScreen: "RenderActivityIndicatorCoolPdf",
     reactNativePdfScreen: "RenderActivityIndicatorReactNativePdf",
+  },
+  {
+    ...ProgressContainerStyleScenario,
+    coolPdfScreen: "ProgressContainerStyleCoolPdf",
+    reactNativePdfScreen: "ProgressContainerStyleReactNativePdf",
   },
 ];
 

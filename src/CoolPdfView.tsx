@@ -42,7 +42,7 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
 
   // Transform base64 data URIs to base64 source objects
   const transformedProps = React.useMemo(() => {
-    const { source, renderActivityIndicator, onLoadProgress, onLoadComplete, ...otherProps } = props;
+    const { source, renderActivityIndicator, progressContainerStyle, onLoadProgress, onLoadComplete, ...otherProps } = props;
 
     // If source is a string or has a uri property, check for base64 data URI
     let transformedSource = source;
@@ -92,7 +92,7 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
     <View style={[props.style, { overflow: 'hidden' }]}>
       <NativeView {...transformedProps} />
       {!isLoaded && (
-        <View style={styles.progressContainer}>
+        <View style={[styles.progressContainer, props.progressContainerStyle]}>
           {props.renderActivityIndicator
             ? props.renderActivityIndicator(loadProgress)
             : <Text>{`${(loadProgress * 100).toFixed(2)}%`}</Text>}

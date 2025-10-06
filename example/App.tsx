@@ -90,6 +90,8 @@ import {
   OnPressLinkReactNativePdfScreen,
   RenderActivityIndicatorCoolPdfScreen,
   RenderActivityIndicatorReactNativePdfScreen,
+  ProgressContainerStyleCoolPdfScreen,
+  ProgressContainerStyleReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -205,6 +207,8 @@ type RootStackParamList = {
   OnPressLinkReactNativePdf: undefined;
   RenderActivityIndicatorCoolPdf: undefined;
   RenderActivityIndicatorReactNativePdf: undefined;
+  ProgressContainerStyleCoolPdf: undefined;
+  ProgressContainerStyleReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -663,6 +667,16 @@ export default function App() {
             name="RenderActivityIndicatorReactNativePdf"
             component={RenderActivityIndicatorReactNativePdfScreen}
             options={{ title: "Render Activity Indicator (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="ProgressContainerStyleCoolPdf"
+            component={ProgressContainerStyleCoolPdfScreen}
+            options={{ title: "Progress Container Style (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="ProgressContainerStyleReactNativePdf"
+            component={ProgressContainerStyleReactNativePdfScreen}
+            options={{ title: "Progress Container Style (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
