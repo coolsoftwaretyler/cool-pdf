@@ -84,6 +84,10 @@ public class CoolPdfModule: Module {
         view.setSinglePage(singlePage)
       }
 
+      Prop("enableAnnotations") { (view: CoolPdfView, enableAnnotations: Bool) in
+        view.setEnableAnnotations(enableAnnotations)
+      }
+
       Prop("showsVerticalScrollIndicator") { (view: CoolPdfView, showsVerticalScrollIndicator: Bool) in
         view.setShowsVerticalScrollIndicator(showsVerticalScrollIndicator)
       }

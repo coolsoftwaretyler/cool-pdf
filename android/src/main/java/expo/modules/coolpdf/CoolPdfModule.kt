@@ -89,6 +89,10 @@ class CoolPdfModule : Module() {
         view.setSinglePage(singlePage)
       }
 
+      Prop("enableAnnotations") { view: CoolPdfView, enableAnnotations: Boolean ->
+        view.setEnableAnnotations(enableAnnotations)
+      }
+
       Prop("enableDoubleTapZoom") { view: CoolPdfView, enableDoubleTapZoom: Boolean ->
         view.setEnableDoubleTapZoom(enableDoubleTapZoom)
       }

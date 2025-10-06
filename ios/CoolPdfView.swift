@@ -27,6 +27,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
   private var password: String? = nil
   private var enableDoubleTapZoom: Bool = true
   private var singlePage: Bool = false
+  private var enableAnnotations: Bool = true
   private var fixScaleFactor: CGFloat = 1.0
 
   // For download progress tracking
@@ -353,6 +354,9 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
       isInitialLoad = true
       pdfView.document = document
 
+      // Apply annotation settings after document loads
+      applyAnnotationSettings()
+
       // Mark that we need to navigate to the page after layout
       needsPageNavigation = true
       currentPage = (pendingPage >= 1 && pendingPage <= document.pageCount) ? pendingPage : 1
@@ -444,6 +448,9 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
         // Suppress automatic pageChanged notification during initial load
         self.isInitialLoad = true
         self.pdfView.document = document
+
+        // Apply annotation settings after document loads
+        self.applyAnnotationSettings()
 
         // Mark that we need to navigate to the page after layout
         self.needsPageNavigation = true
@@ -544,6 +551,9 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
       // Suppress automatic pageChanged notification during initial load
       self.isInitialLoad = true
       self.pdfView.document = document
+
+      // Apply annotation settings after document loads
+      self.applyAnnotationSettings()
 
       // Mark that we need to navigate to the page after layout
       self.needsPageNavigation = true
@@ -727,6 +737,26 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
     } else {
       pdfView.displayMode = .singlePageContinuous
       pdfView.isUserInteractionEnabled = true
+    }
+  }
+
+  func setEnableAnnotations(_ enabled: Bool) {
+    print("🔵 CoolPDF setEnableAnnotations called with: \(enabled)")
+    enableAnnotations = enabled
+
+    // Apply to current document if loaded
+    applyAnnotationSettings()
+  }
+
+  private func applyAnnotationSettings() {
+    guard let document = pdfView.document else { return }
+
+    for i in 0..<document.pageCount {
+      guard let page = document.page(at: i) else { continue }
+
+      for annotation in page.annotations {
+        annotation.shouldDisplay = enableAnnotations
+      }
     }
   }
 

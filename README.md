@@ -34,12 +34,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 86%
+Overall compatibility: 89%
 
-- 26/29 props
+- 27/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 38/44 total props supported
+- 39/44 total props supported
 
 ### Props
 
@@ -63,7 +63,7 @@ Overall compatibility: 86%
 | enableAntialiasing             |                             bool                              |           true           | improve rendering a little bit on low-res screens, but maybe course some problem on Android 4.4, so add a switch                                                            | ✖  | ✔      | ✖        |
 | enablePaging                   |                             bool                              |          false           | only show one page in screen                                                                                                                                                | ✔  | ✔      | ✔        |
 | enableRTL                      |                             bool                              |          false           | scroll page as "page3, page2, page1"                                                                                                                                        | ✔  | ✖      | ✔        |
-| enableAnnotationRendering      |                             bool                              |           true           | enable rendering annotation, notice:iOS only support initial setting,not support realtime changing                                                                          | ✔  | ✔      | ✖        |
+| enableAnnotationRendering      |                             bool                              |           true           | enable rendering annotation, notice:iOS only support initial setting,not support realtime changing                                                                          | ✔  | ✔      | ✔        |
 | enableDoubleTapZoom            |                             bool                              |           true           | Enable double tap to zoom gesture                                                                                                                                           | ✔  | ✔      | ✔        |
 | trustAllCerts                  |                             bool                              |           true           | Allow connections to servers with self-signed certification                                                                                                                 | ✔  | ✔      | ✖        |
 | singlePage                     |                             bool                              |          false           | Only show first page, useful for thumbnail views                                                                                                                            | ✔  | ✔      | ✔        |

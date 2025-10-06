@@ -53,6 +53,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var password: String? = null
   private var enableDoubleTapZoom: Boolean = true
   private var singlePage: Boolean = false
+  private var enableAnnotations: Boolean = true
 
   // For scale tracking
   private var originalWidth: Float = 0f
@@ -260,7 +261,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       val uri = android.net.Uri.fromFile(file)
       val configurator = pdfView.fromUri(uri)
         .enableAntialiasing(true)
-        .enableAnnotationRendering(true)
+        .enableAnnotationRendering(enableAnnotations)
         .spacing(pageSpacing)
         .swipeHorizontal(horizontal)
         .pageFitPolicy(fitPolicy)
@@ -486,6 +487,17 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     Log.d(TAG, "setEnableDoubleTapZoom: $enabled")
 
     // Reload the PDF if it's already loaded (like react-native-pdf does)
+    currentFile?.let { file ->
+      pdfView.recycle()
+      renderPdf(file)
+    }
+  }
+
+  fun setEnableAnnotations(enabled: Boolean) {
+    enableAnnotations = enabled
+    Log.d(TAG, "setEnableAnnotations: $enabled")
+
+    // Reload the PDF if it's already loaded to apply annotation setting
     currentFile?.let { file ->
       pdfView.recycle()
       renderPdf(file)
