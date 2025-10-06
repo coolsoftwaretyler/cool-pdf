@@ -1,10 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, View, StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ScenarioListScreen from "./screens/ScenarioListScreen";
 import {
-  // Basic scenarios
   BasicWithCacheCoolPdfScreen,
   BasicWithCacheReactNativePdfScreen,
   BasicNoCacheCoolPdfScreen,
@@ -43,7 +42,6 @@ import {
   PasswordCorrectReactNativePdfScreen,
   PasswordIncorrectCoolPdfScreen,
   PasswordIncorrectReactNativePdfScreen,
-  // Navigation scenarios
   HorizontalScrollingCoolPdfScreen,
   HorizontalScrollingReactNativePdfScreen,
   PageSnappingCoolPdfScreen,
@@ -60,7 +58,6 @@ import {
   HorizontalPropReactNativePdfScreen,
   EnableRtlPropCoolPdfScreen,
   EnableRtlPropReactNativePdfScreen,
-  // Zoom scenarios
   InitialZoomCoolPdfScreen,
   InitialZoomReactNativePdfScreen,
   CustomZoomRangeCoolPdfScreen,
@@ -84,7 +81,6 @@ type RootStackParamList = {
   CoolPdf: undefined;
   ReactNativePdf: undefined;
   ScenarioList: undefined;
-  // Basic scenarios
   BasicWithCacheCoolPdf: undefined;
   BasicWithCacheReactNativePdf: undefined;
   BasicCacheFileNameCoolPdf: undefined;
@@ -136,7 +132,6 @@ type RootStackParamList = {
   PasswordIncorrectCoolPdf: undefined;
   PasswordIncorrectReactNativePdf: undefined;
 
-  // Navigation scenarios
   HorizontalScrollingCoolPdf: undefined;
   HorizontalScrollingReactNativePdf: undefined;
   PageSnappingCoolPdf: undefined;
@@ -157,7 +152,6 @@ type RootStackParamList = {
   EnableRtlPropCoolPdf: undefined;
   EnableRtlPropReactNativePdf: undefined;
 
-  // Zoom scenarios
   InitialZoomCoolPdf: undefined;
   InitialZoomReactNativePdf: undefined;
   CustomZoomRangeCoolPdf: undefined;
@@ -182,32 +176,6 @@ type RootStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-
-function HomeScreen({ navigation }: any) {
-  return (
-    <View style={styles.homeContainer}>
-      <Text style={styles.sectionTitle}>Basic Demos</Text>
-      <Button
-        title="View with CoolPDF"
-        onPress={() => navigation.navigate("CoolPdf")}
-      />
-      <View style={{ height: 12 }} />
-      <Button
-        title="View with react-native-pdf"
-        onPress={() => navigation.navigate("ReactNativePdf")}
-      />
-
-      <View style={{ height: 32 }} />
-
-      <Text style={styles.sectionTitle}>Test Scenarios</Text>
-      <Button
-        title="Browse Scenarios"
-        onPress={() => navigation.navigate("ScenarioList")}
-        color="#5856d6"
-      />
-    </View>
-  );
-}
 
 export default function App() {
   return (

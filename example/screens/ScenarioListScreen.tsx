@@ -69,7 +69,6 @@ export default function ScenarioListScreen({ navigation }: any) {
         stickySectionHeadersEnabled={true}
         ListHeaderComponent={
           <View style={styles.tocContainer}>
-            <Text style={styles.tocTitle}>Test Scenarios</Text>
             {sections.map((section, sectionIndex) => (
               <View key={section.category} style={styles.categoryGroup}>
                 <Text style={styles.categoryLabel}>{section.title}</Text>
