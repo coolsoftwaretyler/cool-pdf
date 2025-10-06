@@ -9,6 +9,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
   let onLoadComplete = EventDispatcher()
   let onLoadProgress = EventDispatcher()
   let onPageChanged = EventDispatcher()
+  let onScaleChanged = EventDispatcher()
   let onError = EventDispatcher()
   let onPageSingleTap = EventDispatcher()
 
@@ -33,6 +34,8 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
   private var shouldCache: Bool = false
   private var lastProgressUpdate: TimeInterval = 0
   private var lastReportedProgress: Double = 0.0
+  private var currentScale: CGFloat = 1.0
+  private var isInitialized: Bool = false
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -69,6 +72,14 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
       self,
       selector: #selector(handlePageChanged(_:)),
       name: .PDFViewPageChanged,
+      object: pdfView
+    )
+
+    // Listen for scale change notifications
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(handleScaleChanged(_:)),
+      name: .PDFViewScaleChanged,
       object: pdfView
     )
   }
@@ -211,6 +222,21 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
       onPageChanged([
         "page": newPage,
         "numberOfPages": document.pageCount
+      ])
+    }
+  }
+
+  @objc private func handleScaleChanged(_ notification: Notification) {
+    // Only fire if initialized and fixScaleFactor is set
+    guard isInitialized && fixScaleFactor > 0 else {
+      return
+    }
+
+    let newScale = pdfView.scaleFactor / fixScaleFactor
+    if newScale != currentScale {
+      currentScale = newScale
+      onScaleChanged([
+        "scale": Double(newScale)
       ])
     }
   }
@@ -363,6 +389,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
 
       // Re-enable automatic page change notifications
       isInitialLoad = false
+      isInitialized = true
     } else {
       onError([
         "error": "Failed to load PDF document"
@@ -453,6 +480,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
 
         // Re-enable automatic page change notifications
         self.isInitialLoad = false
+        self.isInitialized = true
         return
       }
     }
@@ -556,6 +584,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
 
       // Re-enable automatic page change notifications
       self.isInitialLoad = false
+      self.isInitialized = true
 
       // Clean up
       self.downloadSession = nil

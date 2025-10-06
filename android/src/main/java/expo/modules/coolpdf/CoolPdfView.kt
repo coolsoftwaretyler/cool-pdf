@@ -22,6 +22,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private val onLoadComplete by EventDispatcher()
   private val onLoadProgress by EventDispatcher()
   private val onPageChanged by EventDispatcher()
+  private val onScaleChanged by EventDispatcher()
   private val onError by EventDispatcher()
   private val onPageSingleTap by EventDispatcher()
 
@@ -49,6 +50,11 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var password: String? = null
   private var enableDoubleTapZoom: Boolean = true
   private var singlePage: Boolean = false
+
+  // For scale tracking
+  private var originalWidth: Float = 0f
+  private var lastPageWidth: Float = 0f
+  private var lastPageHeight: Float = 0f
 
   init {
     addView(pdfView)
@@ -343,6 +349,21 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
           Log.d(TAG, "PDF tapped on page $currentPage")
           onPageSingleTap(mapOf("page" to currentPage))
           false // Return false to allow other gestures
+        }
+        .onDraw { canvas, pageWidth, pageHeight, displayedPage ->
+          // Track scale changes based on page width (like react-native-pdf)
+          if (originalWidth == 0f) {
+            originalWidth = pageWidth
+          }
+
+          if (lastPageWidth > 0 && lastPageHeight > 0 &&
+              (pageWidth != lastPageWidth || pageHeight != lastPageHeight)) {
+            val currentScale = pageWidth / originalWidth
+            onScaleChanged(mapOf("scale" to currentScale))
+          }
+
+          lastPageWidth = pageWidth
+          lastPageHeight = pageHeight
         }
 
       // Apply paging if enabled
