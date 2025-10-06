@@ -45,6 +45,8 @@ import { OnScaleChangedScenario } from "./events/OnScaleChanged";
 import { OnPressLinkScenario } from "./events/OnPressLink";
 import { RenderActivityIndicatorScenario } from "./style/RenderActivityIndicator";
 import { ProgressContainerStyleScenario } from "./style/ProgressContainerStyle";
+import { EnableAnnotationsScenario } from "./style/EnableAnnotations";
+import { DisableAnnotationsScenario } from "./style/DisableAnnotations";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -214,6 +216,12 @@ export { default as RenderActivityIndicatorReactNativePdfScreen } from "./style/
 
 export { default as ProgressContainerStyleCoolPdfScreen } from "./style/ProgressContainerStyleCoolPdfScreen";
 export { default as ProgressContainerStyleReactNativePdfScreen } from "./style/ProgressContainerStyleReactNativePdfScreen";
+
+export { default as EnableAnnotationsCoolPdfScreen } from "./style/EnableAnnotationsCoolPdfScreen";
+export { default as EnableAnnotationsReactNativePdfScreen } from "./style/EnableAnnotationsReactNativePdfScreen";
+
+export { default as DisableAnnotationsCoolPdfScreen } from "./style/DisableAnnotationsCoolPdfScreen";
+export { default as DisableAnnotationsReactNativePdfScreen } from "./style/DisableAnnotationsReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -446,6 +454,16 @@ export const allScenarios: ScenarioMetadata[] = [
     ...ProgressContainerStyleScenario,
     coolPdfScreen: "ProgressContainerStyleCoolPdf",
     reactNativePdfScreen: "ProgressContainerStyleReactNativePdf",
+  },
+  {
+    ...EnableAnnotationsScenario,
+    coolPdfScreen: "EnableAnnotationsCoolPdf",
+    reactNativePdfScreen: "EnableAnnotationsReactNativePdf",
+  },
+  {
+    ...DisableAnnotationsScenario,
+    coolPdfScreen: "DisableAnnotationsCoolPdf",
+    reactNativePdfScreen: "DisableAnnotationsReactNativePdf",
   },
 ];
 

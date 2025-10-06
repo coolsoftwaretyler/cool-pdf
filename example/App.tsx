@@ -92,6 +92,10 @@ import {
   RenderActivityIndicatorReactNativePdfScreen,
   ProgressContainerStyleCoolPdfScreen,
   ProgressContainerStyleReactNativePdfScreen,
+  EnableAnnotationsCoolPdfScreen,
+  EnableAnnotationsReactNativePdfScreen,
+  DisableAnnotationsCoolPdfScreen,
+  DisableAnnotationsReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -209,6 +213,10 @@ type RootStackParamList = {
   RenderActivityIndicatorReactNativePdf: undefined;
   ProgressContainerStyleCoolPdf: undefined;
   ProgressContainerStyleReactNativePdf: undefined;
+  EnableAnnotationsCoolPdf: undefined;
+  EnableAnnotationsReactNativePdf: undefined;
+  DisableAnnotationsCoolPdf: undefined;
+  DisableAnnotationsReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -677,6 +685,26 @@ export default function App() {
             name="ProgressContainerStyleReactNativePdf"
             component={ProgressContainerStyleReactNativePdfScreen}
             options={{ title: "Progress Container Style (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="EnableAnnotationsCoolPdf"
+            component={EnableAnnotationsCoolPdfScreen}
+            options={{ title: "Enable Annotations (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="EnableAnnotationsReactNativePdf"
+            component={EnableAnnotationsReactNativePdfScreen}
+            options={{ title: "Enable Annotations (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="DisableAnnotationsCoolPdf"
+            component={DisableAnnotationsCoolPdfScreen}
+            options={{ title: "Disable Annotations (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="DisableAnnotationsReactNativePdf"
+            component={DisableAnnotationsReactNativePdfScreen}
+            options={{ title: "Disable Annotations (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
