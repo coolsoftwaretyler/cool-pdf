@@ -74,7 +74,6 @@ export default function ${pascalName}CoolPdfScreen() {
       <CoolPdfView
         source={{
           uri: "https://craftinginterpreters.com/sample.pdf",
-          // TODO: Add your props here
         }}
         onLoadComplete={(event) => {
           const { numberOfPages, path, dimensions, tableContents } =
