@@ -35,7 +35,6 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
   }, [props.onLoadProgress]);
 
   const handleLoadComplete = React.useCallback((event: any) => {
-    console.log('[CoolPdfView] onLoadComplete fired, setting isLoaded to true');
     setIsLoaded(true);
     setLoadProgress(1);
     props.onLoadComplete?.(event);
@@ -88,8 +87,6 @@ export default function CoolPdfView(props: CoolPdfViewProps) {
       onLoadComplete: handleLoadComplete,
     };
   }, [props, handleLoadProgress, handleLoadComplete]);
-
-  console.log('[CoolPdfView] Rendering, isLoaded:', isLoaded, 'loadProgress:', loadProgress);
 
   return (
     <View style={[props.style, { overflow: 'hidden' }]}>
