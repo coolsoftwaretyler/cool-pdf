@@ -76,6 +76,8 @@ import {
   EnableDoubleTapZoomPropReactNativePdfScreen,
   SinglePageCoolPdfScreen,
   SinglePageReactNativePdfScreen,
+  OnLoadProgressCoolPdfScreen,
+  OnLoadProgressReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -177,6 +179,8 @@ type RootStackParamList = {
   EnableDoubleTapZoomPropReactNativePdf: undefined;
   SinglePageCoolPdf: undefined;
   SinglePageReactNativePdf: undefined;
+  OnLoadProgressCoolPdf: undefined;
+  OnLoadProgressReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -565,6 +569,16 @@ export default function App() {
             name="SinglePageReactNativePdf"
             component={SinglePageReactNativePdfScreen}
             options={{ title: "Single Page (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="OnLoadProgressCoolPdf"
+            component={OnLoadProgressCoolPdfScreen}
+            options={{ title: "On Load Progress (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="OnLoadProgressReactNativePdf"
+            component={OnLoadProgressReactNativePdfScreen}
+            options={{ title: "On Load Progress (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
