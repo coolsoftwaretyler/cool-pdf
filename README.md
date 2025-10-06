@@ -34,12 +34,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 63%
+Overall compatibility: 66%
 
-- 16/29 props
+- 17/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 28/44 total props supported
+- 29/44 total props supported
 
 ### Props
 
@@ -66,7 +66,7 @@ Overall compatibility: 63%
 | enableAnnotationRendering      |                             bool                              |           true           | enable rendering annotation, notice:iOS only support initial setting,not support realtime changing                                                                          | ✔  | ✔      | ✖        |
 | enableDoubleTapZoom            |                             bool                              |           true           | Enable double tap to zoom gesture                                                                                                                                           | ✔  | ✔      | ✔        |
 | trustAllCerts                  |                             bool                              |           true           | Allow connections to servers with self-signed certification                                                                                                                 | ✔  | ✔      | ✖        |
-| singlePage                     |                             bool                              |          false           | Only show first page, useful for thumbnail views                                                                                                                            | ✔  | ✔      | ✖        |
+| singlePage                     |                             bool                              |          false           | Only show first page, useful for thumbnail views                                                                                                                            | ✔  | ✔      | ✔        |
 | onLoadProgress                 |                       function(percent)                       |           null           | callback when loading, return loading progress (0-1)                                                                                                                        | ✔  | ✔      | ✖        |
 | onLoadComplete                 | function(numberOfPages, path, {width, height}, tableContents) |           null           | callback when pdf load completed, return total page count, pdf local/cache path, {width,height} and table of contents                                                       | ✔  | ✔      | ✔        |
 | onPageChanged                  |                 function(page,numberOfPages)                  |           null           | callback when page changed ,return current page and total page count                                                                                                        | ✔  | ✔      | ✖        |

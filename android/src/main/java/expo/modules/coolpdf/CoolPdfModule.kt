@@ -85,6 +85,10 @@ class CoolPdfModule : Module() {
         view.setFitPolicy(fitPolicy)
       }
 
+      Prop("singlePage") { view: CoolPdfView, singlePage: Boolean ->
+        view.setSinglePage(singlePage)
+      }
+
       Prop("enableDoubleTapZoom") { view: CoolPdfView, enableDoubleTapZoom: Boolean ->
         view.setEnableDoubleTapZoom(enableDoubleTapZoom)
       }

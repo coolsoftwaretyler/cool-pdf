@@ -61,6 +61,7 @@ export type CoolPdfViewProps = {
   enableAnnotations?: boolean;
   enableDoubleTapZoom?: boolean;
   fitPolicy?: 0 | 1 | 2; // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
+  singlePage?: boolean;
   showsHorizontalScrollIndicator?: boolean;
   showsVerticalScrollIndicator?: boolean;
   scrollEnabled?: boolean;

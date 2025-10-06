@@ -140,7 +140,6 @@ export default function ${pascalName}ReactNativePdfScreen() {
       <Pdf
         source={{
           uri: "https://craftinginterpreters.com/sample.pdf",
-          // TODO: Add your props here
         }}
         onLoadComplete={(numberOfPages, path, dimensions, tableContents) => {
           addEvent("loadComplete", {

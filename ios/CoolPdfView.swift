@@ -23,6 +23,7 @@ class CoolPdfView: ExpoView {
   private var fitPolicy: Int = 2 // 0: WIDTH, 1: HEIGHT, 2: BOTH (default)
   private var password: String? = nil
   private var enableDoubleTapZoom: Bool = true
+  private var singlePage: Bool = false
   private var fixScaleFactor: CGFloat = 1.0
 
   required init(appContext: AppContext? = nil) {
@@ -629,6 +630,19 @@ class CoolPdfView: ExpoView {
   func setEnableDoubleTapZoom(_ enabled: Bool) {
     print("🔵 CoolPDF setEnableDoubleTapZoom called with: \(enabled)")
     enableDoubleTapZoom = enabled
+  }
+
+  func setSinglePage(_ enabled: Bool) {
+    print("🔵 CoolPDF setSinglePage called with: \(enabled)")
+    singlePage = enabled
+
+    if enabled {
+      pdfView.displayMode = .singlePage
+      pdfView.isUserInteractionEnabled = false
+    } else {
+      pdfView.displayMode = .singlePageContinuous
+      pdfView.isUserInteractionEnabled = true
+    }
   }
 
   private func resolveAssetPath(_ uri: String) -> URL? {

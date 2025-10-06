@@ -80,6 +80,10 @@ public class CoolPdfModule: Module {
         view.setFitPolicy(fitPolicy)
       }
 
+      Prop("singlePage") { (view: CoolPdfView, singlePage: Bool) in
+        view.setSinglePage(singlePage)
+      }
+
       Prop("showsVerticalScrollIndicator") { (view: CoolPdfView, showsVerticalScrollIndicator: Bool) in
         view.setShowsVerticalScrollIndicator(showsVerticalScrollIndicator)
       }

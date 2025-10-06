@@ -47,6 +47,7 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   private var currentFile: File? = null
   private var password: String? = null
   private var enableDoubleTapZoom: Boolean = true
+  private var singlePage: Boolean = false
 
   init {
     addView(pdfView)
@@ -232,9 +233,10 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         .spacing(pageSpacing)
         .swipeHorizontal(horizontal)
         .pageFitPolicy(fitPolicy)
-        .enableDoubletap(enableDoubleTapZoom)
+        .enableDoubletap(!singlePage && enableDoubleTapZoom)
+        .enableSwipe(!singlePage)
         .password(password)
-        .defaultPage(pendingPage - 1)
+        .defaultPage(if (singlePage) 0 else pendingPage - 1)
         .onLoad(OnLoadCompleteListener { nbPages ->
           totalPages = nbPages
           Log.d(TAG, "PDF loaded with $nbPages pages")
@@ -324,6 +326,11 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       // Apply paging if enabled
       if (enablePaging) {
         configurator.pageSnap(true).autoSpacing(true)
+      }
+
+      // Apply singlePage mode - only show the first page
+      if (singlePage) {
+        configurator.pages(0)
       }
 
       configurator.load()
@@ -428,6 +435,17 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
   fun setEnableDoubleTapZoom(enabled: Boolean) {
     enableDoubleTapZoom = enabled
     Log.d(TAG, "setEnableDoubleTapZoom: $enabled")
+
+    // Reload the PDF if it's already loaded (like react-native-pdf does)
+    currentFile?.let { file ->
+      pdfView.recycle()
+      renderPdf(file)
+    }
+  }
+
+  fun setSinglePage(enabled: Boolean) {
+    singlePage = enabled
+    Log.d(TAG, "setSinglePage: $enabled")
 
     // Reload the PDF if it's already loaded (like react-native-pdf does)
     currentFile?.let { file ->
