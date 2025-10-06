@@ -199,7 +199,8 @@ export type ScenarioMetadata = {
   reactNativePdfScreen: string;
 };
 
-const loadingScenarios = [
+// All scenarios metadata
+export const allScenarios: ScenarioMetadata[] = [
   {
     ...BasicNoCacheScenario,
     coolPdfScreen: "BasicNoCacheCoolPdf",
@@ -250,17 +251,11 @@ const loadingScenarios = [
     coolPdfScreen: "FileUriLocalPdfCoolPdf",
     reactNativePdfScreen: "FileUriLocalPdfReactNativePdf",
   },
-];
-
-const eventsScenarios = [
   {
     ...OnLoadCompleteScenario,
     coolPdfScreen: "OnLoadCompleteCoolPdf",
     reactNativePdfScreen: "OnLoadCompleteReactNativePdf",
   },
-];
-
-const styleScenarios = [
   {
     ...StylePropScenario,
     coolPdfScreen: "StylePropCoolPdf",
@@ -281,9 +276,6 @@ const styleScenarios = [
     coolPdfScreen: "CustomSpacingCoolPdf",
     reactNativePdfScreen: "CustomSpacingReactNativePdf",
   },
-];
-
-const navigationScenarios = [
   {
     ...ScrollEnabledScenario,
     coolPdfScreen: "ScrollEnabledCoolPdf",
@@ -324,9 +316,6 @@ const navigationScenarios = [
     coolPdfScreen: "EnableRtlPropCoolPdf",
     reactNativePdfScreen: "EnableRtlPropReactNativePdf",
   },
-];
-
-const passwordScenarios = [
   {
     ...PasswordCorrectScenario,
     coolPdfScreen: "PasswordCorrectCoolPdf",
@@ -337,9 +326,6 @@ const passwordScenarios = [
     coolPdfScreen: "PasswordIncorrectCoolPdf",
     reactNativePdfScreen: "PasswordIncorrectReactNativePdf",
   },
-];
-
-const zoomScenarios = [
   {
     ...InitialZoomScenario,
     coolPdfScreen: "InitialZoomCoolPdf",
@@ -380,16 +366,6 @@ const zoomScenarios = [
     coolPdfScreen: "EnableDoubleTapZoomPropCoolPdf",
     reactNativePdfScreen: "EnableDoubleTapZoomPropReactNativePdf",
   },
-];
-
-// All scenarios metadata
-export const allScenarios: ScenarioMetadata[] = [
-  ...loadingScenarios,
-  ...eventsScenarios,
-  ...styleScenarios,
-  ...navigationScenarios,
-  ...passwordScenarios,
-  ...zoomScenarios,
 ];
 
 export const scenariosByCategory: Record<ScenarioCategory, ScenarioMetadata[]> =
