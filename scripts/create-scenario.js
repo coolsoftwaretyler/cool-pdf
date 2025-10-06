@@ -11,7 +11,7 @@ const getArg = (flag) => {
   return index !== -1 ? args[index + 1] : null;
 };
 
-const VALID_CATEGORIES = ["basic", "navigation", "zoom"];
+const VALID_CATEGORIES = ["loading", "events", "style", "password", "navigation", "zoom"];
 
 // Convert string to PascalCase
 function toPascalCase(str) {
@@ -188,92 +188,43 @@ function updateIndexFile(scenarioName, category) {
   );
   let content = fs.readFileSync(indexPath, "utf8");
 
-  // Add metadata import
+  // Add metadata import - find the last import before the re-export section
   const metadataImport = `import { ${pascalName}Scenario } from "./${category}/${pascalName}";`;
-  const importSection = content.match(
-    /\/\/ Import scenario metadata[\s\S]*?(?=\n\/\/|$)/
-  )[0];
-  const updatedImportSection = importSection + "\n" + metadataImport;
-  content = content.replace(importSection, updatedImportSection);
-
-  // Add to re-exports based on category
-  const categoryExportMap = {
-    basic: /export \{\s*BasicWithCacheScenario[\s\S]*?\};/,
-    navigation:
-      /export \{\s*HorizontalScrollingScenario[\s\S]*?\};/,
-    zoom: /export \{ InitialZoomScenario[\s\S]*?\};/,
-  };
-
-  const exportMatch = content.match(categoryExportMap[category]);
-  if (exportMatch) {
-    const exportBlock = exportMatch[0];
-    // Find the last line before the closing brace
-    const lines = exportBlock.split('\n');
-    const closingBraceIndex = lines.findIndex(line => line.trim() === '};');
-
-    if (closingBraceIndex > 0) {
-      // Insert the new scenario before the closing brace
-      lines.splice(closingBraceIndex, 0, `  ${pascalName}Scenario,`);
-      const updatedExportBlock = lines.join('\n');
-      content = content.replace(exportBlock, updatedExportBlock);
-    }
+  const reExportMatch = content.match(/\/\/ Re-export scenario metadata/);
+  if (reExportMatch) {
+    const insertPosition = content.indexOf(reExportMatch[0]);
+    content = content.slice(0, insertPosition) + metadataImport + "\n" + content.slice(insertPosition);
   }
 
-  // Add screen exports
-  const screenExportComment = content.match(
-    new RegExp(`// ${category.charAt(0).toUpperCase() + category.slice(1)} scenarios`)
-  );
-  if (screenExportComment) {
-    const insertPosition = content.indexOf(screenExportComment[0]);
-    const nextSectionMatch = content
-      .slice(insertPosition)
-      .match(/\n\/\/ /);
-    const insertPoint = nextSectionMatch
-      ? insertPosition + content.slice(insertPosition).indexOf(nextSectionMatch[0])
-      : content.length;
-
-    const newExports = `\nexport { default as ${pascalName}CoolPdfScreen } from "./${category}/${pascalName}CoolPdfScreen";
-export { default as ${pascalName}ReactNativePdfScreen } from "./${category}/${pascalName}ReactNativePdfScreen";\n`;
-
-    content =
-      content.slice(0, insertPoint) + newExports + content.slice(insertPoint);
+  // Add screen exports - insert before "// Types" section
+  const typesMatch = content.match(/\/\/ Types/);
+  if (typesMatch) {
+    const insertPosition = content.indexOf(typesMatch[0]);
+    const newExports = `export { default as ${pascalName}CoolPdfScreen } from "./${category}/${pascalName}CoolPdfScreen";\nexport { default as ${pascalName}ReactNativePdfScreen } from "./${category}/${pascalName}ReactNativePdfScreen";\n\n`;
+    content = content.slice(0, insertPosition) + newExports + content.slice(insertPosition);
   }
 
-  // Add to allScenarios array
+  // Add to allScenarios array - append before the closing ];
   const allScenariosMatch = content.match(
     /export const allScenarios: ScenarioMetadata\[\] = \[[\s\S]*?\];/
   );
   if (allScenariosMatch) {
     const allScenariosBlock = allScenariosMatch[0];
+    const closingIndex = allScenariosBlock.lastIndexOf("];");
 
-    // Find the category section
-    const categoryComment = `// ${category.charAt(0).toUpperCase() + category.slice(1)}`;
-    const categoryIndex = allScenariosBlock.indexOf(categoryComment);
-
-    if (categoryIndex !== -1) {
-      // Find the next category comment or end of array
-      const nextCategoryMatch = allScenariosBlock
-        .slice(categoryIndex + categoryComment.length)
-        .match(/\n  \/\/ /);
-
-      const insertPoint = nextCategoryMatch
-        ? categoryIndex + categoryComment.length + allScenariosBlock.slice(categoryIndex + categoryComment.length).indexOf(nextCategoryMatch[0])
-        : allScenariosBlock.lastIndexOf("];");
-
-      const newEntry = `  {
+    const newEntry = `  {
     ...${pascalName}Scenario,
     coolPdfScreen: "${pascalName}CoolPdf",
     reactNativePdfScreen: "${pascalName}ReactNativePdf",
-  },\n`;
+  },
+`;
 
-      const updatedBlock =
-        allScenariosBlock.slice(0, insertPoint) +
-        "\n" +
-        newEntry +
-        allScenariosBlock.slice(insertPoint);
+    const updatedBlock =
+      allScenariosBlock.slice(0, closingIndex) +
+      newEntry +
+      allScenariosBlock.slice(closingIndex);
 
-      content = content.replace(allScenariosBlock, updatedBlock);
-    }
+    content = content.replace(allScenariosBlock, updatedBlock);
   }
 
   fs.writeFileSync(indexPath, content);
@@ -286,75 +237,46 @@ function updateAppFile(scenarioName, category) {
   const appPath = path.join(__dirname, "..", "example", "App.tsx");
   let content = fs.readFileSync(appPath, "utf8");
 
-  // Add screen imports
+  // Add screen imports - append before the closing "} from"
   const importMatch = content.match(/import \{[\s\S]*?\} from "\.\/screens\/scenarios";/);
   if (importMatch) {
     const importBlock = importMatch[0];
-    const categoryComment = `  // ${category.charAt(0).toUpperCase() + category.slice(1)} scenarios`;
+    const closingBraceIndex = importBlock.lastIndexOf("} from");
 
-    if (importBlock.includes(categoryComment)) {
-      // Find the last import in this category section
-      const categoryIndex = importBlock.indexOf(categoryComment);
-      const remainingBlock = importBlock.slice(categoryIndex + categoryComment.length);
+    const newImports = `  ${pascalName}CoolPdfScreen,
+  ${pascalName}ReactNativePdfScreen,
+`;
 
-      // Find the next category comment or the closing brace
-      const nextCategoryMatch = remainingBlock.match(/\n  \/\/ /);
-      const nextCategoryIndex = nextCategoryMatch ? remainingBlock.indexOf(nextCategoryMatch[0]) : remainingBlock.indexOf("\n} from");
+    const updatedImportBlock =
+      importBlock.slice(0, closingBraceIndex) +
+      newImports +
+      importBlock.slice(closingBraceIndex);
 
-      // Find the last comma before the next section
-      const sectionToInsert = remainingBlock.slice(0, nextCategoryIndex);
-      const lastCommaIndex = sectionToInsert.lastIndexOf(",");
-
-      if (lastCommaIndex !== -1) {
-        const insertPoint = categoryIndex + categoryComment.length + lastCommaIndex + 1;
-        const newImports = `\n  ${pascalName}CoolPdfScreen,\n  ${pascalName}ReactNativePdfScreen,`;
-
-        const updatedImportBlock =
-          importBlock.slice(0, insertPoint) +
-          newImports +
-          importBlock.slice(insertPoint);
-
-        content = content.replace(importBlock, updatedImportBlock);
-      }
-    }
+    content = content.replace(importBlock, updatedImportBlock);
   }
 
-  // Add to RootStackParamList type
+  // Add to RootStackParamList type - append before the closing "};
   const paramListMatch = content.match(/type RootStackParamList = \{[\s\S]*?\};/);
   if (paramListMatch) {
     const paramListBlock = paramListMatch[0];
-    const categoryComment = `  // ${category.charAt(0).toUpperCase() + category.slice(1)} scenarios`;
+    const closingBraceIndex = paramListBlock.lastIndexOf("};");
 
-    if (paramListBlock.includes(categoryComment)) {
-      const categoryIndex = paramListBlock.indexOf(categoryComment);
-      const nextCategoryMatch = paramListBlock.slice(categoryIndex + categoryComment.length).match(/\n  \/\/ /);
+    const newTypes = `  ${pascalName}CoolPdf: undefined;
+  ${pascalName}ReactNativePdf: undefined;
+`;
 
-      const insertPoint = nextCategoryMatch
-        ? categoryIndex + categoryComment.length + paramListBlock.slice(categoryIndex + categoryComment.length).indexOf(nextCategoryMatch[0])
-        : paramListBlock.indexOf("};");
+    const updatedParamListBlock =
+      paramListBlock.slice(0, closingBraceIndex) +
+      newTypes +
+      paramListBlock.slice(closingBraceIndex);
 
-      const newTypes = `  ${pascalName}CoolPdf: undefined;
-  ${pascalName}ReactNativePdf: undefined;\n`;
-
-      const updatedParamListBlock =
-        paramListBlock.slice(0, insertPoint) +
-        "\n" +
-        newTypes +
-        paramListBlock.slice(insertPoint);
-
-      content = content.replace(paramListBlock, updatedParamListBlock);
-    }
+    content = content.replace(paramListBlock, updatedParamListBlock);
   }
 
-  // Add Stack.Screen components
-  const categoryCommentInScreens = `          {/* ${category.charAt(0).toUpperCase() + category.slice(1)} scenarios */}`;
-  if (content.includes(categoryCommentInScreens)) {
-    const categoryIndex = content.indexOf(categoryCommentInScreens);
-    const nextCategoryMatch = content.slice(categoryIndex + categoryCommentInScreens.length).match(/\n\s*\{\/\*/);
-
-    const insertPoint = nextCategoryMatch
-      ? categoryIndex + categoryCommentInScreens.length + content.slice(categoryIndex + categoryCommentInScreens.length).indexOf(nextCategoryMatch[0])
-      : content.indexOf("</Stack.Navigator>");
+  // Add Stack.Screen components - append before </Stack.Navigator>
+  const navigatorCloseMatch = content.match(/<\/Stack\.Navigator>/);
+  if (navigatorCloseMatch) {
+    const insertPoint = content.indexOf("</Stack.Navigator>");
 
     const newScreens = `          <Stack.Screen
             name="${pascalName}CoolPdf"
@@ -365,11 +287,11 @@ function updateAppFile(scenarioName, category) {
             name="${pascalName}ReactNativePdf"
             component={${pascalName}ReactNativePdfScreen}
             options={{ title: "${scenarioName} (RN-PDF)" }}
-          />\n`;
+          />
+`;
 
     content =
       content.slice(0, insertPoint) +
-      "\n" +
       newScreens +
       content.slice(insertPoint);
   }
