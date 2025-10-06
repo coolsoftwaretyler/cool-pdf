@@ -86,6 +86,8 @@ import {
   OnPageSingleTapReactNativePdfScreen,
   OnScaleChangedCoolPdfScreen,
   OnScaleChangedReactNativePdfScreen,
+  OnPressLinkCoolPdfScreen,
+  OnPressLinkReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -197,6 +199,8 @@ type RootStackParamList = {
   OnPageSingleTapReactNativePdf: undefined;
   OnScaleChangedCoolPdf: undefined;
   OnScaleChangedReactNativePdf: undefined;
+  OnPressLinkCoolPdf: undefined;
+  OnPressLinkReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -635,6 +639,16 @@ export default function App() {
             name="OnScaleChangedReactNativePdf"
             component={OnScaleChangedReactNativePdfScreen}
             options={{ title: "On Scale Changed (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="OnPressLinkCoolPdf"
+            component={OnPressLinkCoolPdfScreen}
+            options={{ title: "On Press Link (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="OnPressLinkReactNativePdf"
+            component={OnPressLinkReactNativePdfScreen}
+            options={{ title: "On Press Link (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>

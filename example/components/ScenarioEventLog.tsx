@@ -3,7 +3,7 @@ import * as Clipboard from 'expo-clipboard';
 
 export type ScenarioEvent = {
   timestamp: number;
-  type: 'loadComplete' | 'pageChanged' | 'error' | 'pageSingleTap' | 'info' | 'loadProgress';
+  type: 'loadComplete' | 'pageChanged' | 'error' | 'pageSingleTap' | 'info' | 'loadProgress' | 'pressLink' | 'scaleChanged';
   data: any;
 };
 

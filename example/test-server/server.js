@@ -49,6 +49,20 @@ app.all('/password-protected.pdf', (req, res) => {
   res.sendFile(pdfPath);
 });
 
+// Serve the PDF file with links
+app.all('/basic-link-1.pdf', (req, res) => {
+  const pdfPath = path.join(__dirname, 'basic-link-1.pdf');
+
+  if (!fs.existsSync(pdfPath)) {
+    console.error('❌ Error: basic-link-1.pdf not found at', pdfPath);
+    return res.status(404).send('PDF file not found');
+  }
+
+  console.log('✅ Serving basic-link-1.pdf');
+  res.setHeader('Content-Type', 'application/pdf');
+  res.sendFile(pdfPath);
+});
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.send(`
@@ -60,6 +74,7 @@ app.get('/', (req, res) => {
         <ul>
           <li><a href="/sample.pdf">/sample.pdf</a></li>
           <li><a href="/password-protected.pdf">/password-protected.pdf</a> (password: "test123")</li>
+          <li><a href="/basic-link-1.pdf">/basic-link-1.pdf</a> (contains hyperlinks for testing)</li>
         </ul>
         <p>This server logs all HTTP methods and headers to the console.</p>
       </body>
@@ -96,6 +111,10 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`     iOS Simulator:     http://localhost:${PORT}/password-protected.pdf`);
   console.log(`     Android Emulator:  http://10.0.2.2:${PORT}/password-protected.pdf`);
   console.log(`     Physical Device:   http://${localIP}:${PORT}/password-protected.pdf`);
+  console.log(`\n   PDF with Links:`);
+  console.log(`     iOS Simulator:     http://localhost:${PORT}/basic-link-1.pdf`);
+  console.log(`     Android Emulator:  http://10.0.2.2:${PORT}/basic-link-1.pdf`);
+  console.log(`     Physical Device:   http://${localIP}:${PORT}/basic-link-1.pdf`);
   console.log(`\n👀 Watching for HTTP requests...`);
   console.log('🚀'.repeat(30) + '\n');
 });
