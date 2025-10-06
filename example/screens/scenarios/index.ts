@@ -38,6 +38,7 @@ import { EnableDoubleTapZoomPropScenario } from "./zoom/EnableDoubleTapZoomProp"
 import { EnableRtlPropScenario } from "./navigation/EnableRtlProp";
 import { SinglePageScenario } from "./navigation/SinglePage";
 import { OnLoadProgressScenario } from "./events/OnLoadProgress";
+import { OnPageChangedScenario } from "./events/OnPageChanged";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -186,6 +187,9 @@ export { default as SinglePageReactNativePdfScreen } from "./navigation/SinglePa
 
 export { default as OnLoadProgressCoolPdfScreen } from "./events/OnLoadProgressCoolPdfScreen";
 export { default as OnLoadProgressReactNativePdfScreen } from "./events/OnLoadProgressReactNativePdfScreen";
+
+export { default as OnPageChangedCoolPdfScreen } from "./events/OnPageChangedCoolPdfScreen";
+export { default as OnPageChangedReactNativePdfScreen } from "./events/OnPageChangedReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -383,6 +387,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...OnLoadProgressScenario,
     coolPdfScreen: "OnLoadProgressCoolPdf",
     reactNativePdfScreen: "OnLoadProgressReactNativePdf",
+  },
+  {
+    ...OnPageChangedScenario,
+    coolPdfScreen: "OnPageChangedCoolPdf",
+    reactNativePdfScreen: "OnPageChangedReactNativePdf",
   },
 ];
 

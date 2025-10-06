@@ -34,12 +34,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 68%
+Overall compatibility: 70%
 
-- 18/29 props
+- 19/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 30/44 total props supported
+- 31/44 total props supported
 
 ### Props
 
@@ -69,7 +69,7 @@ Overall compatibility: 68%
 | singlePage                     |                             bool                              |          false           | Only show first page, useful for thumbnail views                                                                                                                            | ✔  | ✔      | ✔        |
 | onLoadProgress                 |                       function(percent)                       |           null           | callback when loading, return loading progress (0-1)                                                                                                                        | ✔  | ✔      | ✔        |
 | onLoadComplete                 | function(numberOfPages, path, {width, height}, tableContents) |           null           | callback when pdf load completed, return total page count, pdf local/cache path, {width,height} and table of contents                                                       | ✔  | ✔      | ✔        |
-| onPageChanged                  |                 function(page,numberOfPages)                  |           null           | callback when page changed ,return current page and total page count                                                                                                        | ✔  | ✔      | ✖        |
+| onPageChanged                  |                 function(page,numberOfPages)                  |           null           | callback when page changed ,return current page and total page count                                                                                                        | ✔  | ✔      | ✔        |
 | onError                        |                        function(error)                        |           null           | callback when error happened                                                                                                                                                | ✔  | ✔      | ✖        |
 | onPageSingleTap                |                        function(page)                         |           null           | callback when page was single tapped                                                                                                                                        | ✔  | ✔      | ✖        |
 | onScaleChanged                 |                        function(scale)                        |           null           | callback when scale page                                                                                                                                                    | ✔  | ✔      | ✖        |
