@@ -41,6 +41,7 @@ import { OnLoadProgressScenario } from "./events/OnLoadProgress";
 import { OnPageChangedScenario } from "./events/OnPageChanged";
 import { OnErrorScenario } from "./events/OnError";
 import { OnPageSingleTapScenario } from "./events/OnPageSingleTap";
+import { OnScaleChangedScenario } from "./events/OnScaleChanged";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -198,6 +199,9 @@ export { default as OnErrorReactNativePdfScreen } from "./events/OnErrorReactNat
 
 export { default as OnPageSingleTapCoolPdfScreen } from "./events/OnPageSingleTapCoolPdfScreen";
 export { default as OnPageSingleTapReactNativePdfScreen } from "./events/OnPageSingleTapReactNativePdfScreen";
+
+export { default as OnScaleChangedCoolPdfScreen } from "./events/OnScaleChangedCoolPdfScreen";
+export { default as OnScaleChangedReactNativePdfScreen } from "./events/OnScaleChangedReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -410,6 +414,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...OnPageSingleTapScenario,
     coolPdfScreen: "OnPageSingleTapCoolPdf",
     reactNativePdfScreen: "OnPageSingleTapReactNativePdf",
+  },
+  {
+    ...OnScaleChangedScenario,
+    coolPdfScreen: "OnScaleChangedCoolPdf",
+    reactNativePdfScreen: "OnScaleChangedReactNativePdf",
   },
 ];
 
