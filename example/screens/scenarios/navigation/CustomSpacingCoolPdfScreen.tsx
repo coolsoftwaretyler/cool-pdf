@@ -8,7 +8,7 @@ export const CustomSpacingScenario = {
   id: 'nav-custom-spacing',
   name: 'Custom Page Spacing',
   description: 'Adjust spacing between pages',
-  category: 'navigation' as const,
+  category: 'style' as const,
   expectedBehavior: 'Should show 30px spacing between pages',
 };
 

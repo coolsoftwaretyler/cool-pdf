@@ -145,9 +145,6 @@ export { default as CustomSpacingReactNativePdfScreen } from "./navigation/Custo
 export { default as PagePropCoolPdfScreen } from "./navigation/PagePropCoolPdfScreen";
 export { default as PagePropReactNativePdfScreen } from "./navigation/PagePropReactNativePdfScreen";
 
-export { default as SpacingPropCoolPdfScreen } from "./navigation/SpacingPropCoolPdfScreen";
-export { default as SpacingPropReactNativePdfScreen } from "./navigation/SpacingPropReactNativePdfScreen";
-
 export { default as EnablePagingPropCoolPdfScreen } from "./navigation/EnablePagingPropCoolPdfScreen";
 export { default as EnablePagingPropReactNativePdfScreen } from "./navigation/EnablePagingPropReactNativePdfScreen";
 
@@ -183,7 +180,13 @@ export { default as EnableDoubleTapZoomPropCoolPdfScreen } from "./zoom/EnableDo
 export { default as EnableDoubleTapZoomPropReactNativePdfScreen } from "./zoom/EnableDoubleTapZoomPropReactNativePdfScreen";
 
 // Types
-export type ScenarioCategory = "loading" | "events" | "basic" | "navigation" | "zoom";
+export type ScenarioCategory =
+  | "loading"
+  | "events"
+  | "style"
+  | "password"
+  | "navigation"
+  | "zoom";
 
 export type ScenarioMetadata = {
   id: string;
@@ -196,9 +199,7 @@ export type ScenarioMetadata = {
   reactNativePdfScreen: string;
 };
 
-// All scenarios metadata
-export const allScenarios: ScenarioMetadata[] = [
-  // Loading
+const loadingScenarios = [
   {
     ...BasicNoCacheScenario,
     coolPdfScreen: "BasicNoCacheCoolPdf",
@@ -249,11 +250,21 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "FileUriLocalPdfCoolPdf",
     reactNativePdfScreen: "FileUriLocalPdfReactNativePdf",
   },
-  // Basic
+];
+
+const eventsScenarios = [
   {
     ...OnLoadCompleteScenario,
     coolPdfScreen: "OnLoadCompleteCoolPdf",
     reactNativePdfScreen: "OnLoadCompleteReactNativePdf",
+  },
+];
+
+const styleScenarios = [
+  {
+    ...StylePropScenario,
+    coolPdfScreen: "StylePropCoolPdf",
+    reactNativePdfScreen: "StylePropReactNativePdf",
   },
   {
     ...ShowsVerticalScrollIndicatorScenario,
@@ -261,36 +272,23 @@ export const allScenarios: ScenarioMetadata[] = [
     reactNativePdfScreen: "ShowsVerticalScrollIndicatorReactNativePdf",
   },
   {
-    ...ScrollEnabledScenario,
-    coolPdfScreen: "ScrollEnabledCoolPdf",
-    reactNativePdfScreen: "ScrollEnabledReactNativePdf",
-  },
-  {
-    ...StylePropScenario,
-    coolPdfScreen: "StylePropCoolPdf",
-    reactNativePdfScreen: "StylePropReactNativePdf",
-  },
-  {
     ...ShowsHorizontalScrollIndicatorScenario,
     coolPdfScreen: "ShowsHorizontalScrollIndicatorCoolPdf",
     reactNativePdfScreen: "ShowsHorizontalScrollIndicatorReactNativePdf",
   },
   {
-    ...PasswordPropScenario,
-    coolPdfScreen: "PasswordPropCoolPdf",
-    reactNativePdfScreen: "PasswordPropReactNativePdf",
+    ...CustomSpacingScenario,
+    coolPdfScreen: "CustomSpacingCoolPdf",
+    reactNativePdfScreen: "CustomSpacingReactNativePdf",
   },
+];
+
+const navigationScenarios = [
   {
-    ...PasswordCorrectScenario,
-    coolPdfScreen: "PasswordCorrectCoolPdf",
-    reactNativePdfScreen: "PasswordCorrectReactNativePdf",
+    ...ScrollEnabledScenario,
+    coolPdfScreen: "ScrollEnabledCoolPdf",
+    reactNativePdfScreen: "ScrollEnabledReactNativePdf",
   },
-  {
-    ...PasswordIncorrectScenario,
-    coolPdfScreen: "PasswordIncorrectCoolPdf",
-    reactNativePdfScreen: "PasswordIncorrectReactNativePdf",
-  },
-  // Navigation
   {
     ...HorizontalScrollingScenario,
     coolPdfScreen: "HorizontalScrollingCoolPdf",
@@ -307,19 +305,9 @@ export const allScenarios: ScenarioMetadata[] = [
     reactNativePdfScreen: "HorizontalWithPagingReactNativePdf",
   },
   {
-    ...CustomSpacingScenario,
-    coolPdfScreen: "CustomSpacingCoolPdf",
-    reactNativePdfScreen: "CustomSpacingReactNativePdf",
-  },
-  {
     ...PagePropScenario,
     coolPdfScreen: "PagePropCoolPdf",
     reactNativePdfScreen: "PagePropReactNativePdf",
-  },
-  {
-    ...SpacingPropScenario,
-    coolPdfScreen: "SpacingPropCoolPdf",
-    reactNativePdfScreen: "SpacingPropReactNativePdf",
   },
   {
     ...EnablePagingPropScenario,
@@ -336,7 +324,22 @@ export const allScenarios: ScenarioMetadata[] = [
     coolPdfScreen: "EnableRtlPropCoolPdf",
     reactNativePdfScreen: "EnableRtlPropReactNativePdf",
   },
-  // Zoom
+];
+
+const passwordScenarios = [
+  {
+    ...PasswordCorrectScenario,
+    coolPdfScreen: "PasswordCorrectCoolPdf",
+    reactNativePdfScreen: "PasswordCorrectReactNativePdf",
+  },
+  {
+    ...PasswordIncorrectScenario,
+    coolPdfScreen: "PasswordIncorrectCoolPdf",
+    reactNativePdfScreen: "PasswordIncorrectReactNativePdf",
+  },
+];
+
+const zoomScenarios = [
   {
     ...InitialZoomScenario,
     coolPdfScreen: "InitialZoomCoolPdf",
@@ -379,19 +382,31 @@ export const allScenarios: ScenarioMetadata[] = [
   },
 ];
 
+// All scenarios metadata
+export const allScenarios: ScenarioMetadata[] = [
+  ...loadingScenarios,
+  ...eventsScenarios,
+  ...styleScenarios,
+  ...navigationScenarios,
+  ...passwordScenarios,
+  ...zoomScenarios,
+];
+
 export const scenariosByCategory: Record<ScenarioCategory, ScenarioMetadata[]> =
   {
     loading: allScenarios.filter((s) => s.category === "loading"),
-    basic: allScenarios.filter((s) => s.category === "basic"),
+    password: allScenarios.filter((s) => s.category === "password"),
     navigation: allScenarios.filter((s) => s.category === "navigation"),
     zoom: allScenarios.filter((s) => s.category === "zoom"),
     events: allScenarios.filter((s) => s.category === "events"),
+    style: allScenarios.filter((s) => s.category === "style"),
   };
 
 export const categoryLabels: Record<ScenarioCategory, string> = {
   loading: "Loading",
-  basic: "Basic",
+  password: "Password",
   navigation: "Navigation",
   zoom: "Zoom & Scale",
   events: "Events",
+  style: "Style",
 };

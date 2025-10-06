@@ -54,8 +54,6 @@ import {
   CustomSpacingReactNativePdfScreen,
   PagePropCoolPdfScreen,
   PagePropReactNativePdfScreen,
-  SpacingPropCoolPdfScreen,
-  SpacingPropReactNativePdfScreen,
   EnablePagingPropCoolPdfScreen,
   EnablePagingPropReactNativePdfScreen,
   HorizontalPropCoolPdfScreen,
@@ -149,9 +147,6 @@ type RootStackParamList = {
   CustomSpacingReactNativePdf: undefined;
   PagePropCoolPdf: undefined;
   PagePropReactNativePdf: undefined;
-
-  SpacingPropCoolPdf: undefined;
-  SpacingPropReactNativePdf: undefined;
 
   EnablePagingPropCoolPdf: undefined;
   EnablePagingPropReactNativePdf: undefined;
@@ -421,19 +416,6 @@ export default function App() {
             options={{ title: "Password Incorrect (RN-PDF)" }}
           />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
           {/* Navigation scenarios */}
           <Stack.Screen
             name="HorizontalScrollingCoolPdf"
@@ -486,16 +468,6 @@ export default function App() {
             options={{ title: "Page Prop (RN-PDF)" }}
           />
           <Stack.Screen
-            name="SpacingPropCoolPdf"
-            component={SpacingPropCoolPdfScreen}
-            options={{ title: "Spacing Prop (CoolPDF)" }}
-          />
-          <Stack.Screen
-            name="SpacingPropReactNativePdf"
-            component={SpacingPropReactNativePdfScreen}
-            options={{ title: "Spacing Prop (RN-PDF)" }}
-          />
-          <Stack.Screen
             name="EnablePagingPropCoolPdf"
             component={EnablePagingPropCoolPdfScreen}
             options={{ title: "Enable Paging Prop (CoolPDF)" }}
@@ -525,11 +497,6 @@ export default function App() {
             component={EnableRtlPropReactNativePdfScreen}
             options={{ title: "Enable RTL Prop (RN-PDF)" }}
           />
-
-
-
-
-
 
           {/* Zoom scenarios */}
           <Stack.Screen
@@ -562,7 +529,7 @@ export default function App() {
             component={RestrictedZoomReactNativePdfScreen}
             options={{ title: "Restricted Zoom (RN-PDF)" }}
           />
-        
+
           <Stack.Screen
             name="ScalePropCoolPdf"
             component={ScalePropCoolPdfScreen}
@@ -617,7 +584,7 @@ export default function App() {
             component={EnableDoubleTapZoomPropReactNativePdfScreen}
             options={{ title: "Enable Double Tap Zoom Prop (RN-PDF)" }}
           />
-</Stack.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
