@@ -43,6 +43,7 @@ import { OnErrorScenario } from "./events/OnError";
 import { OnPageSingleTapScenario } from "./events/OnPageSingleTap";
 import { OnScaleChangedScenario } from "./events/OnScaleChanged";
 import { OnPressLinkScenario } from "./events/OnPressLink";
+import { RenderActivityIndicatorScenario } from "./style/RenderActivityIndicator";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -206,6 +207,9 @@ export { default as OnScaleChangedReactNativePdfScreen } from "./events/OnScaleC
 
 export { default as OnPressLinkCoolPdfScreen } from "./events/OnPressLinkCoolPdfScreen";
 export { default as OnPressLinkReactNativePdfScreen } from "./events/OnPressLinkReactNativePdfScreen";
+
+export { default as RenderActivityIndicatorCoolPdfScreen } from "./style/RenderActivityIndicatorCoolPdfScreen";
+export { default as RenderActivityIndicatorReactNativePdfScreen } from "./style/RenderActivityIndicatorReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -428,6 +432,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...OnPressLinkScenario,
     coolPdfScreen: "OnPressLinkCoolPdf",
     reactNativePdfScreen: "OnPressLinkReactNativePdf",
+  },
+  {
+    ...RenderActivityIndicatorScenario,
+    coolPdfScreen: "RenderActivityIndicatorCoolPdf",
+    reactNativePdfScreen: "RenderActivityIndicatorReactNativePdf",
   },
 ];
 

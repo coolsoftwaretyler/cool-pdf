@@ -88,6 +88,8 @@ import {
   OnScaleChangedReactNativePdfScreen,
   OnPressLinkCoolPdfScreen,
   OnPressLinkReactNativePdfScreen,
+  RenderActivityIndicatorCoolPdfScreen,
+  RenderActivityIndicatorReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -201,6 +203,8 @@ type RootStackParamList = {
   OnScaleChangedReactNativePdf: undefined;
   OnPressLinkCoolPdf: undefined;
   OnPressLinkReactNativePdf: undefined;
+  RenderActivityIndicatorCoolPdf: undefined;
+  RenderActivityIndicatorReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -649,6 +653,16 @@ export default function App() {
             name="OnPressLinkReactNativePdf"
             component={OnPressLinkReactNativePdfScreen}
             options={{ title: "On Press Link (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="RenderActivityIndicatorCoolPdf"
+            component={RenderActivityIndicatorCoolPdfScreen}
+            options={{ title: "Render Activity Indicator (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="RenderActivityIndicatorReactNativePdf"
+            component={RenderActivityIndicatorReactNativePdfScreen}
+            options={{ title: "Render Activity Indicator (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
