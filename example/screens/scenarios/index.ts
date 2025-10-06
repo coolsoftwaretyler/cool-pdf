@@ -36,6 +36,7 @@ import { PasswordCorrectScenario } from "./basic/PasswordCorrect";
 import { PasswordIncorrectScenario } from "./basic/PasswordIncorrect";
 import { EnableDoubleTapZoomPropScenario } from "./zoom/EnableDoubleTapZoomProp";
 import { EnableRtlPropScenario } from "./navigation/EnableRtlProp";
+import { SinglePageScenario } from "./navigation/SinglePage";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -178,6 +179,9 @@ export { default as FitPolicyPropReactNativePdfScreen } from "./zoom/FitPolicyPr
 
 export { default as EnableDoubleTapZoomPropCoolPdfScreen } from "./zoom/EnableDoubleTapZoomPropCoolPdfScreen";
 export { default as EnableDoubleTapZoomPropReactNativePdfScreen } from "./zoom/EnableDoubleTapZoomPropReactNativePdfScreen";
+
+export { default as SinglePageCoolPdfScreen } from "./navigation/SinglePageCoolPdfScreen";
+export { default as SinglePageReactNativePdfScreen } from "./navigation/SinglePageReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -365,6 +369,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...EnableDoubleTapZoomPropScenario,
     coolPdfScreen: "EnableDoubleTapZoomPropCoolPdf",
     reactNativePdfScreen: "EnableDoubleTapZoomPropReactNativePdf",
+  },
+  {
+    ...SinglePageScenario,
+    coolPdfScreen: "SinglePageCoolPdf",
+    reactNativePdfScreen: "SinglePageReactNativePdf",
   },
 ];
 

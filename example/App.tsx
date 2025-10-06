@@ -74,6 +74,8 @@ import {
   FitPolicyPropReactNativePdfScreen,
   EnableDoubleTapZoomPropCoolPdfScreen,
   EnableDoubleTapZoomPropReactNativePdfScreen,
+  SinglePageCoolPdfScreen,
+  SinglePageReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -173,6 +175,8 @@ type RootStackParamList = {
 
   EnableDoubleTapZoomPropCoolPdf: undefined;
   EnableDoubleTapZoomPropReactNativePdf: undefined;
+  SinglePageCoolPdf: undefined;
+  SinglePageReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -552,7 +556,17 @@ export default function App() {
             component={EnableDoubleTapZoomPropReactNativePdfScreen}
             options={{ title: "Enable Double Tap Zoom Prop (RN-PDF)" }}
           />
-        </Stack.Navigator>
+                  <Stack.Screen
+            name="SinglePageCoolPdf"
+            component={SinglePageCoolPdfScreen}
+            options={{ title: "Single Page (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="SinglePageReactNativePdf"
+            component={SinglePageReactNativePdfScreen}
+            options={{ title: "Single Page (RN-PDF)" }}
+          />
+</Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
