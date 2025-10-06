@@ -39,6 +39,7 @@ import { EnableRtlPropScenario } from "./navigation/EnableRtlProp";
 import { SinglePageScenario } from "./navigation/SinglePage";
 import { OnLoadProgressScenario } from "./events/OnLoadProgress";
 import { OnPageChangedScenario } from "./events/OnPageChanged";
+import { OnErrorScenario } from "./events/OnError";
 // Re-export scenario metadata
 export {
   BasicWithCacheScenario,
@@ -190,6 +191,9 @@ export { default as OnLoadProgressReactNativePdfScreen } from "./events/OnLoadPr
 
 export { default as OnPageChangedCoolPdfScreen } from "./events/OnPageChangedCoolPdfScreen";
 export { default as OnPageChangedReactNativePdfScreen } from "./events/OnPageChangedReactNativePdfScreen";
+
+export { default as OnErrorCoolPdfScreen } from "./events/OnErrorCoolPdfScreen";
+export { default as OnErrorReactNativePdfScreen } from "./events/OnErrorReactNativePdfScreen";
 
 // Types
 export type ScenarioCategory =
@@ -392,6 +396,11 @@ export const allScenarios: ScenarioMetadata[] = [
     ...OnPageChangedScenario,
     coolPdfScreen: "OnPageChangedCoolPdf",
     reactNativePdfScreen: "OnPageChangedReactNativePdf",
+  },
+  {
+    ...OnErrorScenario,
+    coolPdfScreen: "OnErrorCoolPdf",
+    reactNativePdfScreen: "OnErrorReactNativePdf",
   },
 ];
 

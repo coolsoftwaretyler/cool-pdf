@@ -80,6 +80,8 @@ import {
   OnLoadProgressReactNativePdfScreen,
   OnPageChangedCoolPdfScreen,
   OnPageChangedReactNativePdfScreen,
+  OnErrorCoolPdfScreen,
+  OnErrorReactNativePdfScreen,
 } from "./screens/scenarios";
 
 type RootStackParamList = {
@@ -185,6 +187,8 @@ type RootStackParamList = {
   OnLoadProgressReactNativePdf: undefined;
   OnPageChangedCoolPdf: undefined;
   OnPageChangedReactNativePdf: undefined;
+  OnErrorCoolPdf: undefined;
+  OnErrorReactNativePdf: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -593,6 +597,16 @@ export default function App() {
             name="OnPageChangedReactNativePdf"
             component={OnPageChangedReactNativePdfScreen}
             options={{ title: "On Page Changed (RN-PDF)" }}
+          />
+          <Stack.Screen
+            name="OnErrorCoolPdf"
+            component={OnErrorCoolPdfScreen}
+            options={{ title: "On Error (CoolPDF)" }}
+          />
+          <Stack.Screen
+            name="OnErrorReactNativePdf"
+            component={OnErrorReactNativePdfScreen}
+            options={{ title: "On Error (RN-PDF)" }}
           />
 </Stack.Navigator>
       </NavigationContainer>
