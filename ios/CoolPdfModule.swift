@@ -96,7 +96,7 @@ public class CoolPdfModule: Module {
         view.setEnableDoubleTapZoom(enableDoubleTapZoom)
       }
 
-      Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
+      Events("onLoadComplete", "onLoadProgress", "onPageChanged", "onError", "onPageSingleTap")
     }
   }
 }

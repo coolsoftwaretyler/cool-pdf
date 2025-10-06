@@ -27,6 +27,7 @@ export default function OnLoadProgressReactNativePdfScreen() {
       <Pdf
         source={{
           uri: "https://craftinginterpreters.com/sample.pdf",
+          cache: false
         }}
         onLoadProgress={(percent) => {
           addEvent("loadProgress", { percent });

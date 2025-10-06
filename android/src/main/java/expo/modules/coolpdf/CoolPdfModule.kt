@@ -94,7 +94,7 @@ class CoolPdfModule : Module() {
       }
 
       // Defines events that the view can send to JavaScript.
-      Events("onLoadComplete", "onPageChanged", "onError", "onPageSingleTap")
+      Events("onLoadComplete", "onLoadProgress", "onPageChanged", "onError", "onPageSingleTap")
     }
   }
 }

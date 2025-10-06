@@ -4,9 +4,10 @@ import CommonCrypto
 
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
-class CoolPdfView: ExpoView {
+class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
   let pdfView = PDFView()
   let onLoadComplete = EventDispatcher()
+  let onLoadProgress = EventDispatcher()
   let onPageChanged = EventDispatcher()
   let onError = EventDispatcher()
   let onPageSingleTap = EventDispatcher()
@@ -25,6 +26,13 @@ class CoolPdfView: ExpoView {
   private var enableDoubleTapZoom: Bool = true
   private var singlePage: Bool = false
   private var fixScaleFactor: CGFloat = 1.0
+
+  // For download progress tracking
+  private var downloadSession: URLSession?
+  private var pendingCacheURL: URL?
+  private var shouldCache: Bool = false
+  private var lastProgressUpdate: TimeInterval = 0
+  private var lastReportedProgress: Double = 0.0
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
@@ -455,86 +463,132 @@ class CoolPdfView: ExpoView {
       request.setValue(value, forHTTPHeaderField: key)
     }
 
-    URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-      DispatchQueue.main.async {
-        guard let self = self else { return }
+    // Store cache info for delegate methods
+    pendingCacheURL = cacheURL
+    shouldCache = cache
 
-        if let error = error {
-          self.onError([
-            "error": error.localizedDescription
-          ])
-          return
-        }
+    // Create a session with delegate for progress tracking
+    downloadSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
 
-        guard let data = data, let document = PDFDocument(data: data) else {
-          self.onError([
-            "error": "Failed to load PDF from URL"
-          ])
-          return
-        }
-
-        // Check if document is locked and needs password (matching react-native-pdf lines 350-357)
-        if document.isLocked {
-          if let password = self.password, document.unlock(withPassword: password) {
-            print("🔵 CoolPDF: Document unlocked with password")
-          } else {
-            print("🔴 CoolPDF: Password required or incorrect password")
-            self.onError([
-              "error": "Password required or incorrect password."
-            ])
-            return
-          }
-        }
-
-        // Save to cache if caching is enabled
-        if cache {
-          try? data.write(to: cacheURL)
-        }
-
-        // Suppress automatic pageChanged notification during initial load
-        self.isInitialLoad = true
-        self.pdfView.document = document
-
-        // Mark that we need to navigate to the page after layout
-        self.needsPageNavigation = true
-        self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
-
-        // Apply scale settings after document loads (like react-native-pdf does)
-        self.applyScaleSettings()
-
-        // Get dimensions using rowSize (like react-native-pdf does)
-        let dimensions: [String: Any]
-        if let firstPage = document.page(at: 0) {
-          let pageSize = self.pdfView.rowSize(for: firstPage)
-          dimensions = [
-            "width": pageSize.width,
-            "height": pageSize.height
-          ]
-        } else {
-          dimensions = ["width": 0, "height": 0]
-        }
-
-        // Get table of contents
-        let tableContents = self.extractTableOfContents(from: document)
-
-        self.onLoadComplete([
-          "numberOfPages": document.pageCount,
-          "path": cache ? cacheURL.path : url.absoluteString,
-          "dimensions": dimensions,
-          "tableContents": tableContents
-        ])
-
-        // Fire onPageChanged for initial page (after loadComplete)
-        self.onPageChanged([
-          "page": self.currentPage,
-          "numberOfPages": document.pageCount
-        ])
-
-        // Re-enable automatic page change notifications
-        self.isInitialLoad = false
-      }
-    }.resume()
+    downloadSession?.downloadTask(with: request).resume()
   }
+
+  // MARK: - URLSessionDownloadDelegate
+
+  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+    guard let data = try? Data(contentsOf: location) else {
+      DispatchQueue.main.async {
+        self.onError(["error": "Failed to read downloaded PDF"])
+      }
+      return
+    }
+
+    DispatchQueue.main.async { [weak self] in
+      guard let self = self else { return }
+
+      guard let document = PDFDocument(data: data) else {
+        self.onError([
+          "error": "Failed to load PDF from URL"
+        ])
+        return
+      }
+
+      // Check if document is locked and needs password
+      if document.isLocked {
+        if let password = self.password, document.unlock(withPassword: password) {
+          print("🔵 CoolPDF: Document unlocked with password")
+        } else {
+          print("🔴 CoolPDF: Password required or incorrect password")
+          self.onError([
+            "error": "Password required or incorrect password."
+          ])
+          return
+        }
+      }
+
+      // Save to cache if caching is enabled
+      if self.shouldCache, let cacheURL = self.pendingCacheURL {
+        try? data.write(to: cacheURL)
+      }
+
+      // Suppress automatic pageChanged notification during initial load
+      self.isInitialLoad = true
+      self.pdfView.document = document
+
+      // Mark that we need to navigate to the page after layout
+      self.needsPageNavigation = true
+      self.currentPage = (self.pendingPage >= 1 && self.pendingPage <= document.pageCount) ? self.pendingPage : 1
+
+      // Apply scale settings after document loads
+      self.applyScaleSettings()
+
+      // Get dimensions using rowSize
+      let dimensions: [String: Any]
+      if let firstPage = document.page(at: 0) {
+        let pageSize = self.pdfView.rowSize(for: firstPage)
+        dimensions = [
+          "width": pageSize.width,
+          "height": pageSize.height
+        ]
+      } else {
+        dimensions = ["width": 0, "height": 0]
+      }
+
+      // Get table of contents
+      let tableContents = self.extractTableOfContents(from: document)
+
+      let finalPath = self.shouldCache && self.pendingCacheURL != nil
+        ? self.pendingCacheURL!.path
+        : downloadTask.originalRequest?.url?.absoluteString ?? ""
+
+      self.onLoadComplete([
+        "numberOfPages": document.pageCount,
+        "path": finalPath,
+        "dimensions": dimensions,
+        "tableContents": tableContents
+      ])
+
+      // Fire onPageChanged for initial page (after loadComplete)
+      self.onPageChanged([
+        "page": self.currentPage,
+        "numberOfPages": document.pageCount
+      ])
+
+      // Re-enable automatic page change notifications
+      self.isInitialLoad = false
+
+      // Clean up
+      self.downloadSession = nil
+      self.pendingCacheURL = nil
+    }
+  }
+
+  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    let progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
+    let currentTime = Date().timeIntervalSince1970
+    let timeSinceLastUpdate = currentTime - lastProgressUpdate
+    let progressDelta = progress - lastReportedProgress
+
+    // Debounce: only report every 100ms or when progress changes by at least 5%
+    if timeSinceLastUpdate >= 0.1 || progressDelta >= 0.05 {
+      lastProgressUpdate = currentTime
+      lastReportedProgress = progress
+      DispatchQueue.main.async {
+        self.onLoadProgress(["percent": progress])
+      }
+    }
+  }
+
+  func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    if let error = error {
+      DispatchQueue.main.async { [weak self] in
+        self?.onError(["error": error.localizedDescription])
+        self?.downloadSession = nil
+        self?.pendingCacheURL = nil
+      }
+    }
+  }
+
 
   func setPage(_ pageNumber: Int) {
     // Store the pending page for when the PDF loads

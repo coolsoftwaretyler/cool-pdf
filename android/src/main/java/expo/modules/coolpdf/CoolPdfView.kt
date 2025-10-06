@@ -20,6 +20,7 @@ import java.net.URL
 
 class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
   private val onLoadComplete by EventDispatcher()
+  private val onLoadProgress by EventDispatcher()
   private val onPageChanged by EventDispatcher()
   private val onError by EventDispatcher()
   private val onPageSingleTap by EventDispatcher()
@@ -198,19 +199,40 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
       val targetFile = if (cache) cacheFile else File.createTempFile("pdf", ".pdf", context.cacheDir)
       Log.d(TAG, "Downloading to file: ${targetFile.absolutePath}")
 
-      var totalBytes = 0L
+      val contentLength = connection.contentLength.toLong()
+      var totalBytesRead = 0L
+      var lastProgressUpdate = 0L
+      var lastReportedProgress = 0.0
+
       connection.getInputStream().use { input ->
         FileOutputStream(targetFile).use { output ->
           val buffer = ByteArray(8192)
           var bytesRead: Int
           while (input.read(buffer).also { bytesRead = it } != -1) {
             output.write(buffer, 0, bytesRead)
-            totalBytes += bytesRead
+            totalBytesRead += bytesRead
+
+            // Report progress if content length is known
+            // Debounce: only report every 100ms or when progress changes by at least 5%
+            if (contentLength > 0) {
+              val progress = totalBytesRead.toDouble() / contentLength.toDouble()
+              val currentTime = System.currentTimeMillis()
+              val timeSinceLastUpdate = currentTime - lastProgressUpdate
+              val progressDelta = progress - lastReportedProgress
+
+              if (timeSinceLastUpdate >= 100 || progressDelta >= 0.05) {
+                lastProgressUpdate = currentTime
+                lastReportedProgress = progress
+                withContext(Dispatchers.Main) {
+                  onLoadProgress(mapOf("percent" to progress))
+                }
+              }
+            }
           }
         }
       }
 
-      Log.d(TAG, "Download complete: $totalBytes bytes written")
+      Log.d(TAG, "Download complete: $totalBytesRead bytes written")
       targetFile
     } catch (e: Exception) {
       Log.e(TAG, "Error downloading PDF", e)

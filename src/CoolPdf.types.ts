@@ -40,6 +40,10 @@ export type OnPageSingleTapEventPayload = {
   page: number;
 };
 
+export type OnLoadProgressEventPayload = {
+  percent: number;
+};
+
 export type CoolPdfModuleEvents = {
   onChange: (params: ChangeEventPayload) => void;
 };
@@ -66,6 +70,7 @@ export type CoolPdfViewProps = {
   showsVerticalScrollIndicator?: boolean;
   scrollEnabled?: boolean;
   onLoadComplete?: (event: { nativeEvent: OnLoadCompleteEventPayload }) => void;
+  onLoadProgress?: (event: { nativeEvent: OnLoadProgressEventPayload }) => void;
   onPageChanged?: (event: { nativeEvent: OnPageChangedEventPayload }) => void;
   onError?: (event: { nativeEvent: OnErrorEventPayload }) => void;
   onPageSingleTap?: (event: { nativeEvent: OnPageSingleTapEventPayload }) => void;
