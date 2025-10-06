@@ -8,6 +8,8 @@ import com.github.barteksc.pdfviewer.listener.OnErrorListener
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.github.barteksc.pdfviewer.listener.OnTapListener
+import com.github.barteksc.pdfviewer.link.LinkHandler
+import com.github.barteksc.pdfviewer.model.LinkTapEvent
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import expo.modules.kotlin.AppContext
 import expo.modules.kotlin.viewevent.EventDispatcher
@@ -18,11 +20,12 @@ import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
+class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, appContext), LinkHandler {
   private val onLoadComplete by EventDispatcher()
   private val onLoadProgress by EventDispatcher()
   private val onPageChanged by EventDispatcher()
   private val onScaleChanged by EventDispatcher()
+  private val onPressLink by EventDispatcher()
   private val onError by EventDispatcher()
   private val onPageSingleTap by EventDispatcher()
 
@@ -376,6 +379,9 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
         configurator.pages(0)
       }
 
+      // Set link handler for link press events
+      configurator.linkHandler(this)
+
       configurator.load()
 
       // Apply scale settings after load
@@ -524,5 +530,20 @@ class CoolPdfView(context: Context, appContext: AppContext) : ExpoView(context, 
     super.onDetachedFromWindow()
     pdfView.recycle()
     scope.cancel()
+  }
+
+  // MARK: - LinkHandler implementation
+
+  override fun handleLinkEvent(event: LinkTapEvent) {
+    val uri = event.link.uri
+    val page = event.link.destPageIdx
+
+    if (uri != null && uri.isNotEmpty()) {
+      // Handle external link
+      onPressLink(mapOf("uri" to uri))
+    } else if (page != null) {
+      // Handle internal page link - navigate to the page
+      pdfView.jumpTo(page)
+    }
   }
 }

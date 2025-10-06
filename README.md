@@ -34,12 +34,12 @@ import { CoolPdfView } from "@coolsoftwaretyler/cool-pdf";
 
 ## Compatibility with react-native-pdf
 
-Overall compatibility: 77%
+Overall compatibility: 80%
 
-- 22/29 props
+- 23/29 props
 - 6/6 source parameters
 - 6/9 types of source uri
-- 34/44 total props supported
+- 35/44 total props supported
 
 ### Props
 
@@ -73,7 +73,7 @@ Overall compatibility: 77%
 | onError                        |                        function(error)                        |           null           | callback when error happened                                                                                                                                                | ✔  | ✔      | ✔        |
 | onPageSingleTap                |                        function(page)                         |           null           | callback when page was single tapped                                                                                                                                        | ✔  | ✔      | ✔        |
 | onScaleChanged                 |                        function(scale)                        |           null           | callback when scale page                                                                                                                                                    | ✔  | ✔      | ✔        |
-| onPressLink                    |                         function(uri)                         |           null           | callback when link tapped                                                                                                                                                   | ✔  | ✔      | ✖        |
+| onPressLink                    |                         function(uri)                         |           null           | callback when link tapped                                                                                                                                                   | ✔  | ✔      | ✔        |
 
 #### parameters of source
 

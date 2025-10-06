@@ -4,12 +4,13 @@ import CommonCrypto
 
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
-class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
+class CoolPdfView: ExpoView, URLSessionDownloadDelegate, PDFViewDelegate {
   let pdfView = PDFView()
   let onLoadComplete = EventDispatcher()
   let onLoadProgress = EventDispatcher()
   let onPageChanged = EventDispatcher()
   let onScaleChanged = EventDispatcher()
+  let onPressLink = EventDispatcher()
   let onError = EventDispatcher()
   let onPageSingleTap = EventDispatcher()
 
@@ -45,6 +46,7 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
     pdfView.autoScales = true
     pdfView.displayMode = .singlePageContinuous
     pdfView.displayDirection = .vertical
+    pdfView.delegate = self
 
     addSubview(pdfView)
 
@@ -771,5 +773,13 @@ class CoolPdfView: ExpoView, URLSessionDownloadDelegate {
     }
 
     return items
+  }
+
+  // MARK: - PDFViewDelegate
+
+  func pdfViewWillClick(onLink sender: PDFView, with url: URL) {
+    onPressLink([
+      "uri": url.absoluteString
+    ])
   }
 }
