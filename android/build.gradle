@@ -1,13 +1,34 @@
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.13.0'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0'
+  }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+// AGP 8.13+ requires compileSdk to be set early when applied at root
+android {
+  compileSdk 36
+}
 
 group = 'expo.modules.coolpdf'
 version = '0.1.0'
 
-def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
-apply from: expoModulesCorePlugin
-applyKotlinExpoModulesCorePlugin()
-useCoreDependencies()
-useExpoPublishing()
+// Only apply Expo plugin when building as part of an Expo app (not standalone)
+def hasExpoModulesCore = findProject(':expo-modules-core') != null
+if (hasExpoModulesCore) {
+  def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+  apply from: expoModulesCorePlugin
+  applyKotlinExpoModulesCorePlugin()
+  useCoreDependencies()
+  useExpoPublishing()
+}
 
 // If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
 // The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
@@ -22,8 +43,7 @@ if (useManagedAndroidSdkVersions) {
       rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
     }
   }
-  project.android {
-    compileSdkVersion safeExtGet("compileSdkVersion", 36)
+  android {
     defaultConfig {
       minSdkVersion safeExtGet("minSdkVersion", 24)
       targetSdkVersion safeExtGet("targetSdkVersion", 36)
@@ -32,6 +52,8 @@ if (useManagedAndroidSdkVersions) {
 }
 
 repositories {
+  google()
+  mavenCentral()
   maven { url 'https://jitpack.io' }
 }
 
@@ -42,6 +64,12 @@ dependencies {
   // Depend on PdfiumAndroidKt directly so this can be updated independently of AndroidPdfViewer as updates are provided.
   implementation 'io.legere:pdfiumandroid:1.0.33'
   implementation 'com.google.code.gson:gson:2.13.1'
+
+  // Test dependencies
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'io.mockk:mockk:1.13.13'
+  testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0'
+  testImplementation 'androidx.test:core-ktx:1.6.1'
 }
 
 android {
@@ -52,5 +80,18 @@ android {
   }
   lintOptions {
     abortOnError false
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+  testOptions {
+    unitTests {
+      returnDefaultValues = true
+      includeAndroidResources = true
+    }
   }
 }
