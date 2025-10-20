@@ -2,6 +2,7 @@ export default {
   expo: {
     name: 'cool-pdf-example',
     slug: 'cool-pdf-example',
+    scheme: 'coolpdf',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',

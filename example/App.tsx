@@ -221,11 +221,25 @@ type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const linking = {
+  prefixes: ['coolpdf://', 'expo.modules.coolpdf.example://'],
+  config: {
+    screens: {
+      ScenarioList: 'scenarios',
+      BasicNoCacheCoolPdf: 'basic-no-cache-cool',
+      BasicNoCacheReactNativePdf: 'basic-no-cache-rnpdf',
+      BasicWithCacheCoolPdf: 'basic-with-cache-cool',
+      BasicWithCacheReactNativePdf: 'basic-with-cache-rnpdf',
+      // Add more as needed
+    },
+  },
+};
+
 export default function App() {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
+      <NavigationContainer linking={linking} fallback={null}>
+        <Stack.Navigator initialRouteName="ScenarioList">
           <Stack.Screen
             name="ScenarioList"
             component={ScenarioListScreen}

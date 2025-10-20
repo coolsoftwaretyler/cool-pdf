@@ -1,0 +1,11 @@
+appId: ${APP_ID}
+---
+# Common assertion helpers that can be imported into other tests
+
+# Wait for PDF to load successfully (no error message)
+- assertNotVisible:
+    text: "Error"
+    optional: true
+- assertNotVisible:
+    text: "Failed"
+    optional: true

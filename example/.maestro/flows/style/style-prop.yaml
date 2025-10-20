@@ -1,0 +1,53 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Style Prop
+# Category: Style (Visual Regression)
+# Description: Tests visual rendering of style props (border, dimensions)
+# This test captures screenshots for visual comparison
+
+- launchApp
+- tapOn: "Style"
+- waitForAnimationToEnd
+- tapOn: "Style Prop"
+- waitForAnimationToEnd
+
+# Test CoolPDF implementation
+- tapOn: "View in CoolPDF"
+- waitForAnimationToEnd
+- assertVisible: "CoolPDF Implementation"
+- assertVisible: "Style Prop"
+
+# Wait for PDF to render fully
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot for visual comparison
+- takeScreenshot: coolpdf-style-prop
+
+# Navigate back
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd
+
+# Test react-native-pdf implementation
+- tapOn: "View in react-native-pdf"
+- waitForAnimationToEnd
+- assertVisible: "react-native-pdf Implementation"
+- assertVisible: "Style Prop"
+
+# Wait for PDF to render fully
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot for visual comparison
+- takeScreenshot: rnpdf-style-prop
+
+# Navigate back to home
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd
+
+# Note: Screenshots are saved to ~/.maestro/tests/{test-run-id}/
+# Compare the two screenshots manually or with image diff tools:
+# - Maestro Cloud provides automatic visual regression
+# - Locally: use tools like Pixelmatch or ImageMagick's compare

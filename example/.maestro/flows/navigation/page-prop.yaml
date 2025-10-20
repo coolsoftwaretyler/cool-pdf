@@ -1,0 +1,72 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Page Prop
+# Category: Navigation
+# Description: Tests the page prop to verify PDF opens on the specified page
+
+- launchApp
+- tapOn: "Navigation"
+- waitForAnimationToEnd
+- tapOn: "Page Prop"
+- waitForAnimationToEnd
+
+# Test CoolPDF implementation
+- tapOn: "View in CoolPDF"
+- waitForAnimationToEnd
+- assertVisible: "CoolPDF Implementation"
+- assertVisible: "Page Prop"
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# The scenario should open on a specific page (not page 1)
+# Check event log for pageChanged or loadComplete showing correct page
+- assertVisible: "page"
+
+# Swipe to navigate between pages
+- swipe:
+    direction: UP
+    duration: 500
+
+# Wait for page change
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Verify page changed event fired
+- assertVisible: "pageChanged"
+
+# Navigate back
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd
+
+# Test react-native-pdf implementation
+- tapOn: "View in react-native-pdf"
+- waitForAnimationToEnd
+- assertVisible: "react-native-pdf Implementation"
+- assertVisible: "Page Prop"
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Check event log for correct initial page
+- assertVisible: "page"
+
+# Swipe to navigate between pages
+- swipe:
+    direction: UP
+    duration: 500
+
+# Wait for page change
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Verify page changed event fired
+- assertVisible: "pageChanged"
+
+# Navigate back to home
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd

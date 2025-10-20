@@ -1,0 +1,8 @@
+appId: expo.modules.coolpdf.example
+---
+# Maestro Configuration
+# This file sets up environment variables for all tests
+
+env:
+  SCREENSHOTS_DIR: "/tmp/maestro-screenshots"
+  APP_ID: "expo.modules.coolpdf.example"

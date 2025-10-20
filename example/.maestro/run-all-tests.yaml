@@ -1,0 +1,12 @@
+appId: expo.modules.coolpdf.example
+---
+# Master test suite - runs all visual comparison tests
+
+# Basic/Loading tests
+- runFlow: flows/basic/basic-no-cache.yaml
+
+# Add more test flows here as they're created
+# - runFlow: flows/basic/basic-with-cache.yaml
+# - runFlow: flows/events/on-load-complete.yaml
+# - runFlow: flows/navigation/page-prop.yaml
+# - runFlow: flows/style/style-prop.yaml
