@@ -60,8 +60,6 @@ export function ScenarioEventLog({ events, accentColor = '#5856d6' }: Props) {
                 <Text style={[styles.eventType, { color: accentColor }]}>{event.type}</Text>
                 <Text
                   style={styles.eventData}
-                  testID={`event-data-${index}`}
-                  accessibilityLabel={JSON.stringify(event.data, null, 2)}
                 >
                   {JSON.stringify(event.data, null, 2)}
                 </Text>

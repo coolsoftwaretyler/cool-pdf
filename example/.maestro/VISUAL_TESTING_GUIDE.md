@@ -117,9 +117,6 @@ appId: expo.modules.coolpdf.example
 - assertVisible: "CoolPDF Implementation"
 - waitForAnimationToEnd:
     timeout: 10000
-- assertNotVisible:
-    text: "Error"
-    optional: true
 - takeScreenshot: my-new-test-coolpdf
 
 # Test react-native-pdf implementation
@@ -128,9 +125,6 @@ appId: expo.modules.coolpdf.example
 - assertVisible: "react-native-pdf Implementation"
 - waitForAnimationToEnd:
     timeout: 10000
-- assertNotVisible:
-    text: "Error"
-    optional: true
 - takeScreenshot: my-new-test-rnpdf
 ```
 
@@ -173,11 +167,6 @@ Use the same wait times for both implementations to ensure fair comparison.
 
 ### 3. Hide Dynamic Content
 If your screens show timestamps or other dynamic data, consider hiding them for visual tests:
-```yaml
-- assertNotVisible:
-    text: "timestamp"
-    optional: true
-```
 
 ### 4. Test Specific Features
 Focus each test on a single feature (e.g., caching, page navigation, zoom) for easier debugging.

@@ -43,7 +43,6 @@ This document outlines the comprehensive testing strategy for the cool-pdf Expo 
 ```
 
 **Key Assertions:**
-- `assertNotVisible: "Error"`
 - Wait for load completion (timeout: 10s)
 - Verify implementation header visible
 
@@ -218,9 +217,6 @@ Tests both CoolPDF and react-native-pdf with the same test flow.
       SCENARIO_NAME: "Basic No Cache"
       TEST_FLOW: "flows/basic/basic-no-cache-actions.yaml"
 ```
-
-### 3. `utils/common-assertions.yaml`
-Common assertion patterns (no errors, successful load, etc.)
 
 ---
 

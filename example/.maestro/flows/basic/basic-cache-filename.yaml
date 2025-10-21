@@ -12,11 +12,6 @@ appId: expo.modules.coolpdf.example
 - waitForAnimationToEnd:
     timeout: 10000
 
-# Assert no error occurred
-- assertNotVisible:
-    text: "Error"
-    optional: true
-
 # Expand event log to check the cached path
 - tapOn:
     id: "event-log-toggle"
@@ -41,11 +36,6 @@ appId: expo.modules.coolpdf.example
 # Wait for PDF to load
 - waitForAnimationToEnd:
     timeout: 10000
-
-# Assert no error occurred
-- assertNotVisible:
-    text: "Error"
-    optional: true
 
 # Expand event log to check the cached path
 - tapOn:

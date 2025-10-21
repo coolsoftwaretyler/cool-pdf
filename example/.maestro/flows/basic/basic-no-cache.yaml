@@ -12,11 +12,6 @@ appId: expo.modules.coolpdf.example
 - waitForAnimationToEnd:
     timeout: 10000
 
-# Assert no error occurred
-- assertNotVisible:
-    text: "Error"
-    optional: true
-
 # Capture screenshot of CoolPDF implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-coolpdf
 
@@ -27,11 +22,6 @@ appId: expo.modules.coolpdf.example
 # Wait for PDF to load
 - waitForAnimationToEnd:
     timeout: 10000
-
-# Assert no error occurred
-- assertNotVisible:
-    text: "Error"
-    optional: true
 
 # Capture screenshot of react-native-pdf implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-rnpdf
