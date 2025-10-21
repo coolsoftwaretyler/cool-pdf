@@ -22,7 +22,7 @@ export default function EnableDoubleTapZoomPropReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={EnableDoubleTapZoomPropScenario.name}
         description={EnableDoubleTapZoomPropScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controls}>
@@ -56,7 +56,7 @@ export default function EnableDoubleTapZoomPropReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

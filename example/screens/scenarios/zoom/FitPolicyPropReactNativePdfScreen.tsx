@@ -30,7 +30,7 @@ export default function FitPolicyPropReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={FitPolicyPropScenario.name}
         description={FitPolicyPropScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controlsContainer}>
@@ -75,7 +75,7 @@ export default function FitPolicyPropReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

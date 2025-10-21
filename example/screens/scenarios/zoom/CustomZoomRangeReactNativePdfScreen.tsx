@@ -21,7 +21,7 @@ export default function CustomZoomRangeReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={CustomZoomRangeScenario.name}
         description={CustomZoomRangeScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -48,7 +48,7 @@ export default function CustomZoomRangeReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

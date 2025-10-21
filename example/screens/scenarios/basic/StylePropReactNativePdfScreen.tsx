@@ -21,7 +21,7 @@ export default function StylePropReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={StylePropScenario.name}
         description={StylePropScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -40,7 +40,7 @@ export default function StylePropReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

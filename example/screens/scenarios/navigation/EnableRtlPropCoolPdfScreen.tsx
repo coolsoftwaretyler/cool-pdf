@@ -22,7 +22,7 @@ export default function EnableRtlPropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={EnableRtlPropScenario.name}
         description={EnableRtlPropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controls}>
@@ -58,7 +58,7 @@ export default function EnableRtlPropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

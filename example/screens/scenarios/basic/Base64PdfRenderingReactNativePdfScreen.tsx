@@ -21,7 +21,7 @@ export default function Base64PdfRenderingReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={Base64PdfRenderingScenario.name}
         description={Base64PdfRenderingScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -40,7 +40,7 @@ export default function Base64PdfRenderingReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

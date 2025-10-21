@@ -21,7 +21,7 @@ export default function BundleAssetsPdfCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={BundleAssetsPdfScenario.name}
         description={BundleAssetsPdfScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -39,7 +39,7 @@ export default function BundleAssetsPdfCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

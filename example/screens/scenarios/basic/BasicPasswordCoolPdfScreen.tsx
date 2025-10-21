@@ -29,7 +29,7 @@ export default function BasicPasswordCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={BasicPasswordScenario.name}
         description={BasicPasswordScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -53,7 +53,7 @@ export default function BasicPasswordCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

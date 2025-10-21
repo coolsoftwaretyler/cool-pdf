@@ -22,7 +22,7 @@ export default function HorizontalPropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={HorizontalPropScenario.name}
         description={HorizontalPropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controlsContainer}>
@@ -62,7 +62,7 @@ export default function HorizontalPropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

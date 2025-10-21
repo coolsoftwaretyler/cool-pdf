@@ -30,7 +30,7 @@ export default function FitPolicyPropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={FitPolicyPropScenario.name}
         description={FitPolicyPropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controlsContainer}>
@@ -76,7 +76,7 @@ export default function FitPolicyPropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

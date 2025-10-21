@@ -22,7 +22,7 @@ export default function OnPressLinkCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={OnPressLinkScenario.name}
         description={OnPressLinkScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -46,7 +46,7 @@ export default function OnPressLinkCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

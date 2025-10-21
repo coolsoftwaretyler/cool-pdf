@@ -1,0 +1,25 @@
+appId: ${APP_ID}
+env:
+  SCENARIO_NAME: ${SCENARIO_NAME}
+  TEST_FLOW: ${TEST_FLOW}
+---
+# Shared flow to test both CoolPDF and react-native-pdf implementations
+# Runs the same test flow for both implementations
+
+# Test CoolPDF implementation
+- tapOn: "View in CoolPDF"
+- waitForAnimationToEnd
+- assertVisible: "CoolPDF Implementation"
+- runFlow: ${TEST_FLOW}
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd
+
+# Test react-native-pdf implementation
+- tapOn: "View in react-native-pdf"
+- waitForAnimationToEnd
+- assertVisible: "react-native-pdf Implementation"
+- runFlow: ${TEST_FLOW}
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd

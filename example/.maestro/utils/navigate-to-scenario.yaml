@@ -1,0 +1,12 @@
+appId: ${APP_ID}
+env:
+  CATEGORY: ${CATEGORY}
+  SCENARIO_NAME: ${SCENARIO_NAME}
+---
+# Shared flow to navigate to a specific scenario from home screen
+# Usage: runFlow with CATEGORY and SCENARIO_NAME env vars
+
+- tapOn: "${CATEGORY}"
+- waitForAnimationToEnd
+- tapOn: "${SCENARIO_NAME}"
+- waitForAnimationToEnd

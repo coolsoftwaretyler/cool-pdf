@@ -1,0 +1,27 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Basic No Cache
+# Category: Loading
+# Description: Tests loading a PDF from a URL without caching
+
+# Test CoolPDF implementation using deep link
+- openLink: coolpdf://basic-no-cache-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot of CoolPDF implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-coolpdf
+
+# Test react-native-pdf implementation
+- openLink: coolpdf://basic-no-cache-rnpdf
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot of react-native-pdf implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-rnpdf

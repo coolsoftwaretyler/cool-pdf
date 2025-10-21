@@ -1,0 +1,57 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: On Load Complete
+# Category: Events
+# Description: Verifies the onLoadComplete event fires with correct parameters
+
+- launchApp
+- tapOn: "Events"
+- waitForAnimationToEnd
+- tapOn: "On Load Complete"
+- waitForAnimationToEnd
+
+# Test CoolPDF implementation
+- tapOn: "View in CoolPDF"
+- waitForAnimationToEnd
+- assertVisible: "CoolPDF Implementation"
+- assertVisible: "On Load Complete"
+
+# Wait for PDF to load and event to fire
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Assert the event log shows loadComplete event
+- assertVisible: "loadComplete"
+
+# Assert event contains expected data fields
+- assertVisible: "numberOfPages"
+- assertVisible: "path"
+- assertVisible: "dimensions"
+
+# Navigate back
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd
+
+# Test react-native-pdf implementation
+- tapOn: "View in react-native-pdf"
+- waitForAnimationToEnd
+- assertVisible: "react-native-pdf Implementation"
+- assertVisible: "On Load Complete"
+
+# Wait for PDF to load and event to fire
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Assert the event log shows loadComplete event
+- assertVisible: "loadComplete"
+
+# Assert event contains expected data fields
+- assertVisible: "numberOfPages"
+- assertVisible: "path"
+- assertVisible: "dimensions"
+
+# Navigate back to home
+- tapOn:
+    label: "Go back"
+- waitForAnimationToEnd

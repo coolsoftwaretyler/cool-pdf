@@ -1,0 +1,77 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Cache Expiration
+# Category: Loading
+# Verifies cache expires after 10s and triggers re-download (via loadProgress events)
+
+# === CoolPDF Implementation ===
+
+# First load (establish cache)
+- openLink: coolpdf://basic-cache-expiration-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Navigate back to scenario list
+- openLink: coolpdf://scenarios
+- waitForAnimationToEnd
+
+# Wait for cache to expire (10s expiration + 2s buffer)
+- runScript:
+    file: ../../utils/sleep.js
+    env:
+      sleepMs: 12000
+
+# Second load - cache expired, should trigger re-download with progress events
+- openLink: coolpdf://basic-cache-expiration-cool
+- waitForAnimationToEnd
+
+# Wait for load to complete
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Expand event log
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
+# Assert loadProgress event exists (indicates download happened)
+- assertVisible:
+    text: "loadProgress"
+
+# === React-Native-PDF Implementation ===
+
+# Navigate back to scenario list
+- openLink: coolpdf://scenarios
+- waitForAnimationToEnd
+
+# First load
+- openLink: coolpdf://basic-cache-expiration-rnpdf
+- waitForAnimationToEnd
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Navigate back
+- openLink: coolpdf://scenarios
+- waitForAnimationToEnd
+
+# Wait for cache to expire
+- runScript:
+    file: ../../utils/sleep.js
+    env:
+      sleepMs: 12000
+
+# Second load - re-download
+- openLink: coolpdf://basic-cache-expiration-rnpdf
+- waitForAnimationToEnd
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Check for loadProgress events
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+- assertVisible:
+    text: "loadProgress"

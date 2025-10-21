@@ -1,0 +1,27 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Base64 PDF Rendering
+# Category: Loading
+# Description: Visual regression test for rendering PDF from base64 string
+
+# Test CoolPDF implementation
+- openLink: coolpdf://basic-base64-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-base64-coolpdf
+
+# Test react-native-pdf implementation
+- openLink: coolpdf://basic-base64-rnpdf
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-base64-rnpdf

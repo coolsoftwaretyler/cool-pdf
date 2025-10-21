@@ -21,7 +21,7 @@ export default function ProgressContainerStyleCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={ProgressContainerStyleScenario.name}
         description={ProgressContainerStyleScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -42,7 +42,7 @@ export default function ProgressContainerStyleCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

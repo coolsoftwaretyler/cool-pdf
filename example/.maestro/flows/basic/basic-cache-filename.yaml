@@ -1,0 +1,54 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Basic Cache Filename
+# Category: Loading
+# Description: Tests loading a PDF from a URL with a custom cache filename
+
+# Test CoolPDF implementation using deep link
+- openLink: coolpdf://basic-cache-filename-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Expand event log to check the cached path
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
+# Assert that the path contains the custom cache filename with full path
+- assertVisible:
+    text: ".*my-custom-cached-file.*"
+
+# Collapse event log before screenshot
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
+# Capture screenshot of CoolPDF implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-cache-filename-coolpdf
+
+# Test react-native-pdf implementation
+- openLink: coolpdf://basic-cache-filename-rnpdf
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Expand event log to check the cached path
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+# Assert that the path contains the custom cache filename with full path
+- assertVisible:
+    text: ".*my-custom-cached-file.*"
+
+# Collapse event log before screenshot
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
+# Capture screenshot of react-native-pdf implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-cache-filename-rnpdf

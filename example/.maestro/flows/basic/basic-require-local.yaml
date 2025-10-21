@@ -1,0 +1,27 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Require Local PDF
+# Category: Loading
+# Description: Visual regression test for loading local PDF using require()
+
+# Test CoolPDF implementation
+- openLink: coolpdf://basic-require-local-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-require-local-coolpdf
+
+# Test react-native-pdf implementation
+- openLink: coolpdf://basic-require-local-rnpdf
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Capture screenshot (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-require-local-rnpdf
