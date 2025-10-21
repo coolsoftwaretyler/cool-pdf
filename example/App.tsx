@@ -230,6 +230,8 @@ const linking = {
       BasicNoCacheReactNativePdf: 'basic-no-cache-rnpdf',
       BasicWithCacheCoolPdf: 'basic-with-cache-cool',
       BasicWithCacheReactNativePdf: 'basic-with-cache-rnpdf',
+      BasicCacheFileNameCoolPdf: 'basic-cache-filename-cool',
+      BasicCacheFileNameReactNativePdf: 'basic-cache-filename-rnpdf',
       // Add more as needed
     },
   },
