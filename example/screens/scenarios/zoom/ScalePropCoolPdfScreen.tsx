@@ -21,7 +21,7 @@ export default function ScalePropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={ScalePropScenario.name}
         description={ScalePropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -42,7 +42,7 @@ export default function ScalePropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

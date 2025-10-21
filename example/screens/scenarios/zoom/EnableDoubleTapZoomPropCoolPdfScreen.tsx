@@ -22,7 +22,7 @@ export default function EnableDoubleTapZoomPropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={EnableDoubleTapZoomPropScenario.name}
         description={EnableDoubleTapZoomPropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controls}>
@@ -57,7 +57,7 @@ export default function EnableDoubleTapZoomPropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

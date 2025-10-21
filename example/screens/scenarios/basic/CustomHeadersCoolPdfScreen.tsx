@@ -22,7 +22,7 @@ export default function CustomHeadersCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={CustomHeadersScenario.name}
         description={CustomHeadersScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -45,7 +45,7 @@ export default function CustomHeadersCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

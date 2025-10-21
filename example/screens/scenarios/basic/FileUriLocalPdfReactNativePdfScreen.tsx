@@ -64,7 +64,7 @@ export default function FileUriLocalPdfReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={FileUriLocalPdfScenario.name}
         description={FileUriLocalPdfScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       {loading ? (
@@ -92,7 +92,7 @@ export default function FileUriLocalPdfReactNativePdfScreen() {
         />
       ) : null}
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

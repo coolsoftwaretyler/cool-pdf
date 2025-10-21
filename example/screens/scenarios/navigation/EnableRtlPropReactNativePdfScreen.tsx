@@ -22,7 +22,7 @@ export default function EnableRtlPropReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={EnableRtlPropScenario.name}
         description={EnableRtlPropScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controls}>
@@ -57,7 +57,7 @@ export default function EnableRtlPropReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

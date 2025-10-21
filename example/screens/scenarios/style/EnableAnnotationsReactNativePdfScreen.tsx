@@ -22,7 +22,7 @@ export default function EnableAnnotationsReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={EnableAnnotationsScenario.name}
         description={EnableAnnotationsScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -42,7 +42,7 @@ export default function EnableAnnotationsReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

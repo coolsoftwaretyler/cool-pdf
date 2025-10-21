@@ -27,7 +27,7 @@ export default function PasswordIncorrectReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={PasswordIncorrectScenario.name}
         description={PasswordIncorrectScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -50,7 +50,7 @@ export default function PasswordIncorrectReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

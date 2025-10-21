@@ -21,7 +21,7 @@ export default function BasicNoCacheReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={BasicNoCacheScenario.name}
         description={BasicNoCacheScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -41,7 +41,7 @@ export default function BasicNoCacheReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

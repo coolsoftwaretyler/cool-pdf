@@ -20,7 +20,7 @@ export default function BasicNoCacheCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={BasicNoCacheScenario.name}
         description={BasicNoCacheScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -41,7 +41,7 @@ export default function BasicNoCacheCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

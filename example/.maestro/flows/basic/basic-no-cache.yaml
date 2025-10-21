@@ -8,9 +8,6 @@ appId: expo.modules.coolpdf.example
 - openLink: coolpdf://basic-no-cache-cool
 - waitForAnimationToEnd
 
-# Verify we're on the CoolPDF screen
-- assertVisible: "CoolPDF Implementation"
-
 # Wait for PDF to load
 - waitForAnimationToEnd:
     timeout: 10000
@@ -20,16 +17,13 @@ appId: expo.modules.coolpdf.example
     text: "Error"
     optional: true
 
-# Capture screenshot of CoolPDF implementation
+# Capture screenshot of CoolPDF implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-coolpdf
 
 # Test react-native-pdf implementation
 - openLink: coolpdf://basic-no-cache-rnpdf
 - waitForAnimationToEnd
 
-# Verify we're on the react-native-pdf screen
-- assertVisible: "react-native-pdf Implementation"
-
 # Wait for PDF to load
 - waitForAnimationToEnd:
     timeout: 10000
@@ -39,5 +33,5 @@ appId: expo.modules.coolpdf.example
     text: "Error"
     optional: true
 
-# Capture screenshot of react-native-pdf implementation
+# Capture screenshot of react-native-pdf implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-no-cache-rnpdf

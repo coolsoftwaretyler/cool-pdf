@@ -28,7 +28,7 @@ export default function CustomZoomRangeCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={CustomZoomRangeScenario.name}
         description={CustomZoomRangeScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -55,7 +55,7 @@ export default function CustomZoomRangeCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

@@ -250,475 +250,475 @@ export default function App() {
           <Stack.Screen
             name="BasicWithCacheCoolPdf"
             component={BasicWithCacheCoolPdfScreen}
-            options={{ title: "Load PDF from URL (CoolPDF)" }}
+            options={{ title: "Load PDF from URL" }}
           />
           <Stack.Screen
             name="BasicWithCacheReactNativePdf"
             component={BasicWithCacheReactNativePdfScreen}
-            options={{ title: "Load PDF from URL (RN-PDF)" }}
+            options={{ title: "Load PDF from URL" }}
           />
           <Stack.Screen
             name="BasicNoCacheCoolPdf"
             component={BasicNoCacheCoolPdfScreen}
-            options={{ title: "No Cache (CoolPDF)" }}
+            options={{ title: "No Cache" }}
           />
           <Stack.Screen
             name="BasicNoCacheReactNativePdf"
             component={BasicNoCacheReactNativePdfScreen}
-            options={{ title: "No Cache (RN-PDF)" }}
+            options={{ title: "No Cache" }}
           />
           <Stack.Screen
             name="BasicCacheFileNameCoolPdf"
             component={BasicCacheFileNameCoolPdfScreen}
             options={{
-              title: "Load PDF from URL with Custom Cache Filename (CoolPDF)",
+              title: "Load PDF from URL with Custom Cache Filename",
             }}
           />
           <Stack.Screen
             name="BasicCacheFileNameReactNativePdf"
             component={BasicCacheFileNameReactNativePdfScreen}
             options={{
-              title: "Load PDF from URL with Custom Cache Filename (RN-PDF)",
+              title: "Load PDF from URL with Custom Cache Filename",
             }}
           />
           <Stack.Screen
             name="BasicCacheExpirationCoolPdf"
             component={BasicCacheExpirationCoolPdfScreen}
-            options={{ title: "Cache Expiration (CoolPDF)" }}
+            options={{ title: "Cache Expiration" }}
           />
           <Stack.Screen
             name="BasicCacheExpirationReactNativePdf"
             component={BasicCacheExpirationReactNativePdfScreen}
-            options={{ title: "Cache Expiration (RN-PDF)" }}
+            options={{ title: "Cache Expiration" }}
           />
           <Stack.Screen
             name="BasicPasswordCoolPdf"
             component={BasicPasswordCoolPdfScreen}
-            options={{ title: "Password Protected (CoolPDF)" }}
+            options={{ title: "Password Protected" }}
           />
           <Stack.Screen
             name="BasicPasswordReactNativePdf"
             component={BasicPasswordReactNativePdfScreen}
-            options={{ title: "Password Protected (RN-PDF)" }}
+            options={{ title: "Password Protected" }}
           />
           <Stack.Screen
             name="CustomHttpMethodCoolPdf"
             component={CustomHttpMethodCoolPdfScreen}
-            options={{ title: "Custom HTTP Method (CoolPDF)" }}
+            options={{ title: "Custom HTTP Method" }}
           />
           <Stack.Screen
             name="CustomHttpMethodReactNativePdf"
             component={CustomHttpMethodReactNativePdfScreen}
-            options={{ title: "Custom HTTP Method (RN-PDF)" }}
+            options={{ title: "Custom HTTP Method" }}
           />
           <Stack.Screen
             name="CustomHeadersCoolPdf"
             component={CustomHeadersCoolPdfScreen}
-            options={{ title: "Custom Headers (CoolPDF)" }}
+            options={{ title: "Custom Headers" }}
           />
           <Stack.Screen
             name="CustomHeadersReactNativePdf"
             component={CustomHeadersReactNativePdfScreen}
-            options={{ title: "Custom Headers (RN-PDF)" }}
+            options={{ title: "Custom Headers" }}
           />
           <Stack.Screen
             name="Base64PdfRenderingCoolPdf"
             component={Base64PdfRenderingCoolPdfScreen}
-            options={{ title: "Base64 PDF Rendering (CoolPDF)" }}
+            options={{ title: "Base64 PDF Rendering" }}
           />
           <Stack.Screen
             name="Base64PdfRenderingReactNativePdf"
             component={Base64PdfRenderingReactNativePdfScreen}
-            options={{ title: "Base64 PDF Rendering (RN-PDF)" }}
+            options={{ title: "Base64 PDF Rendering" }}
           />
           <Stack.Screen
             name="RequireLocalPdfCoolPdf"
             component={RequireLocalPdfCoolPdfScreen}
-            options={{ title: "Require Local PDF (CoolPDF)" }}
+            options={{ title: "Require Local PDF" }}
           />
           <Stack.Screen
             name="RequireLocalPdfReactNativePdf"
             component={RequireLocalPdfReactNativePdfScreen}
-            options={{ title: "Require Local PDF (RN-PDF)" }}
+            options={{ title: "Require Local PDF" }}
           />
           <Stack.Screen
             name="BundleAssetsPdfCoolPdf"
             component={BundleAssetsPdfCoolPdfScreen}
-            options={{ title: "Bundle Assets PDF (CoolPDF)" }}
+            options={{ title: "Bundle Assets PDF" }}
           />
           <Stack.Screen
             name="BundleAssetsPdfReactNativePdf"
             component={BundleAssetsPdfReactNativePdfScreen}
-            options={{ title: "Bundle Assets PDF (RN-PDF)" }}
+            options={{ title: "Bundle Assets PDF" }}
           />
           <Stack.Screen
             name="FileUriLocalPdfCoolPdf"
             component={FileUriLocalPdfCoolPdfScreen}
-            options={{ title: "File URI Local PDF (CoolPDF)" }}
+            options={{ title: "File URI Local PDF" }}
           />
           <Stack.Screen
             name="FileUriLocalPdfReactNativePdf"
             component={FileUriLocalPdfReactNativePdfScreen}
-            options={{ title: "File URI Local PDF (RN-PDF)" }}
+            options={{ title: "File URI Local PDF" }}
           />
           <Stack.Screen
             name="OnLoadCompleteCoolPdf"
             component={OnLoadCompleteCoolPdfScreen}
-            options={{ title: "On Load Complete (CoolPDF)" }}
+            options={{ title: "On Load Complete" }}
           />
           <Stack.Screen
             name="OnLoadCompleteReactNativePdf"
             component={OnLoadCompleteReactNativePdfScreen}
-            options={{ title: "On Load Complete (RN-PDF)" }}
+            options={{ title: "On Load Complete" }}
           />
           <Stack.Screen
             name="ShowsVerticalScrollIndicatorCoolPdf"
             component={ShowsVerticalScrollIndicatorCoolPdfScreen}
-            options={{ title: "Shows Vertical Scroll Indicator (CoolPDF)" }}
+            options={{ title: "Shows Vertical Scroll Indicator" }}
           />
           <Stack.Screen
             name="ShowsVerticalScrollIndicatorReactNativePdf"
             component={ShowsVerticalScrollIndicatorReactNativePdfScreen}
-            options={{ title: "Shows Vertical Scroll Indicator (RN-PDF)" }}
+            options={{ title: "Shows Vertical Scroll Indicator" }}
           />
           <Stack.Screen
             name="ScrollEnabledCoolPdf"
             component={ScrollEnabledCoolPdfScreen}
-            options={{ title: "Scroll Enabled (CoolPDF)" }}
+            options={{ title: "Scroll Enabled" }}
           />
           <Stack.Screen
             name="ScrollEnabledReactNativePdf"
             component={ScrollEnabledReactNativePdfScreen}
-            options={{ title: "Scroll Enabled (RN-PDF)" }}
+            options={{ title: "Scroll Enabled" }}
           />
           <Stack.Screen
             name="StylePropCoolPdf"
             component={StylePropCoolPdfScreen}
-            options={{ title: "Style Prop (CoolPDF)" }}
+            options={{ title: "Style Prop" }}
           />
           <Stack.Screen
             name="StylePropReactNativePdf"
             component={StylePropReactNativePdfScreen}
-            options={{ title: "Style Prop (RN-PDF)" }}
+            options={{ title: "Style Prop" }}
           />
           <Stack.Screen
             name="ShowsHorizontalScrollIndicatorCoolPdf"
             component={ShowsHorizontalScrollIndicatorCoolPdfScreen}
-            options={{ title: "Shows Horizontal Scroll Indicator (CoolPDF)" }}
+            options={{ title: "Shows Horizontal Scroll Indicator" }}
           />
           <Stack.Screen
             name="ShowsHorizontalScrollIndicatorReactNativePdf"
             component={ShowsHorizontalScrollIndicatorReactNativePdfScreen}
-            options={{ title: "Shows Horizontal Scroll Indicator (RN-PDF)" }}
+            options={{ title: "Shows Horizontal Scroll Indicator" }}
           />
           <Stack.Screen
             name="PasswordPropCoolPdf"
             component={PasswordPropCoolPdfScreen}
-            options={{ title: "Password Prop (CoolPDF)" }}
+            options={{ title: "Password Prop" }}
           />
           <Stack.Screen
             name="PasswordPropReactNativePdf"
             component={PasswordPropReactNativePdfScreen}
-            options={{ title: "Password Prop (RN-PDF)" }}
+            options={{ title: "Password Prop" }}
           />
           <Stack.Screen
             name="PasswordCorrectCoolPdf"
             component={PasswordCorrectCoolPdfScreen}
-            options={{ title: "Password Correct (CoolPDF)" }}
+            options={{ title: "Password Correct" }}
           />
           <Stack.Screen
             name="PasswordCorrectReactNativePdf"
             component={PasswordCorrectReactNativePdfScreen}
-            options={{ title: "Password Correct (RN-PDF)" }}
+            options={{ title: "Password Correct" }}
           />
           <Stack.Screen
             name="PasswordIncorrectCoolPdf"
             component={PasswordIncorrectCoolPdfScreen}
-            options={{ title: "Password Incorrect (CoolPDF)" }}
+            options={{ title: "Password Incorrect" }}
           />
           <Stack.Screen
             name="PasswordIncorrectReactNativePdf"
             component={PasswordIncorrectReactNativePdfScreen}
-            options={{ title: "Password Incorrect (RN-PDF)" }}
+            options={{ title: "Password Incorrect" }}
           />
 
           {/* Navigation scenarios */}
           <Stack.Screen
             name="HorizontalScrollingCoolPdf"
             component={HorizontalScrollingCoolPdfScreen}
-            options={{ title: "Horizontal Scrolling (CoolPDF)" }}
+            options={{ title: "Horizontal Scrolling" }}
           />
           <Stack.Screen
             name="HorizontalScrollingReactNativePdf"
             component={HorizontalScrollingReactNativePdfScreen}
-            options={{ title: "Horizontal Scrolling (RN-PDF)" }}
+            options={{ title: "Horizontal Scrolling" }}
           />
           <Stack.Screen
             name="PageSnappingCoolPdf"
             component={PageSnappingCoolPdfScreen}
-            options={{ title: "Page Snapping (CoolPDF)" }}
+            options={{ title: "Page Snapping" }}
           />
           <Stack.Screen
             name="PageSnappingReactNativePdf"
             component={PageSnappingReactNativePdfScreen}
-            options={{ title: "Page Snapping (RN-PDF)" }}
+            options={{ title: "Page Snapping" }}
           />
           <Stack.Screen
             name="HorizontalWithPagingCoolPdf"
             component={HorizontalWithPagingCoolPdfScreen}
-            options={{ title: "Horizontal + Paging (CoolPDF)" }}
+            options={{ title: "Horizontal + Paging" }}
           />
           <Stack.Screen
             name="HorizontalWithPagingReactNativePdf"
             component={HorizontalWithPagingReactNativePdfScreen}
-            options={{ title: "Horizontal + Paging (RN-PDF)" }}
+            options={{ title: "Horizontal + Paging" }}
           />
           <Stack.Screen
             name="CustomSpacingCoolPdf"
             component={CustomSpacingCoolPdfScreen}
-            options={{ title: "Custom Spacing (CoolPDF)" }}
+            options={{ title: "Custom Spacing" }}
           />
           <Stack.Screen
             name="CustomSpacingReactNativePdf"
             component={CustomSpacingReactNativePdfScreen}
-            options={{ title: "Custom Spacing (RN-PDF)" }}
+            options={{ title: "Custom Spacing" }}
           />
           <Stack.Screen
             name="PagePropCoolPdf"
             component={PagePropCoolPdfScreen}
-            options={{ title: "Page Prop (CoolPDF)" }}
+            options={{ title: "Page Prop" }}
           />
           <Stack.Screen
             name="PagePropReactNativePdf"
             component={PagePropReactNativePdfScreen}
-            options={{ title: "Page Prop (RN-PDF)" }}
+            options={{ title: "Page Prop" }}
           />
           <Stack.Screen
             name="EnablePagingPropCoolPdf"
             component={EnablePagingPropCoolPdfScreen}
-            options={{ title: "Enable Paging Prop (CoolPDF)" }}
+            options={{ title: "Enable Paging Prop" }}
           />
           <Stack.Screen
             name="EnablePagingPropReactNativePdf"
             component={EnablePagingPropReactNativePdfScreen}
-            options={{ title: "Enable Paging Prop (RN-PDF)" }}
+            options={{ title: "Enable Paging Prop" }}
           />
           <Stack.Screen
             name="HorizontalPropCoolPdf"
             component={HorizontalPropCoolPdfScreen}
-            options={{ title: "Horizontal Prop (CoolPDF)" }}
+            options={{ title: "Horizontal Prop" }}
           />
           <Stack.Screen
             name="HorizontalPropReactNativePdf"
             component={HorizontalPropReactNativePdfScreen}
-            options={{ title: "Horizontal Prop (RN-PDF)" }}
+            options={{ title: "Horizontal Prop" }}
           />
           <Stack.Screen
             name="EnableRtlPropCoolPdf"
             component={EnableRtlPropCoolPdfScreen}
-            options={{ title: "Enable RTL Prop (CoolPDF)" }}
+            options={{ title: "Enable RTL Prop" }}
           />
           <Stack.Screen
             name="EnableRtlPropReactNativePdf"
             component={EnableRtlPropReactNativePdfScreen}
-            options={{ title: "Enable RTL Prop (RN-PDF)" }}
+            options={{ title: "Enable RTL Prop" }}
           />
 
           {/* Zoom scenarios */}
           <Stack.Screen
             name="InitialZoomCoolPdf"
             component={InitialZoomCoolPdfScreen}
-            options={{ title: "Initial Zoom (CoolPDF)" }}
+            options={{ title: "Initial Zoom" }}
           />
           <Stack.Screen
             name="InitialZoomReactNativePdf"
             component={InitialZoomReactNativePdfScreen}
-            options={{ title: "Initial Zoom (RN-PDF)" }}
+            options={{ title: "Initial Zoom" }}
           />
           <Stack.Screen
             name="CustomZoomRangeCoolPdf"
             component={CustomZoomRangeCoolPdfScreen}
-            options={{ title: "Custom Zoom Range (CoolPDF)" }}
+            options={{ title: "Custom Zoom Range" }}
           />
           <Stack.Screen
             name="CustomZoomRangeReactNativePdf"
             component={CustomZoomRangeReactNativePdfScreen}
-            options={{ title: "Custom Zoom Range (RN-PDF)" }}
+            options={{ title: "Custom Zoom Range" }}
           />
           <Stack.Screen
             name="RestrictedZoomCoolPdf"
             component={RestrictedZoomCoolPdfScreen}
-            options={{ title: "Restricted Zoom (CoolPDF)" }}
+            options={{ title: "Restricted Zoom" }}
           />
           <Stack.Screen
             name="RestrictedZoomReactNativePdf"
             component={RestrictedZoomReactNativePdfScreen}
-            options={{ title: "Restricted Zoom (RN-PDF)" }}
+            options={{ title: "Restricted Zoom" }}
           />
 
           <Stack.Screen
             name="ScalePropCoolPdf"
             component={ScalePropCoolPdfScreen}
-            options={{ title: "Scale Prop (CoolPDF)" }}
+            options={{ title: "Scale Prop" }}
           />
           <Stack.Screen
             name="ScalePropReactNativePdf"
             component={ScalePropReactNativePdfScreen}
-            options={{ title: "Scale Prop (RN-PDF)" }}
+            options={{ title: "Scale Prop" }}
           />
 
           <Stack.Screen
             name="MinScalePropCoolPdf"
             component={MinScalePropCoolPdfScreen}
-            options={{ title: "Min Scale Prop (CoolPDF)" }}
+            options={{ title: "Min Scale Prop" }}
           />
           <Stack.Screen
             name="MinScalePropReactNativePdf"
             component={MinScalePropReactNativePdfScreen}
-            options={{ title: "Min Scale Prop (RN-PDF)" }}
+            options={{ title: "Min Scale Prop" }}
           />
 
           <Stack.Screen
             name="MaxScalePropCoolPdf"
             component={MaxScalePropCoolPdfScreen}
-            options={{ title: "Max Scale Prop (CoolPDF)" }}
+            options={{ title: "Max Scale Prop" }}
           />
           <Stack.Screen
             name="MaxScalePropReactNativePdf"
             component={MaxScalePropReactNativePdfScreen}
-            options={{ title: "Max Scale Prop (RN-PDF)" }}
+            options={{ title: "Max Scale Prop" }}
           />
 
           <Stack.Screen
             name="FitPolicyPropCoolPdf"
             component={FitPolicyPropCoolPdfScreen}
-            options={{ title: "Fit Policy Prop (CoolPDF)" }}
+            options={{ title: "Fit Policy Prop" }}
           />
           <Stack.Screen
             name="FitPolicyPropReactNativePdf"
             component={FitPolicyPropReactNativePdfScreen}
-            options={{ title: "Fit Policy Prop (RN-PDF)" }}
+            options={{ title: "Fit Policy Prop" }}
           />
 
           <Stack.Screen
             name="EnableDoubleTapZoomPropCoolPdf"
             component={EnableDoubleTapZoomPropCoolPdfScreen}
-            options={{ title: "Enable Double Tap Zoom Prop (CoolPDF)" }}
+            options={{ title: "Enable Double Tap Zoom Prop" }}
           />
           <Stack.Screen
             name="EnableDoubleTapZoomPropReactNativePdf"
             component={EnableDoubleTapZoomPropReactNativePdfScreen}
-            options={{ title: "Enable Double Tap Zoom Prop (RN-PDF)" }}
+            options={{ title: "Enable Double Tap Zoom Prop" }}
           />
                   <Stack.Screen
             name="SinglePageCoolPdf"
             component={SinglePageCoolPdfScreen}
-            options={{ title: "Single Page (CoolPDF)" }}
+            options={{ title: "Single Page" }}
           />
           <Stack.Screen
             name="SinglePageReactNativePdf"
             component={SinglePageReactNativePdfScreen}
-            options={{ title: "Single Page (RN-PDF)" }}
+            options={{ title: "Single Page" }}
           />
           <Stack.Screen
             name="OnLoadProgressCoolPdf"
             component={OnLoadProgressCoolPdfScreen}
-            options={{ title: "On Load Progress (CoolPDF)" }}
+            options={{ title: "On Load Progress" }}
           />
           <Stack.Screen
             name="OnLoadProgressReactNativePdf"
             component={OnLoadProgressReactNativePdfScreen}
-            options={{ title: "On Load Progress (RN-PDF)" }}
+            options={{ title: "On Load Progress" }}
           />
           <Stack.Screen
             name="OnPageChangedCoolPdf"
             component={OnPageChangedCoolPdfScreen}
-            options={{ title: "On Page Changed (CoolPDF)" }}
+            options={{ title: "On Page Changed" }}
           />
           <Stack.Screen
             name="OnPageChangedReactNativePdf"
             component={OnPageChangedReactNativePdfScreen}
-            options={{ title: "On Page Changed (RN-PDF)" }}
+            options={{ title: "On Page Changed" }}
           />
           <Stack.Screen
             name="OnErrorCoolPdf"
             component={OnErrorCoolPdfScreen}
-            options={{ title: "On Error (CoolPDF)" }}
+            options={{ title: "On Error" }}
           />
           <Stack.Screen
             name="OnErrorReactNativePdf"
             component={OnErrorReactNativePdfScreen}
-            options={{ title: "On Error (RN-PDF)" }}
+            options={{ title: "On Error" }}
           />
           <Stack.Screen
             name="OnPageSingleTapCoolPdf"
             component={OnPageSingleTapCoolPdfScreen}
-            options={{ title: "On Page Single Tap (CoolPDF)" }}
+            options={{ title: "On Page Single Tap" }}
           />
           <Stack.Screen
             name="OnPageSingleTapReactNativePdf"
             component={OnPageSingleTapReactNativePdfScreen}
-            options={{ title: "On Page Single Tap (RN-PDF)" }}
+            options={{ title: "On Page Single Tap" }}
           />
           <Stack.Screen
             name="OnScaleChangedCoolPdf"
             component={OnScaleChangedCoolPdfScreen}
-            options={{ title: "On Scale Changed (CoolPDF)" }}
+            options={{ title: "On Scale Changed" }}
           />
           <Stack.Screen
             name="OnScaleChangedReactNativePdf"
             component={OnScaleChangedReactNativePdfScreen}
-            options={{ title: "On Scale Changed (RN-PDF)" }}
+            options={{ title: "On Scale Changed" }}
           />
           <Stack.Screen
             name="OnPressLinkCoolPdf"
             component={OnPressLinkCoolPdfScreen}
-            options={{ title: "On Press Link (CoolPDF)" }}
+            options={{ title: "On Press Link" }}
           />
           <Stack.Screen
             name="OnPressLinkReactNativePdf"
             component={OnPressLinkReactNativePdfScreen}
-            options={{ title: "On Press Link (RN-PDF)" }}
+            options={{ title: "On Press Link" }}
           />
           <Stack.Screen
             name="RenderActivityIndicatorCoolPdf"
             component={RenderActivityIndicatorCoolPdfScreen}
-            options={{ title: "Render Activity Indicator (CoolPDF)" }}
+            options={{ title: "Render Activity Indicator" }}
           />
           <Stack.Screen
             name="RenderActivityIndicatorReactNativePdf"
             component={RenderActivityIndicatorReactNativePdfScreen}
-            options={{ title: "Render Activity Indicator (RN-PDF)" }}
+            options={{ title: "Render Activity Indicator" }}
           />
           <Stack.Screen
             name="ProgressContainerStyleCoolPdf"
             component={ProgressContainerStyleCoolPdfScreen}
-            options={{ title: "Progress Container Style (CoolPDF)" }}
+            options={{ title: "Progress Container Style" }}
           />
           <Stack.Screen
             name="ProgressContainerStyleReactNativePdf"
             component={ProgressContainerStyleReactNativePdfScreen}
-            options={{ title: "Progress Container Style (RN-PDF)" }}
+            options={{ title: "Progress Container Style" }}
           />
           <Stack.Screen
             name="EnableAnnotationsCoolPdf"
             component={EnableAnnotationsCoolPdfScreen}
-            options={{ title: "Enable Annotations (CoolPDF)" }}
+            options={{ title: "Enable Annotations" }}
           />
           <Stack.Screen
             name="EnableAnnotationsReactNativePdf"
             component={EnableAnnotationsReactNativePdfScreen}
-            options={{ title: "Enable Annotations (RN-PDF)" }}
+            options={{ title: "Enable Annotations" }}
           />
           <Stack.Screen
             name="DisableAnnotationsCoolPdf"
             component={DisableAnnotationsCoolPdfScreen}
-            options={{ title: "Disable Annotations (CoolPDF)" }}
+            options={{ title: "Disable Annotations" }}
           />
           <Stack.Screen
             name="DisableAnnotationsReactNativePdf"
             component={DisableAnnotationsReactNativePdfScreen}
-            options={{ title: "Disable Annotations (RN-PDF)" }}
+            options={{ title: "Disable Annotations" }}
           />
 </Stack.Navigator>
       </NavigationContainer>

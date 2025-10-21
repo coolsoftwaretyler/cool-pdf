@@ -28,7 +28,7 @@ export default function HorizontalScrollingCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={HorizontalScrollingScenario.name}
         description={HorizontalScrollingScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -53,7 +53,7 @@ export default function HorizontalScrollingCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

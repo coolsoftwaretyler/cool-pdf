@@ -21,7 +21,7 @@ export default function OnErrorCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={OnErrorScenario.name}
         description={OnErrorScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -45,7 +45,7 @@ export default function OnErrorCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

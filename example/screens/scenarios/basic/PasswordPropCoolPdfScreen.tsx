@@ -33,7 +33,7 @@ export default function PasswordPropCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={PasswordPropScenario.name}
         description={PasswordPropScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <View style={styles.controlsContainer}>
@@ -76,7 +76,7 @@ export default function PasswordPropCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

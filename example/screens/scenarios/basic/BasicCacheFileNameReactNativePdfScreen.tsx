@@ -21,7 +21,7 @@ export default function BasicCacheFileNameReactNativePdfScreen() {
         implementation="react-native-pdf Implementation"
         name={BasicCacheFileNameScenario.name}
         description={BasicCacheFileNameScenario.description}
-        backgroundColor="#34c759"
+        backgroundColor="#6b7280"
       />
 
       <Pdf
@@ -42,7 +42,7 @@ export default function BasicCacheFileNameReactNativePdfScreen() {
         trustAllCerts={false}
       />
 
-      <ScenarioEventLog events={events} accentColor="#34c759" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }

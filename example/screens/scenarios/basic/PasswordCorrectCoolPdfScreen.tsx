@@ -27,7 +27,7 @@ export default function PasswordCorrectCoolPdfScreen() {
         implementation="CoolPDF Implementation"
         name={PasswordCorrectScenario.name}
         description={PasswordCorrectScenario.description}
-        backgroundColor="#5856d6"
+        backgroundColor="#6b7280"
       />
 
       <CoolPdfView
@@ -51,7 +51,7 @@ export default function PasswordCorrectCoolPdfScreen() {
         style={styles.pdf}
       />
 
-      <ScenarioEventLog events={events} accentColor="#5856d6" />
+      <ScenarioEventLog events={events} accentColor="#6b7280" />
     </View>
   );
 }
