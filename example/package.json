@@ -17,8 +17,7 @@
     "test:maestro:style": "maestro test .maestro/flows/style/",
     "test:maestro:ios": "maestro test --platform ios .maestro/",
     "test:maestro:android": "maestro test --platform android .maestro/",
-    "test:visual": "maestro test .maestro/ && node scripts/compare-screenshots.js",
-    "test:visual:report": "node scripts/compare-screenshots.js"
+    "test:visual": "maestro test .maestro/ && node scripts/compare-screenshots.js"
   },
   "dependencies": {
     "@config-plugins/react-native-blob-util": "^12.0.0",
