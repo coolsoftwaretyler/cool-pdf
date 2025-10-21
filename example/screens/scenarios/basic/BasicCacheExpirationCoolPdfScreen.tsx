@@ -40,6 +40,10 @@ export default function BasicCacheExpirationCoolPdfScreen() {
             tableContents,
           });
         }}
+        onLoadProgress={(event) => {
+          const { percent } = event.nativeEvent;
+          addEvent("loadProgress", { percent });
+        }}
         style={styles.pdf}
       />
 

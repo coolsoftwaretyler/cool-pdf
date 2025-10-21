@@ -38,6 +38,9 @@ export default function BasicCacheExpirationReactNativePdfScreen() {
             tableContents,
           });
         }}
+        onLoadProgress={(percent) => {
+          addEvent("loadProgress", { percent });
+        }}
         style={styles.pdf}
         trustAllCerts={false}
       />
