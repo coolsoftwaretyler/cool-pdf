@@ -7,6 +7,7 @@ appId: expo.modules.coolpdf.example
 - runFlow: flows/basic/basic-with-cache.yaml
 - runFlow: flows/basic/basic-cache-filename.yaml
 - runFlow: flows/basic/basic-cache-expiration.yaml
+- runFlow: flows/basic/basic-base64.yaml
 
 # Add more test flows here as they're created
 # - runFlow: flows/basic/basic-with-cache.yaml

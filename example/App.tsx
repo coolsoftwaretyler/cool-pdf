@@ -234,6 +234,8 @@ const linking = {
       BasicCacheFileNameReactNativePdf: 'basic-cache-filename-rnpdf',
       BasicCacheExpirationCoolPdf: 'basic-cache-expiration-cool',
       BasicCacheExpirationReactNativePdf: 'basic-cache-expiration-rnpdf',
+      Base64PdfRenderingCoolPdf: 'basic-base64-cool',
+      Base64PdfRenderingReactNativePdf: 'basic-base64-rnpdf',
       // Add more as needed
     },
   },
