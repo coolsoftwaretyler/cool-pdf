@@ -4,6 +4,7 @@ appId: expo.modules.coolpdf.example
 
 # Basic/Loading tests
 - runFlow: flows/basic/basic-no-cache.yaml
+- runFlow: flows/basic/basic-with-cache.yaml
 
 # Add more test flows here as they're created
 # - runFlow: flows/basic/basic-with-cache.yaml

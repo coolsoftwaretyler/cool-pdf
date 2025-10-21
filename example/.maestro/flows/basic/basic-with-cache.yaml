@@ -1,0 +1,37 @@
+appId: expo.modules.coolpdf.example
+---
+# Test: Basic With Cache
+# Category: Loading
+# Description: Tests loading a PDF from a URL with caching enabled
+
+# Test CoolPDF implementation using deep link
+- openLink: coolpdf://basic-with-cache-cool
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Assert no error occurred
+- assertNotVisible:
+    text: "Error"
+    optional: true
+
+# Capture screenshot of CoolPDF implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-with-cache-coolpdf
+
+# Test react-native-pdf implementation
+- openLink: coolpdf://basic-with-cache-rnpdf
+- waitForAnimationToEnd
+
+# Wait for PDF to load
+- waitForAnimationToEnd:
+    timeout: 10000
+
+# Assert no error occurred
+- assertNotVisible:
+    text: "Error"
+    optional: true
+
+# Capture screenshot of react-native-pdf implementation (with headers collapsed)
+- takeScreenshot: /tmp/maestro-screenshots/basic-with-cache-rnpdf
