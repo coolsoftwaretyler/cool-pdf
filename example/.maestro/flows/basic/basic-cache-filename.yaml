@@ -17,6 +17,20 @@ appId: expo.modules.coolpdf.example
     text: "Error"
     optional: true
 
+# Expand event log to check the cached path
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
+# Assert that the path contains the custom cache filename with full path
+- assertVisible:
+    text: ".*my-custom-cached-file.*"
+
+# Collapse event log before screenshot
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+
 # Capture screenshot of CoolPDF implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-cache-filename-coolpdf
 
@@ -32,6 +46,19 @@ appId: expo.modules.coolpdf.example
 - assertNotVisible:
     text: "Error"
     optional: true
+
+# Expand event log to check the cached path
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
+# Assert that the path contains the custom cache filename with full path
+- assertVisible:
+    text: ".*my-custom-cached-file.*"
+
+# Collapse event log before screenshot
+- tapOn:
+    id: "event-log-toggle"
+- waitForAnimationToEnd
 
 # Capture screenshot of react-native-pdf implementation (with headers collapsed)
 - takeScreenshot: /tmp/maestro-screenshots/basic-cache-filename-rnpdf

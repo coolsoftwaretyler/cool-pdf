@@ -26,6 +26,7 @@ export function ScenarioEventLog({ events, accentColor = '#5856d6' }: Props) {
   return (
     <View style={styles.eventLog}>
       <TouchableOpacity
+        testID="event-log-toggle"
         style={styles.eventLogHeader}
         onPress={() => setIsExpanded(!isExpanded)}
         activeOpacity={0.8}
@@ -57,7 +58,11 @@ export function ScenarioEventLog({ events, accentColor = '#5856d6' }: Props) {
             events.map((event, index) => (
               <View key={index} style={styles.event}>
                 <Text style={[styles.eventType, { color: accentColor }]}>{event.type}</Text>
-                <Text style={styles.eventData}>
+                <Text
+                  style={styles.eventData}
+                  testID={`event-data-${index}`}
+                  accessibilityLabel={JSON.stringify(event.data, null, 2)}
+                >
                   {JSON.stringify(event.data, null, 2)}
                 </Text>
               </View>
